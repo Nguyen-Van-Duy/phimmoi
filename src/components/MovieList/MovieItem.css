@@ -1,0 +1,102 @@
+.movie-item {
+    position: relative;
+    margin: 0 auto;
+    max-width: 20rem;
+    padding: 0 1rem; 
+}
+
+.movie-item__link {
+    text-decoration: none;
+    color: rgb(255, 255, 255);
+}
+
+.movie-item__content {
+    margin: 10px 0;
+    width: 100%;
+    background-color: #222222;
+    border-radius: 0.8rem;
+    font-size: 1.6rem;
+    box-shadow: 0 0 10px rgba(236, 229, 229, 0.5);
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.25s ease-in-out;
+}
+
+.movie-item__quanlity {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 4rem;
+    height: 2rem;
+    line-height: 2rem;
+    text-align: center;
+    font-size: 1.4rem;
+    background-color: rgb(15, 15, 15, 0.6);
+    border-radius: 6px;
+}
+
+.movie-item__cent {
+    position: absolute;
+    top: 0.5rem;
+    left: 0.5rem;
+    width: 3.3rem;
+    height: 3.3rem;
+    line-height: 3.3rem;
+    font-size: 1.2rem;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.6);
+    border-radius: 3.3rem;
+}
+
+.movie-item__image {
+    width: 100%;
+    max-height: 25rem;
+    min-height: 24rem;
+
+    /* min-height: 27rem; */
+    border-top-left-radius: 0.8rem;
+    border-top-right-radius: 0.8rem;
+    transition: all 0.25s ease-in-out;
+}
+
+.movie-item__content:hover .movie-item__image {
+    transform: scaleY(1.05);
+    transform: scaleX(1.1);
+}
+
+.movie-item__content:hover {
+    color: rgb(255, 251, 0);
+    font-weight: 500;
+    background-color: rgba(0, 0, 0, 0.7);
+    transform: translateY(-5px);
+}
+
+.movie-item__content:hover .movie-item__cent,
+.movie-item__content:hover .movie-item__quanlity {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.movie-item__desc {
+    padding: 0.5rem;
+}
+
+.movie-item__name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    min-height: 4rem;
+}
+
+.movie-item__date {
+    font-size: 1.4rem;
+    opacity: 0.5;
+}
+
+@media (max-width: 768px) {
+    .movie-item__image {
+        max-height: 23rem;
+    }
+}

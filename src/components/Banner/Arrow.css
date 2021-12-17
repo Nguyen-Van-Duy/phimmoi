@@ -1,0 +1,39 @@
+.banner__arrow {
+    position: absolute;
+    top: 50%;
+    width: 3rem;
+    height: 7rem;
+    background-color: rgba(0, 0, 0, 1);
+    transform: translateY(-70%);
+    color: #fff;
+    cursor: pointer;
+    z-index: 11;
+    font-size: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.4rem;
+    opacity: 0.5;
+}
+
+.banner__arrow:hover {
+    opacity: 0.8;
+}
+
+.next-arrow {
+    right: 2rem;
+}
+
+.prev-arrows {
+    left: 2rem;
+}
+
+@media(max-width: 786px) {
+    .next-arrow {
+        right: 1rem;
+    }
+    
+    .prev-arrows {
+        left: 1rem;
+    }
+}

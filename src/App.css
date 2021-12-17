@@ -1,0 +1,55 @@
+.container {
+  max-width: 100%;
+  height: 100%;
+  padding: 0 5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.main {
+  width: 100%;
+}
+
+.button {
+  padding: 1rem 2rem;
+  font-size: 1.6rem;
+  background-color: rgb(31, 30, 30);
+  border-radius: 0.6rem;
+  text-align: center;
+  margin-right: 2rem;
+  cursor: pointer;
+}
+
+.button:last-child {
+  margin-right: 0;
+}
+
+.red {
+  background-color: rgba(220,38,38, 0.9);
+}
+
+.blue {
+  background-color: rgba(37,99,235, 0.9);
+}
+
+.button i {
+  font-size: 1.6rem;
+  margin-right: 1rem;
+
+}
+
+@media (max-width: 1024px) {
+
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0 2rem;
+  }
+  .button {
+    padding: 1rem 1.5rem;
+    margin-right: 1rem;
+  }
+}
+

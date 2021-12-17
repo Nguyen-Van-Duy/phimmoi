@@ -1,0 +1,73 @@
+.footer {
+    width: 100%;
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.8)), url("https://media.baamboozle.com/uploads/images/410104/1636047346_447449.jpeg");
+    font-size: 1.8rem;
+    padding-bottom: 2rem;
+    color: rgb(214, 213, 213);
+    background-size: cover;
+    text-shadow: 0 5px 5px rgba(0, 0, 0, 0.5);
+}
+
+.footer__container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.footer__list--title {
+    color: yellow;
+    font-size: 2.4rem;
+    margin: 0;
+    padding: 2rem 0 1rem;
+}
+
+.footer__list li {
+    list-style: none;
+    padding: 0.4rem 0;
+    cursor: pointer;
+}
+
+.footer__list li:hover {
+    color: yellow;
+}
+
+.footer__desc {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+}
+
+.footer__desc span,
+.footer__desc a {
+    color: yellow;
+    font-size: 1.4rem;
+    border: 1px solid rgb(255, 255, 255);
+    padding: 0.5rem;
+    margin: 1rem 0.5rem 0;
+}
+
+.footer__desc a:hover {
+    font-weight: bold;
+}
+
+@media(max-width: 768px) {
+    .footer__desc,
+    .footer__container {
+        flex-wrap: wrap;
+    }
+
+    .footer__list {
+        text-align: center;
+        width: 50%;
+    }
+
+    .footer__desc {
+        justify-content: center;
+    }
+}
+
+@media(max-width: 376px) {
+    .footer__list {
+        width: 100%;
+    }
+}
