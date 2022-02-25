@@ -4,8 +4,8 @@ import apiConfig from "../../API/configApi";
 import "./ContentItem.css";
 
 const ContentItem = ({ item, category }) => {
-  console.log(item, category);
   return (
+    <>
     <div className="content-item">
       <Link to={`/${category}/${item.id}`} className="content-item__link">
         <div
@@ -32,6 +32,7 @@ const ContentItem = ({ item, category }) => {
         <i className="fas fa-play-circle"></i>Play Now
       </span>
     </div>
+    </>
   );
 };
 

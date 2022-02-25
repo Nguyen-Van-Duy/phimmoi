@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { category } from '../../API/MoviesApi';
 import Banner from '../../components/Banner/Banner';
@@ -18,9 +18,14 @@ const Home = () => {
     const tv_trending = useSelector(state => state.datafilm.dataTv.tv_trending)
     const tv_on_the_air = useSelector(state => state.datafilm.dataTv.tv_on_the_air)
 
+    useEffect(() => {
+        document.title = "DUY FILM";
+        window.scrollTo(0, 0)
+    }, [])
+
     return (
         <div>
-            <Banner />
+            <Banner category="movie" />
             <div className="content-list">
                 {/* show movies */}
                 <MovieContent dataFilm={movie_upcoming} titleFilm="Movies" category={category.movie} />

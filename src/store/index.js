@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import dataFilm from "./dataFilmSlice";
+import profileCast from "./profileCastSlice";
 
 const store = configureStore({
     reducer: {
-        datafilm: dataFilm
+        datafilm: dataFilm,
+        profileCast: profileCast,
     }
 })
 

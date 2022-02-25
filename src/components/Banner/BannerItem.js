@@ -1,10 +1,13 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import apiConfig from "../../API/configApi";
+import Loading from "../Loading";
 import "./BannerItem.css";
 
-const BannerItem = ({ item }) => {
+const BannerItem = ({ item, category}) => {
   return (
-    <div
+    <>
+    {item ? <div
       className="banner__container"
       style={{ backgroundImage: `url(${apiConfig.originalImage(item.backdrop_path || item.poster_path)})` }}
     >
@@ -21,12 +24,15 @@ const BannerItem = ({ item }) => {
           <span className="button red">
             <i className="fas fa-play-circle"></i>Play Now
           </span>
-          <span className="button blue">
-            <i className="fas fa-info-circle"></i>More Info
-          </span>
+          <Link to={`/${category}/${item.id}`} className="content-item__link">
+            <span className="button blue">
+              <i className="fas fa-info-circle"></i>More Info
+            </span>
+          </Link>
         </div>
       </div>
-    </div>
+    </div>: <div className='loading'><Loading /></div>}
+    </>
   );
 };
 

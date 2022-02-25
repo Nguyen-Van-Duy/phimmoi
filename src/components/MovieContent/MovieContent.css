@@ -3,11 +3,10 @@
     justify-content: center;
     font-size: 2.2rem;
     margin-bottom: 2rem;
-    
 }
 
 .content-list__title {
-    font-size: 3rem;
+    font-size: 2.5rem;
     color: yellow;
     text-shadow: 5px 5px 5px rgba(255, 255, 255, 0.5);
 }

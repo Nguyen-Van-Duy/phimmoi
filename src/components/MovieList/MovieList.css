@@ -1,9 +1,3 @@
-.movie-list {
-    margin: 5rem auto;
-    width: 100%; 
-    color: rgb(224, 220, 220);
-}
-
 .movie-list__header {
     display: flex;
     justify-content: space-between;
@@ -12,7 +6,7 @@
 }
 
 .movie-list__title {
-    font-size: 3rem;
+    font-size: 2.5rem;
     color: yellow;
     text-shadow: 0 5px 10px rgba(255, 255, 255, 0.5);
 }

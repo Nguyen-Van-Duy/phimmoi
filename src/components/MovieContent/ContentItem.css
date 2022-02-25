@@ -124,4 +124,8 @@
 }
 
 @media (max-width: 768px) {
+  .content-item {
+    margin: 0 1rem;
+    max-width: 38rem;
+  }
 }

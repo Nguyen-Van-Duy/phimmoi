@@ -75,7 +75,13 @@
 .movie-item__content:hover .movie-item__cent,
 .movie-item__content:hover .movie-item__quanlity {
     background-color: rgba(0, 0, 0, 0.8);
+    /* color:rgb(255, 251, 0); */
 }
+
+.movie-item__content:hover .movie-item__desc {
+    /* color:rgb(255, 251, 0); */
+}
+
 
 .movie-item__desc {
     padding: 0.5rem;

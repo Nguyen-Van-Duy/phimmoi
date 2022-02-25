@@ -6,11 +6,17 @@ import BannerItem from "./BannerItem";
 import NextArrow from './NextArrow';
 import PrevArrow from "./PrevArrow";
 import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 
 
-const Banner = () => {
+const Banner = ({category}) => {
 
   const data = useSelector(state => state.datafilm.dataMovie.movie_now_play)
+  const dataMovies = useSelector(state => state.datafilm.dataMovie.movie_trending)
+  const dataTvs = useSelector(state => state.datafilm.dataTv.tv_trending)
+
+  const params = useParams()
+  console.log(params)
 
   // if(!data) return "loading...";
 
@@ -41,9 +47,15 @@ const Banner = () => {
   return (
     <section className="banner">
       <div>
-        <Slider {...settings}>
-          {data.map((item, index) => <BannerItem key={index} item={item}/>)}
-        </Slider>
+        {!params.category && <Slider {...settings}>
+          {(data.length > 0 ? data : Array.from(new Array(4))).map((item, index) => <BannerItem key={index} category={category} item={item}/>)}
+        </Slider>}
+        {params.category === 'movie' && <Slider {...settings}>
+          {(data.length > 0 ? dataMovies : Array.from(new Array(4))).map((item, index) => <BannerItem key={index} category={category} item={item}/>)}
+        </Slider>}
+        {category === 'tv' && <Slider {...settings}>
+          {(data.length > 0 ? dataTvs : Array.from(new Array(4))).map((item, index) => <BannerItem key={index} category={category} item={item}/>)}
+        </Slider>}
       </div>
 
     </section>

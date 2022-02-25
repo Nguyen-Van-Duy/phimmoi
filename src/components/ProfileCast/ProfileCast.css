@@ -1,0 +1,53 @@
+.profile-cast {
+    width: 100%;
+    padding-bottom: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 1.6rem;
+    color: #fff;
+    font-weight: 300;
+    overflow: auto;
+    max-height: 60rem;
+}
+
+.profile-cast::-webkit-scrollbar { 
+    display: none; 
+}
+
+.cast-info__img {
+    width: 23rem;
+    margin-bottom: 1rem;
+}
+
+.cast-info__img img {
+    width: 100%;
+    width: 23rem;
+}
+
+.profile-cast__info {
+    height: 100%;
+    width: calc(100% - 23rem);
+    padding-left: 2rem;
+}
+
+.profile-cast__info p {
+    margin-bottom: 0.5rem;
+}
+
+.profile-cast__info span {
+    opacity: 0.6;
+}
+
+@media (max-width: 600px) {
+    .cast-info__img {
+        width: 100%;
+    }
+    .profile-cast__info {
+        width: 100%;
+        padding-left: 0;
+    }
+    .cast-info__img {
+        display: flex;
+        justify-content: center;
+    }
+}

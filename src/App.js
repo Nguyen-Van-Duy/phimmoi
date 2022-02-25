@@ -1,15 +1,19 @@
 import { Routes, Route } from "react-router-dom";
 import "./App.css";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Header from "./components/Header/Header";
 import Home from "./pages/Home/Home";
 import { dataMovie, trending } from "./API/MoviesApi";
 import { useDispatch } from "react-redux";
 import { dataFilmAction } from "./store/dataFilmSlice";
 import Footer from "./components/Footer/Footer";
+import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
+import Loading from "./components/Loading";
+import MovieDetails from "./pages/MovieDetails/MovieDetails";
+import Movie from "./pages/Movies/Movie";
 
 function App() {
-
+  const [isLoading, setIsLoading] = useState(true)
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -41,6 +45,7 @@ function App() {
       dispatch(dataFilmAction.tv_popular(tv_popular))
       dispatch(dataFilmAction.tv_top_rated(tv_top_rated))
 
+      setIsLoading(false)
     }
     fetchDataFilm()
   }, [dispatch])
@@ -49,7 +54,7 @@ function App() {
     <div className="App">
       <Header />
       <main className="main">
-        <Routes>
+        {!isLoading && <Routes>
           <Route path="/" element={<Home />} />
           <Route
             path="/movies"
@@ -57,15 +62,17 @@ function App() {
           />
           <Route
             path="/:category"
-            element={'tv-show and movies'}
+            element={<Movie />}
           />
           <Route
             path="/:category/:id"
-            element={'view more'}
+            element={<MovieDetails />}
           />
           <Route path="/:category/:id/watch" element={"watch movie"} />
-        </Routes>
+        </Routes>}
+        {isLoading && <div className="loading"><Loading /></div>}
       </main>
+      <ScrollToTop />
       <Footer />
     </div>
   );

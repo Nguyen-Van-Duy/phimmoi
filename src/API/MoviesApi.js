@@ -18,3 +18,33 @@ export const trending = async (type, time) => {
   return response.data.results;
 };
 
+export const movieDetails = async (category, id) => {
+  const url = `${apiConfig.baseUrl}/${category}/${id}?api_key=${apiConfig.apiKey}`;
+  const response = await axios.get(url);
+  return response.data;
+};
+
+export const cast = async (category, id) => {
+  const url = `${apiConfig.baseUrl}/${category}/${id}/credits?api_key=${apiConfig.apiKey}`;
+  const response = await axios.get(url);
+  return response.data;
+};
+
+export const listTrailer = async (category, id) => {
+  const url = `${apiConfig.baseUrl}/${category}/${id}/videos?api_key=${apiConfig.apiKey}`;
+  const response = await axios.get(url);
+  return response.data;
+};
+
+export const similar = async (category, id) => {
+  const url = `${apiConfig.baseUrl}/${category}/${id}/similar?api_key=${apiConfig.apiKey}`;
+  const response = await axios.get(url);
+  return response.data.results;
+};
+
+export const infoCast = async (id) => {
+  const url = `${apiConfig.baseUrl}/person/${id}?api_key=${apiConfig.apiKey}`;
+  const response = await axios.get(url);
+  return response.data;
+};
+

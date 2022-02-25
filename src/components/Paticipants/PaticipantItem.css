@@ -1,0 +1,44 @@
+.paticipant-content {
+    display: flex;
+}
+
+.paticipant-content:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.paticipant-img img {
+    width: 13rem;
+}
+
+.paticipant-content::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.1);
+}
+
+.paticipant-info {
+    margin: 2rem 1.5rem;
+    font-size: 1.8rem;
+}
+
+.paticipant-info p {
+    margin-bottom: 0.8rem;
+}
+
+.paticipant-info__desc {
+    color: rgb(255, 238, 0);
+    font-size: 1.6rem;
+    line-height: 0.2;
+}
+
+.paticipant-button {
+    position: absolute;
+    right: 2rem;
+    bottom: 1.5rem;
+    z-index: 1;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.7);
+}
