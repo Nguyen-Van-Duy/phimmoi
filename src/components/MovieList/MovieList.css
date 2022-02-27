@@ -11,6 +11,10 @@
     text-shadow: 0 5px 10px rgba(255, 255, 255, 0.5);
 }
 
+.movie-list__link {
+    color: rgb(255, 255, 255);
+}
+
 .movie-list__more {
     font-size: 1.6rem;
     padding: 0.5rem;

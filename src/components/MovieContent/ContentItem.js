@@ -4,6 +4,14 @@ import apiConfig from "../../API/configApi";
 import "./ContentItem.css";
 
 const ContentItem = ({ item, category }) => {
+
+  let pathUrl
+  if(category === 'movie') {
+    pathUrl = `/${category}/${item.id}/watch`
+  } else {
+    pathUrl = `/${category}/${item.id}/watch/season/1/esp/1`
+  }
+
   return (
     <>
     <div className="content-item">
@@ -28,9 +36,11 @@ const ContentItem = ({ item, category }) => {
           <div className="content-item__quanlity">HD</div>
         </div>
       </Link>
-      <span className="button red content-button">
-        <i className="fas fa-play-circle"></i>Play Now
-      </span>
+      <Link to={pathUrl} className="content-item__link">
+        <span className="button red content-button">
+          <i className="fas fa-play-circle"></i>Play Now
+        </span>
+      </Link>
     </div>
     </>
   );

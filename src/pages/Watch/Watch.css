@@ -1,0 +1,14 @@
+.movie-container {
+    
+}
+
+.movie-container__similar {
+    padding: 0 5rem;
+    margin: 0;
+}
+
+@media (max-width: 768px) {
+    .movie-container__similar {
+        padding: 0 0.5rem;
+    }
+}

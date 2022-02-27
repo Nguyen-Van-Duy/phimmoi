@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import apiConfig from '../../API/configApi';
 import { cast, movieDetails } from '../../API/MoviesApi';
 import './MovieDetails.css';
@@ -11,6 +11,8 @@ import Similar from '../../components/Similar/Similar';
 import ProfileCast from '../../components/ProfileCast/ProfileCast';
 import { useDispatch, useSelector } from 'react-redux';
 import { handleShowProfileCast } from '../../store/profileCastSlice';
+import Loading from '../../components/Loading';
+import VoteAverage from '../../components/VoteAverage/VoteAverage';
 
 const MovieDetails = () => {
     const [dataDetails, setDAtaDetails] = useState({})
@@ -29,24 +31,6 @@ const MovieDetails = () => {
     }
 
     const directors = listCrew.filter((item) => item.job === "Director")
-
-    const voteAverage = []
-    if(Number.isInteger(dataDetails.vote_average)) {
-        for(let i = 1; i <= dataDetails.vote_average; i++) {
-            voteAverage.push('fa-solid fa-star')
-        }
-        for(let i = 1; i <= 10 - dataDetails.vote_average; i++) {
-            voteAverage.push('fa-regular fa-star')
-        }
-    } else {
-        for(let i = 1; i <= Math.floor(dataDetails.vote_average); i++) {
-            voteAverage.push('fa-solid fa-star')
-        }
-        voteAverage.push('fa-solid fa-star-half-stroke')
-        for(let i = 1; i <= 10 - Math.ceil(dataDetails.vote_average); i++) {
-            voteAverage.push('fa-regular fa-star')
-        }
-    }
 
     const toggleModal = () => {
         setShowModal(!showModal)
@@ -77,11 +61,13 @@ const MovieDetails = () => {
         <div onClick={toggleShowProfile}><Modal showModal={showProfileCast} /></div>
         {showProfileCast && <ProfileCast category={params.category} id={params.id}/>}
 
+        {isLoading && <div className="loading"><Loading /></div>}
         {!isLoading && <> <section className="detail-container container" 
-        style={{ backgroundImage: `url(${apiConfig.originalImage(dataDetails.backdrop_path || dataDetails.poster_path)})` }}>
+        style={{ backgroundImage: `url(${dataDetails.backdrop_path || dataDetails.poster_path ? apiConfig.originalImage(dataDetails.backdrop_path || dataDetails.poster_path): apiConfig.background})` }}>
             <div className="detail-container__content">
                 <div className="detail__image">
-                    <img src={apiConfig.w500Image(dataDetails.poster_path || dataDetails.backdrop_path)} alt={dataDetails.title || dataDetails.name} />
+                    <img src={dataDetails.poster_path || dataDetails.backdrop_path ? apiConfig.w500Image(dataDetails.poster_path || dataDetails.backdrop_path) : apiConfig.backupPhoto} 
+                    alt={dataDetails.title || dataDetails.name} />
                 </div>
                 <div className="detail-container__wrap">
                     <div className="detail-content">
@@ -103,13 +89,13 @@ const MovieDetails = () => {
                             {dataDetails.genres.map((item, id) => <span key={id}>{item.name}</span>)}
                         </div>
                         <p className="detail-content__desc">
-                            {voteAverage.map((vote, id) => <span key={id} className='vote-start'><i className={`${vote}`}></i></span>)}
-                            ({dataDetails.vote_count} votes)
+                            <VoteAverage dataDetails={dataDetails} />
                         </p>
                         <div className="banner__button detail-content__button">
-                            <span className="button red">
+                            <Link to={(params.category === 'movie' && `/${params.category}/${params.id}/watch`) || 
+                            (params.category === 'tv' && `/${params.category}/${params.id}/watch/season/1/esp/1`)} className="button red">
                                 <i className="fas fa-play-circle"></i>Play Now
-                            </span>
+                            </Link>
                             <span className="button green" onClick={toggleModal}>
                             <i className="fa-brands fa-youtube"></i>Trailer
                             </span>
@@ -120,7 +106,7 @@ const MovieDetails = () => {
         </section>
         <span className="home-page container">Homepage: <a href={dataDetails.homepage} target="_blank" rel="noopener noreferrer"> {dataDetails.homepage}</a></span>
         <div className="content-list">
-            {listCast.length > 0 && <Paticipants paticipants={listCast}/>}
+            {listCast.length > 3 && <Paticipants paticipants={listCast}/>}
             <Similar />
         </div>
         </>

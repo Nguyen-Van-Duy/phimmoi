@@ -12,15 +12,11 @@ import { useParams } from "react-router-dom";
 const Banner = ({category}) => {
 
   const data = useSelector(state => state.datafilm.dataMovie.movie_now_play)
-  const dataMovies = useSelector(state => state.datafilm.dataMovie.movie_trending)
-  const dataTvs = useSelector(state => state.datafilm.dataTv.tv_trending)
+  const dataMovies = useSelector(state => state.datafilm.dataMovie.movie_trending_day)
+  const dataTvs = useSelector(state => state.datafilm.dataTv.tv_trending_day)
 
   const params = useParams()
-  console.log(params)
 
-  // if(!data) return "loading...";
-
-  // const [data, setData] = useState([])
 
     const settings = {
         infinite: true,

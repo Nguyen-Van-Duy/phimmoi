@@ -84,6 +84,14 @@
     margin-bottom: 0.5rem;
 }
 
+.detail-content__button a {
+    color: #ddd;
+}
+
+.button:hover {
+    color: #fff;
+}
+
 .detail-content__genres span:last-child {
     margin-right: 0;
 }

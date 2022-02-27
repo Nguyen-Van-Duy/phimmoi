@@ -1,0 +1,52 @@
+.watch-movie__item {
+    height: 8.5rem;
+    background-color: rgba(71, 71, 71, 0.2);
+    list-style: none;
+    margin-bottom: 1rem;
+    display: flex;
+    cursor: pointer;
+    color: rgb(240, 240, 240);
+}
+
+
+.season-active,
+/* .watch-movie__item:hover .watch-movie__image, */
+.watch-movie__item:hover {
+    /* transform: scale(1.1); */
+    background-color: rgba(124, 124, 124, 0.4);
+    color: yellow;
+}
+
+.watch-movie__image {
+    max-width: 15rem;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.image-tv {
+    width: 7rem;
+}
+
+.watch-movie__info {
+    display: flex;
+    align-items: center;
+}
+
+.watch-movie__name {
+    font-size: 1.6rem;
+    margin-left: 1rem;
+}
+
+@media (max-width: 768px) {
+    .watch-movie__item {
+        height: 7rem;
+    }
+    .watch-movie__image {
+        width: 12rem;
+    }
+    .image-tv {
+        width: 6.5rem;
+    }
+    
+}

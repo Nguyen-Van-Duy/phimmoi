@@ -9,6 +9,7 @@
 
 .content-item__link {
   color: rgb(233, 230, 230);
+  /* margin-right: 2rem; */
 }
 
 .content-item__content {

@@ -42,7 +42,7 @@ const ProfileCast = () => {
         <BoxModal title="Profile" closeModal={toggleShowProfile}>
             {dataInfoCast && <div className="profile-cast">
                 <div className="cast-info__img">
-                    <img src={apiConfig.w500Image(dataInfoCast.profile_path)} alt={dataInfoCast.name} title={dataInfoCast.name} />
+                    <img src={dataInfoCast.profile_path ? apiConfig.w500Image(dataInfoCast.profile_path) : apiConfig.backupPhoto} alt={dataInfoCast.name} title={dataInfoCast.name} />
                 </div>
                 <div className="profile-cast__info">
                     <p>Name: <span>{dataInfoCast.name}</span></p>

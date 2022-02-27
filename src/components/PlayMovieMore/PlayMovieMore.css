@@ -1,0 +1,27 @@
+.watch-movie__container {
+    width: 100%;
+}
+
+.watch-movie__title {
+    font-size: 2rem;
+    color: white;
+    margin: 0;
+    height: 4rem;
+    display: flex;
+    align-items: center;
+}
+
+.watch-movie__list {
+    padding: 0;
+    overflow: auto;
+    max-height: calc(100vh - 14rem);
+}
+
+.watch-movie__list::-webkit-scrollbar {
+    width: 6px;
+    background-color: #F5F5F5;
+} 
+
+.watch-movie__list::-webkit-scrollbar-thumb {
+    background-color: #494949;
+}

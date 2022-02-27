@@ -18,7 +18,7 @@ const Similar = () => {
     return (
         <div>
             {/* show movies */}
-            <MovieList dataFilm={dataSimilar} titleFilm="Similar" category={params.category} />
+            <MovieList dataFilm={dataSimilar} titleFilm="Similar" category={params.category} type="similar" />
         </div>
     );
 };

@@ -23,6 +23,17 @@
   border: 1px solid rgb(251, 250, 250);
 }
 
+.search__container {
+  max-height: 70vh;
+  width:  65rem;
+  max-width: 120rem;
+  position: absolute;
+  border: 1px solid rgb(251, 250, 250);
+  top: 6rem;
+  right: 5rem;
+  border-radius: 1rem;
+}
+
 .search-mobile {
   width: 34px;
   height: 34px;
@@ -48,7 +59,6 @@
   background-color: rgb(20, 20, 20);
 
 }
-
 
 /* .btn-search:focus ~ .form-search .input-search {
   width: 40rem;

@@ -20,7 +20,7 @@ const PaticipantItem = ({ item }) => {
       <div className="content-item__link">
         <div className="content-item__content paticipant-content">
           <div className="paticipant-img">
-              <img src={apiConfig.w200Image(item.profile_path)} alt={item.name} title={item.name} />
+              <img src={item.profile_path ? apiConfig.w200Image(item.profile_path) : apiConfig.backupPhoto} alt={item.name} title={item.name} />
           </div>
           <div className="paticipant-info">
               <p>{item.name}</p>

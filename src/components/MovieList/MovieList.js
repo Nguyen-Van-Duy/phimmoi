@@ -1,10 +1,11 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import Slider from "react-slick";
 import NextArrow from "../Banner/NextArrow";
 import PrevArrow from "../Banner/PrevArrow";
 import MovieItem from "./MovieItem";
 
-const MovieList = ({dataFilm, titleFilm, category}) => {
+const MovieList = ({dataFilm, titleFilm, category, type}) => {
   
   const settings = {
     dots: false,
@@ -68,7 +69,9 @@ const MovieList = ({dataFilm, titleFilm, category}) => {
     <div className="movie-list">
       <div className="movie-list__header">
         <span className="movie-list__title">{titleFilm}</span>
-        <span className="movie-list__more">View More</span>
+        {type !== 'similar' && <Link to={`/${category}/${type}/view`} className="movie-list__link">
+          <span className="movie-list__more">View More</span>
+        </Link>}
       </div>
       <Slider {...settings}>
         {dataFilm.map((item, index) => (

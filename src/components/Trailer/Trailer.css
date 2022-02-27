@@ -19,7 +19,7 @@
     z-index: 12;
     border-radius: 1rem;
     padding: 0 1.5rem;
-    animation: move1 1s ease-in-out;
+    animation: move1 0.4s ease-in-out;
 
 }
 

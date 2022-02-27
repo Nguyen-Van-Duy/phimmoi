@@ -1,0 +1,8 @@
+.movie-list__episode {
+    /* margin-top: -0.5rem; */
+    padding-left: 2rem;
+}
+
+.show-episode {
+    display: none;
+}

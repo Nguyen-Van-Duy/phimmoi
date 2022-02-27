@@ -75,6 +75,7 @@ const Header = () => {
           </ul>
         </nav>
         <Search search={onSearch} onSearch={toggleSearch} />
+        {/* <SearchData /> */}
       </div>
     </header>
   );

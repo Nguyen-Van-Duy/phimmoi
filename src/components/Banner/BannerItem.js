@@ -5,6 +5,14 @@ import Loading from "../Loading";
 import "./BannerItem.css";
 
 const BannerItem = ({ item, category}) => {
+
+  let pathUrl
+  if(category === 'movie') {
+    pathUrl = `/${category}/${item.id}/watch`
+  } else {
+    pathUrl = `/${category}/${item.id}/watch/season/1/esp/1`
+  }
+
   return (
     <>
     {item ? <div
@@ -21,9 +29,11 @@ const BannerItem = ({ item, category}) => {
         </p>
         <br />
         <div className="banner__button">
-          <span className="button red">
-            <i className="fas fa-play-circle"></i>Play Now
-          </span>
+          <Link to={pathUrl} className="content-item__link mr-2">
+            <span className="button red">
+              <i className="fas fa-play-circle"></i>Play Now
+            </span>
+          </Link>
           <Link to={`/${category}/${item.id}`} className="content-item__link">
             <span className="button blue">
               <i className="fas fa-info-circle"></i>More Info

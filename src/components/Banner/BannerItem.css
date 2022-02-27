@@ -58,6 +58,10 @@
     margin: 3rem;
 }
 
+.mr-2 {
+    margin-right: 2rem;
+}
+
 @media (max-width: 1024px) {
 
 }
