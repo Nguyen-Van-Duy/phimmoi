@@ -11,7 +11,8 @@
 .input-search {
   height: 34px;
   width: 100%;
-  border-radius: 17px;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
   border-style: none;
   outline: none;
   transition: all 0.25s ease-in-out;
@@ -45,20 +46,24 @@
 }
 
 .btn-search {
-  position: absolute;
+  /* position: absolute; */
   padding: 0 1.5rem;
   cursor: pointer;
+  height: 100%;
   height: 34px;
-  border-radius: 50px;
+  /* border-radius: 8px; */
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
   border-style: none;
   outline: none;
   border: 1px solid rgb(251, 250, 250);
-  right: 0;
+  /* right: 0; */
   font-weight: 500;
   color: #fff;
   background-color: rgb(20, 20, 20);
-
 }
+
+
 
 /* .btn-search:focus ~ .form-search .input-search {
   width: 40rem;
@@ -78,23 +83,22 @@
     width: 100%;
     transition: all 0.25s ease-in-out;
     z-index: -1;
-
-  }
-  .btn-search {
-    border-radius: 8px;
-  }
-  .input-search {
-      border-radius: 8px;
-      width: 100%;
-      background-color: rgba(0, 0, 0, 0.8);
   }
   .show-search {
     animation: showSearch 0.25s ease-in-out;
     opacity: 1;
     top: 6rem;
-    z-index: 101;
-
-}
+    z-index: 1000;
+  }
+  .btn-search {
+    /* border-radius: 8px; */
+  }
+  .input-search {
+      /* border-radius: 8px; */
+      width: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+  }
+  
   .search-mobile {
     display: block;
   }

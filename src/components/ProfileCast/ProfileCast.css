@@ -7,11 +7,20 @@
     color: #fff;
     font-weight: 300;
     overflow: auto;
-    max-height: 60rem;
+    max-height: calc(100vh - 10rem);
 }
 
-.profile-cast::-webkit-scrollbar { 
+/* .profile-cast::-webkit-scrollbar { 
     display: none; 
+} */
+
+.profile-cast::-webkit-scrollbar {
+    width: 6px;
+    background-color: #818181;
+} 
+
+.profile-cast::-webkit-scrollbar-thumb {
+    background-color: #494949;
 }
 
 .cast-info__img {

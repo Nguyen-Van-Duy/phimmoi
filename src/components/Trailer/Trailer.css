@@ -13,7 +13,7 @@
     margin: 4rem 5rem;
     position: fixed;
     width: 80%;
-    max-height: 95%;
+    height: 95%;
     max-width: 80rem;
     background-color: #141414;
     z-index: 12;
@@ -53,7 +53,7 @@
     flex-wrap: wrap;
     justify-content: center;
     overflow: auto;
-    max-height: 60rem;
+    max-height: calc(100vh - 10rem);
     padding-bottom: 2rem;
     font-size: 1.8rem;
     min-height: 20rem;
@@ -65,8 +65,17 @@
     margin-bottom: 1.5rem;
 }
 
-.trailer-main::-webkit-scrollbar { 
+/* .trailer-main::-webkit-scrollbar { 
     display: none; 
+} */
+
+.trailer-main::-webkit-scrollbar {
+    width: 6px;
+    background-color: #6e6e6e;
+} 
+
+.trailer-main::-webkit-scrollbar-thumb {
+    background-color: #494949;
 }
 
 .trailer-item__title {

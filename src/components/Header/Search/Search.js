@@ -45,15 +45,16 @@ const Search = ({search, onSearch}) => {
         <i className="fas fa-search"></i>
       </button>
       <form className={`form-search ${search ? "show-search" : ""}`} onSubmit={handleSubmit}>
-        <button type="submit" className="btn-search">
-          Search
-        </button>
         <input
           ref={valueRef}
           type="text"
           className="input-search"
           placeholder="Enter movie name..."
         />
+        <input type="submit" className="btn-search" value="Search" />
+
+          {/* Search
+        </input> */}
       </form>
     </div>
   );
