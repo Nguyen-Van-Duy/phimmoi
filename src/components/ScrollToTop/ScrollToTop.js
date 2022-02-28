@@ -8,7 +8,7 @@ const ScrollToTop = () => {
     useEffect(() => {
         const fixedScroll = () => {
             if (
-                document.documentElement.scrollTop > 500
+                document.documentElement.scrollTop > 400
             ) {
                 scrollTop.current.classList.add('show-scroll-top');
             } else {

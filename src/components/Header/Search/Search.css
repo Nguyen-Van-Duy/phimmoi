@@ -92,6 +92,7 @@
     animation: showSearch 0.25s ease-in-out;
     opacity: 1;
     top: 6rem;
+    z-index: 101;
 
 }
   .search-mobile {

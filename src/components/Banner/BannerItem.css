@@ -68,7 +68,7 @@
 
 @media (max-width: 768px) {
     .banner__container {
-        height: 60vh;
+        height: 100vh;
     }
     .banner__content {
         margin: 0 1rem;
