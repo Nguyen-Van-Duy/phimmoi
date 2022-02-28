@@ -13,10 +13,10 @@
     margin: 4rem 5rem;
     position: fixed;
     width: 80%;
-    height: 95%;
+    /* height: 95vh; */
     max-width: 80rem;
     background-color: #141414;
-    z-index: 12;
+    z-index: 1000;
     border-radius: 1rem;
     padding: 0 1.5rem;
     animation: move1 0.4s ease-in-out;
@@ -53,10 +53,12 @@
     flex-wrap: wrap;
     justify-content: center;
     overflow: auto;
-    max-height: calc(100vh - 10rem);
+    max-height: calc(80vh);
     padding-bottom: 2rem;
     font-size: 1.8rem;
     min-height: 20rem;
+    height: 100%;
+    /* max-height: 80%; */
 }
 
 .trailer-item {

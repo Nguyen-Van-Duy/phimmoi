@@ -7,7 +7,7 @@
     color: #fff;
     font-weight: 300;
     overflow: auto;
-    max-height: calc(100vh - 10rem);
+    max-height: calc(80vh);
 }
 
 /* .profile-cast::-webkit-scrollbar { 
@@ -25,12 +25,14 @@
 
 .cast-info__img {
     width: 23rem;
+    max-height: 34rem;
     margin-bottom: 1rem;
 }
 
 .cast-info__img img {
     width: 100%;
     width: 23rem;
+    max-height: 34rem;
 }
 
 .profile-cast__info {
