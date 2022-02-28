@@ -7,12 +7,10 @@ import './Paticipants.css';
 
 const Paticipants = ({paticipants}) => {
 
-    console.log(paticipants)
-
     const settings = {
         dots: false,
         infinite: true,
-        // autoplay: true,
+        autoplay: true,
         // centerMode: true,
         speed: 700,
         slidesToShow: 4,

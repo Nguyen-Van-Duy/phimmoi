@@ -31,15 +31,6 @@ const Banner = ({category}) => {
         prevArrow: <PrevArrow />,
     };
 
-    // useEffect(() => {
-    //   const fetch = async () => {
-    //     const result = await dataMovie('movie', 'now_playing')
-    //     setData(result);
-    //     console.log(result)
-    //   }
-    //   fetch()
-    // }, [])
-
   return (
     <section className="banner">
       <div>

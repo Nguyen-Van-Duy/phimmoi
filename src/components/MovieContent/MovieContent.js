@@ -10,7 +10,7 @@ const MovieContent = ({dataFilm, titleFilm, category}) => {
     const settings = {
         dots: false,
         infinite: true,
-        // autoplay: true,
+        autoplay: true,
         // centerMode: true,
         speed: 700,
         slidesToShow: 4,

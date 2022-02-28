@@ -32,7 +32,6 @@ const ProfileCast = () => {
     useEffect(() => {
         const fetchDataInfoCast = async () => {
             const data = await infoCast(castId)
-            console.log(data)
             setDataInfoCast(data)
         }
         fetchDataInfoCast()

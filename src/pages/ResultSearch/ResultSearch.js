@@ -10,13 +10,11 @@ const ResultSearch = () => {
     const [page, setPage] = useState(1)
     const [totalResults, setTotalResults] = useState(0)
     const [totalPage, setTotalPage] = useState(0)
-    // const keyword = useSelector(state => state.datafilm.keyword)
 
     const handlePage = () => {
         setPage(page + 1)
         const fetchDataSearch = async () => {
             const data = await dataSearch(params.keyword, page + 1)
-            console.log(data)
             setDataFilm(d => [...d,...data.results])
         }
         fetchDataSearch()

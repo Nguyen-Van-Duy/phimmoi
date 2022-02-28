@@ -27,6 +27,14 @@
     cursor: pointer;
 }
 
+.footer__list h2 {
+    cursor: pointer;
+}
+
+.footer__list h2:hover {
+    color:yellow;
+}
+
 .footer__list li:hover {
     color: yellow;
 }

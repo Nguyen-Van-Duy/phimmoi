@@ -11,7 +11,6 @@ const TvSeasonItem = ({item, category}) => {
     const navigate = useNavigate()
     const [listEsp, setListEsp] = useState([])
     const [showEpisode, setShowEpisode] = useState(true)
-    console.log(item,listEsp)
 
     const handleWatchEpisode = (episode) => {
         if(episode.toString() === params.esp) {

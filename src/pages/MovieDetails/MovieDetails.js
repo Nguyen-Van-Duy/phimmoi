@@ -23,8 +23,6 @@ const MovieDetails = () => {
     const showProfileCast = useSelector( state => state.profileCast.isShowProfile)
     const params = useParams()
     const dispatch = useDispatch()
-    console.log(showProfileCast)
-    console.log(dataDetails, listCrew)
 
     const toggleShowProfile = () => {
         dispatch(handleShowProfileCast.handleShowProfile())

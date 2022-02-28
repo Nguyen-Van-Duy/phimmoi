@@ -14,7 +14,6 @@ const Trailer = ({closeTrailer, category, id}) => {
     useEffect(() => {
         const fetchDataTrailer = async () => {
             const data = await listTrailer(category, id);
-            console.log(data.results);
             setDataTrailer(data.results)
         }
         fetchDataTrailer()

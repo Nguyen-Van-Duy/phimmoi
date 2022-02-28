@@ -16,7 +16,6 @@ const Search = ({search, onSearch}) => {
     // const fetchDataSearch = async (value) => {
     //   if(value.length > 2) {
     //     const result = await dataSearch(value);
-    //     console.log(result, value)
     //     dispatch(dataFilmAction.handleSearch(result))
     //   } else {
     //     dispatch(dataFilmAction.handleSearch([]))
@@ -36,7 +35,6 @@ const Search = ({search, onSearch}) => {
     const searchValue = valueRef.current.value;
     if (searchValue.length > 1) {
       dispatch(dataFilmAction.handleKeyword(searchValue))
-      console.log(searchValue)
       navigate(`/results/${searchValue}`)
     }
   };

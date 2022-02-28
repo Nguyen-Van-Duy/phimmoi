@@ -9,7 +9,6 @@ const ViewMore = () => {
     const [dataFilm, setDataFilm] = useState([])
     const [page, setPage] = useState(1)
     const params = useParams()
-    console.log(params)
 
     let title
     if(params.category === 'movie') {
@@ -30,7 +29,6 @@ const ViewMore = () => {
             } else {
                 data = await dataMovie(params.category, params.type, page)
             }
-            console.log(data)
             setDataFilm(d => [...d, ...data])
         }
         fetchDataFilm()

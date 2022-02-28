@@ -5,7 +5,6 @@ import './Search.css'
 const SearchData = () => {
 
     const dataSearch = useSelector(state => state.datafilm.keyword)
-    console.log(dataSearch)
     
     return (
         <div className="search__container">

@@ -11,12 +11,10 @@ const PlayMovieMore = ({dataFilm}) => {
     const [dataMovie, setDataMovie] = useState([])
 
     const params = useParams()
-    // console.log(dataMovie, dataFilm)
 
     useEffect(() => {
         const fetchData = async () => {
             const data = await trending(params.category, 'day')
-            // console.log(data)
             setDataMovie(data)
         }
         fetchData()

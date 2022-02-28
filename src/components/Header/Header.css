@@ -37,6 +37,10 @@
     margin: 0;
 }
 
+.header__logo:hover {
+    color: yellow;
+}
+
 .header__menu-list {
     padding: 0;
     margin: 0;

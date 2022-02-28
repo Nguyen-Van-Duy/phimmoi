@@ -11,7 +11,6 @@ const WatchMovie = () => {
 
     const params = useParams()
     const [dataFilm, setDataFim] = useState({})
-    // console.log(params, dataFilm)
 
     useEffect(() => {
         const fetchData = async () => {
