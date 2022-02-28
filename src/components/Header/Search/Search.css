@@ -84,19 +84,19 @@
     transition: all 0.25s ease-in-out;
     z-index: -1;
   }
-  .show-search {
+  .form-search.show-search {
     animation: showSearch 0.25s ease-in-out;
     opacity: 1;
     top: 6rem;
     z-index: 1000;
   }
   .btn-search {
-    /* border-radius: 8px; */
+    background-color: rgba(0, 0, 0, 1);
   }
   .input-search {
       /* border-radius: 8px; */
       width: 100%;
-      background-color: rgba(0, 0, 0, 0.8);
+      background-color: rgba(0, 0, 0, 1);
   }
   
   .search-mobile {
