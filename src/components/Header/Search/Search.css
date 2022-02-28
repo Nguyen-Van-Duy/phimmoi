@@ -81,7 +81,7 @@
     opacity: 0;
     /* display: none; */
     width: 100%;
-    transition: all 0.25s ease-in-out;
+    /* transition: all 0.25s ease-in-out; */
     z-index: -1;
   }
   .form-search.show-search {

@@ -1,15 +1,16 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 // import { dataSearch } from "../../../API/MoviesApi";
 import { dataFilmAction } from "../../../store/dataFilmSlice";
 import "./Search.css";
 
-const Search = ({search, onSearch}) => {
+const Search = (props) => {
   const valueRef = useRef(null);
   // const valueInputRef = useRef();
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const [search, setSearch] = useState(false)
 
   // const handleValueInput = e => {
 
@@ -30,6 +31,10 @@ const Search = ({search, onSearch}) => {
     // }, 500)
   // }
 
+  const handleShowSearch = () => {
+    setSearch(!search)
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const searchValue = valueRef.current.value;
@@ -41,7 +46,7 @@ const Search = ({search, onSearch}) => {
 
   return (
     <div className="search-box">
-      <button className="search-mobile" onClick={() => onSearch()}>
+      <button className="search-mobile" onClick={() => handleShowSearch()}>
         <i className="fas fa-search"></i>
       </button>
       <form className={`form-search ${search ? "show-search" : ""}`} onSubmit={handleSubmit}>
