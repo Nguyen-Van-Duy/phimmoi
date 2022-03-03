@@ -22,6 +22,11 @@
     overflow: hidden;
     cursor: pointer;
     transition: all 0.25s ease-in-out;
+    z-index: 1000;
+}
+
+.movie-item__content:hover {
+    color: red;
 }
 
 .movie-item__quanlity {
