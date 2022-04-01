@@ -22,6 +22,7 @@ const PaticipantItem = ({ item }) => {
         <div className="content-item__content paticipant-content">
           <div className="paticipant-img">
               <LazyLoadImage src={item.profile_path ? apiConfig.w200Image(item.profile_path) : apiConfig.backupPhoto}
+              height='100%'
               effect='black-and-white'
                alt={item.name} title={item.name} />
           </div>
