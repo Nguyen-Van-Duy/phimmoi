@@ -19,9 +19,9 @@
 
 .watch-movie__list::-webkit-scrollbar {
     width: 6px;
-    background-color: #F5F5F5;
+    background-color: #494949;
 } 
 
 .watch-movie__list::-webkit-scrollbar-thumb {
-    background-color: #494949;
+    background-color: #F5F5F5;
 }

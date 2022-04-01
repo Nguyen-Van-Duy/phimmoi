@@ -3,6 +3,7 @@ import './MovieItem.css';
 import "./MovieList.css";
 import apiConfig from '../../API/configApi';
 import { Link } from 'react-router-dom';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 const MovieItem = ({item, category}) => {
 
@@ -15,8 +16,9 @@ const MovieItem = ({item, category}) => {
         <div className="movie-item">
             <div className="movie-item__content">
                 <Link onClick={handleNotification} to={category !== 'person' ? `/${category}/${item.id}` : '#'} className="movie-item__link">
-                    <img className="movie-item__image" src={`${item.poster_path || item.backdrop_path ? apiConfig.w200Image(item.poster_path || item.backdrop_path
+                    <LazyLoadImage className="movie-item__image" src={`${item.poster_path || item.backdrop_path ? apiConfig.w200Image(item.poster_path || item.backdrop_path
                     ) : apiConfig.backupPhoto}` } 
+                    effect='black-and-white'
                     alt={item.title || item.name} height="150%" loading="lazy" />
                     <div className="movie-item__desc">
                         <span className="movie-item__name">{item.title || item.name}</span>

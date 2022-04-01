@@ -73,11 +73,11 @@
 
 .trailer-main::-webkit-scrollbar {
     width: 6px;
-    background-color: #6e6e6e;
+    background-color: #494949;
 } 
 
 .trailer-main::-webkit-scrollbar-thumb {
-    background-color: #494949;
+    background-color: #6e6e6e;
 }
 
 .trailer-item__title {

@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import apiConfig from "../../API/configApi";
 import { handleShowProfileCast } from "../../store/profileCastSlice";
 import "./PaticipantItem.css";
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 const PaticipantItem = ({ item }) => {
 
@@ -20,7 +21,9 @@ const PaticipantItem = ({ item }) => {
       <div className="content-item__link">
         <div className="content-item__content paticipant-content">
           <div className="paticipant-img">
-              <img src={item.profile_path ? apiConfig.w200Image(item.profile_path) : apiConfig.backupPhoto} alt={item.name} title={item.name} />
+              <LazyLoadImage src={item.profile_path ? apiConfig.w200Image(item.profile_path) : apiConfig.backupPhoto}
+              effect='black-and-white'
+               alt={item.name} title={item.name} />
           </div>
           <div className="paticipant-info">
               <p>{item.name}</p>

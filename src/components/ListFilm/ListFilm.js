@@ -34,19 +34,19 @@ const ListFilm = () => {
                 {params.category === "movie" && <div>
                     <MovieContent dataFilm={movie_upcoming} titleFilm="Movies" category={category.movie} />
                     <MovieList type="day" dataFilm={movie_trending_day} titleFilm="Movie Trending Day" category={category.movie} />
-                    <MovieList dataFilm={movie_trending} titleFilm="Movie Trending" category={category.movie} />
-                    <MovieList dataFilm={movie_top_rated} titleFilm="Movie Top Rated" category={category.movie} />
-                    <MovieList dataFilm={movie_popular} titleFilm="Movie Popular" category={category.movie} />
+                    <MovieList type="week" dataFilm={movie_trending} titleFilm="Movie Trending" category={category.movie} />
+                    <MovieList type="top_rated" dataFilm={movie_top_rated} titleFilm="Movie Top Rated" category={category.movie} />
+                    <MovieList type="popular" dataFilm={movie_popular} titleFilm="Movie Popular" category={category.movie} />
                 </div>}
 
                 {/* show tv  */}
                 {params.category === "tv" && <div>
                     <MovieContent dataFilm={tv_on_the_air} titleFilm="TV Shows" category={category.tv} />
                     <MovieList type="day" dataFilm={tv_trending_day} titleFilm="TV Trending Day" category={category.tv} />
-                    <MovieList dataFilm={tv_trending} titleFilm="TV Trending" category={category.tv} />
-                    <MovieList dataFilm={tv_top_rated} titleFilm="TV Top Rated" category={category.tv} />
-                    <MovieList dataFilm={tv_popular} titleFilm="TV Popular" category={category.tv} />
-                    <MovieList dataFilm={tv_on_the_air} titleFilm="TV On The Air" category={category.tv} />
+                    <MovieList type="week" dataFilm={tv_trending} titleFilm="TV Trending" category={category.tv} />
+                    <MovieList type="top_rated" dataFilm={tv_top_rated} titleFilm="TV Top Rated" category={category.tv} />
+                    <MovieList type="popular" dataFilm={tv_popular} titleFilm="TV Popular" category={category.tv} />
+                    <MovieList type="on_the_air" dataFilm={tv_on_the_air} titleFilm="TV On The Air" category={category.tv} />
                 </div>}
             </div>
         </div>

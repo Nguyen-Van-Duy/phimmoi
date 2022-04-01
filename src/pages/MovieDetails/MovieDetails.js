@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { handleShowProfileCast } from '../../store/profileCastSlice';
 import Loading from '../../components/Loading';
 import VoteAverage from '../../components/VoteAverage/VoteAverage';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 const MovieDetails = () => {
     const [dataDetails, setDAtaDetails] = useState({})
@@ -64,7 +65,8 @@ const MovieDetails = () => {
         style={{ backgroundImage: `url(${dataDetails.backdrop_path || dataDetails.poster_path ? apiConfig.originalImage(dataDetails.backdrop_path || dataDetails.poster_path): apiConfig.background})` }}>
             <div className="detail-container__content">
                 <div className="detail__image">
-                    <img src={dataDetails.poster_path || dataDetails.backdrop_path ? apiConfig.w500Image(dataDetails.poster_path || dataDetails.backdrop_path) : apiConfig.backupPhoto} 
+                    <LazyLoadImage src={dataDetails.poster_path || dataDetails.backdrop_path ? apiConfig.w500Image(dataDetails.poster_path || dataDetails.backdrop_path) : apiConfig.backupPhoto} 
+                    effect='black-and-white'
                     alt={dataDetails.title || dataDetails.name} />
                 </div>
                 <div className="detail-container__wrap">

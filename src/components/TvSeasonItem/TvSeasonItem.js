@@ -4,6 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import apiConfig from '../../API/configApi';
 import { movieSeasons } from '../../API/MoviesApi';
 import './TvSeasonItem.css';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 const TvSeasonItem = ({item, category}) => {
 
@@ -43,7 +44,8 @@ const TvSeasonItem = ({item, category}) => {
         <>
             <li className={`watch-movie__item ${params.season === item.season_number?.toString() && 'season-active'}`} 
             onClick={() => handleShowEpisode(item.season_number)}>
-                <img className={`watch-movie__image ${category === 'tv' && 'image-tv'}`}
+                <LazyLoadImage className={`watch-movie__image ${category === 'tv' && 'image-tv'}`}
+                effect='black-and-white'
                 src={item.backdrop_path || item.poster_path ? apiConfig.w300Image(item.backdrop_path || item.poster_path) : apiConfig.backupPhoto} 
                 alt="backdrop" />
                 <div className="watch-movie__info">
@@ -57,7 +59,8 @@ const TvSeasonItem = ({item, category}) => {
                     }
                     return <li key={id} onClick={() => handleWatchEpisode(data.episode_number)}
                     className={`watch-movie__item ${params.esp === data.episode_number?.toString() && 'season-active'}`}>
-                        <img className={`watch-movie__image`}
+                        <LazyLoadImage className={`watch-movie__image`}
+                        effect='black-and-white'
                         src={data.still_path || data.poster_path ? apiConfig.w300Image(data.still_path || data.poster_path) : apiConfig.background} 
                         alt="backdrop" />
                         <div className="watch-movie__info">

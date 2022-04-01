@@ -16,11 +16,12 @@
 
 .profile-cast::-webkit-scrollbar {
     width: 6px;
-    background-color: #818181;
+    background-color: #494949;
+
 } 
 
 .profile-cast::-webkit-scrollbar-thumb {
-    background-color: #494949;
+    background-color: #818181;
 }
 
 .cast-info__img {

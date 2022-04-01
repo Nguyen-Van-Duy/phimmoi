@@ -1,10 +1,12 @@
+import { useNavigate } from "react-router-dom";
 import "./Footer.css";
 
 const Footer = () => {
+  const navigate = useNavigate()
   return (
     <footer className="footer">
       <div className="container footer__container">
-      <div className="footer__list" onClick={() => window.scrollTo(0,0)}>
+      <div className="footer__list" onClick={() => navigate('/')}>
         <h2>DUY FILM</h2>
       </div>
       <div className="footer__list">
