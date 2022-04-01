@@ -19,7 +19,7 @@ const MovieItem = ({item, category}) => {
                     <LazyLoadImage className="movie-item__image" src={`${item.poster_path || item.backdrop_path ? apiConfig.w200Image(item.poster_path || item.backdrop_path
                     ) : apiConfig.backupPhoto}` } 
                     effect='black-and-white'
-                    alt={item.title || item.name} height="150%" loading="lazy" />
+                    alt={item.title || item.name} height="150%" width="100%" loading="lazy" />
                     <div className="movie-item__desc">
                         <span className="movie-item__name">{item.title || item.name}</span>
                         {/* <p className="movie-item__date">Note that the</p> */}
