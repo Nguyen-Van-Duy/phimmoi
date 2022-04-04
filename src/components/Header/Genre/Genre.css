@@ -1,0 +1,28 @@
+.header__menu-genre {
+    position: absolute;
+    top: 5rem;
+    max-width: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    padding-left: 2rem;
+    padding-bottom: 1rem;
+    margin-right: 5rem;
+    left: 5rem;
+}
+
+.list-genre {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.list-genre__title {
+    margin: 1rem;
+    color: yellow;
+}
+
+.list-genre__item {
+    list-style: none;
+    display: inline-block;
+    margin-right: 2rem;
+    width: 17rem;
+    padding: 0.5rem 0;
+}

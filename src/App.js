@@ -12,6 +12,7 @@ import Loading from "./components/Loading";
 import MovieDetails from "./pages/MovieDetails/MovieDetails";
 import Movie from "./pages/Movies/Movie";
 import ViewMore from "./pages/ViewMore/ViewMore";
+import ViewGenre from "./pages/ViewGenre/ViewMore";
 import ResultSearch from "./pages/ResultSearch/ResultSearch";
 import Watch from "./pages/Watch/Watch";
 
@@ -79,6 +80,10 @@ function App() {
           <Route
             path="/:category/:type/view"
             element={<ViewMore />}
+          />
+          <Route
+            path="/:category/genre/:id"
+            element={<ViewGenre />}
           />
           <Route
             path="/results/:keyword"

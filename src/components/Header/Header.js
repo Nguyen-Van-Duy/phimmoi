@@ -4,6 +4,7 @@ import Modal from "../Modal/Modal";
 import "./Header.css";
 import Search from "./Search/Search";
 import {category} from "../../API/MoviesApi";
+import Genre from "./Genre/Genre";
 
 const menu = [
   {
@@ -19,7 +20,7 @@ const menu = [
     path: `/${category.tv}`,
   },
   {
-    name: "New & Popular",
+    name: "Movie Genre",
     path: "/new-popular",
   },
 ];
@@ -65,14 +66,15 @@ const Header = () => {
           <ul className={`header__menu-list ${menuMobile ? "show-menu" : ""}`}>
             {menu.map((item, index) => (
               <li key={index} className="header__menu-item">
-                <NavLink
+                {item.name !== "Movie Genre" ? <NavLink
                   className="header__menu-link"
                   to={item.path}
                 >
                   {item.name}
-                </NavLink>
+                </NavLink>: <span className="header__menu-link">{item.name}</span>}
               </li>
             ))}
+            <Genre />
           </ul>
         </nav>
         <Search search={onSearch} onSearch={toggleSearch} />

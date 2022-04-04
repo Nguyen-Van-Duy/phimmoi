@@ -104,4 +104,17 @@ export const movieSeasons = async (id, season) => {
   const response = await axios.get(url);
   return response.data;
 };
+// https://api.themoviedb.org/3/genre/tv/list?api_key=04180240cb03c5637ab753d363c07d7b
+export const genreMovies = async (type) => {
+  const url = `${apiConfig.baseUrl}/genre/${type}/list?api_key=${apiConfig.apiKey}`;
+  const response = await axios.get(url);
+  return response.data;
+};
+// https://api.themoviedb.org/3/discover/tv?api_key=${api_key}&language=en-US&with_genres=10759
+
+export const viewGenreMovies = async (category, id) => {
+  const url = `${apiConfig.baseUrl}/discover/${category}?api_key=${apiConfig.apiKey}&with_genres=${id}`;
+  const response = await axios.get(url);
+  return response.data;
+};
 
