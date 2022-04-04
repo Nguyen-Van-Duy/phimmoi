@@ -24,36 +24,48 @@ function App() {
     const fetchDataFilm = async () => {
 
       // call data movie
-      const movie_trending = await trending("movie", "week")
       const movie_trending_day = await trending("movie", "day")
       const movie_now_playing = await dataMovie("movie", "now_playing")
+      const tv_trending_day = await trending("tv", "day")
+      
+      //dispatch data movie
+      dispatch(dataFilmAction.movie_trending_day(movie_trending_day))
+      dispatch(dataFilmAction.movie_now_play(movie_now_playing))
+      dispatch(dataFilmAction.tv_trending_day(tv_trending_day))
+      
+      setIsLoading(false)
+    }
+    fetchDataFilm()
+  }, [dispatch])
+
+  useEffect(() => {
+    const fetchDataFilm = async () => {
+
+      // call data movie
+      const movie_trending = await trending("movie", "week")
       const movie_upcoming = await dataMovie("movie", "upcoming")
       const movie_popular = await dataMovie("movie", "popular")
       const movie_top_rated = await dataMovie("movie", "top_rated")
 
       //call data tv
       const tv_trending = await trending("tv", "week")
-      const tv_trending_day = await trending("tv", "day")
       const tv_on_the_air = await dataMovie("tv", "on_the_air")
       const tv_popular = await dataMovie("tv", "popular")
       const tv_top_rated = await dataMovie("tv", "top_rated")
 
       //dispatch data movie
       dispatch(dataFilmAction.movie_trending(movie_trending))
-      dispatch(dataFilmAction.movie_trending_day(movie_trending_day))
-      dispatch(dataFilmAction.movie_now_play(movie_now_playing))
       dispatch(dataFilmAction.movie_top_rated(movie_top_rated))
       dispatch(dataFilmAction.movie_upcoming(movie_upcoming))
       dispatch(dataFilmAction.movie_popular(movie_popular))
 
       //dispatch data tv
       dispatch(dataFilmAction.tv_trending(tv_trending))
-      dispatch(dataFilmAction.tv_trending_day(tv_trending_day))
       dispatch(dataFilmAction.tv_on_the_air(tv_on_the_air))
       dispatch(dataFilmAction.tv_popular(tv_popular))
       dispatch(dataFilmAction.tv_top_rated(tv_top_rated))
 
-      setIsLoading(false)
+      // setIsLoading(false)
     }
     fetchDataFilm()
   }, [dispatch])
