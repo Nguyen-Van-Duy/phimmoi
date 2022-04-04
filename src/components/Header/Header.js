@@ -71,10 +71,12 @@ const Header = () => {
                   to={item.path}
                 >
                   {item.name}
-                </NavLink>: <span className="header__menu-link">{item.name}</span>}
+                </NavLink>: <span className="link__menu-genre">{item.name}
+                <div className="menu-genre__container"><Genre /></div></span>}
               </li>
             ))}
-            <Genre />
+            
+            
           </ul>
         </nav>
         <Search search={onSearch} onSearch={toggleSearch} />

@@ -112,8 +112,8 @@ export const genreMovies = async (type) => {
 };
 // https://api.themoviedb.org/3/discover/tv?api_key=${api_key}&language=en-US&with_genres=10759
 
-export const viewGenreMovies = async (category, id) => {
-  const url = `${apiConfig.baseUrl}/discover/${category}?api_key=${apiConfig.apiKey}&with_genres=${id}`;
+export const viewGenreMovies = async (category, id, page) => {
+  const url = `${apiConfig.baseUrl}/discover/${category}?api_key=${apiConfig.apiKey}&with_genres=${id}&page=${page}`;
   const response = await axios.get(url);
   return response.data;
 };

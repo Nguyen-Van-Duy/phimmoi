@@ -22,10 +22,10 @@ const Genre = () => {
         <div className="header__menu-genre">
             <div className="list-genre">
                 <h3 className="list-genre__title">Movie Genre</h3>
-                <ul>
+                <ul className="list-menu__genre">
                     {movieGenre.length > 0 && movieGenre?.map((item, id) => <li key={id} className="list-genre__item">
                         <NavLink
-                            className="header__menu-link"
+                            className="header__menu-link list__menu-link"
                             to={`/movie/genre/${item.id}/${item.name}`}
                             >
                             {item.name}
@@ -35,11 +35,11 @@ const Genre = () => {
             </div>
             <div className="list-genre">
                 <h3 className="list-genre__title">TV Genre</h3>
-                <ul>
+                <ul className="list-menu__genre">
                     {TVGenre.length > 0 && TVGenre?.map((item, id) => <li key={id} className="list-genre__item">
                     <NavLink
-                        className="header__menu-link"
-                        to={`/tv/genre/${item.id}`}
+                        className="header__menu-link list__menu-link"
+                        to={`/tv/genre/${item.id}/${item.name}`}
                         >
                         {item.name}
                     </NavLink>

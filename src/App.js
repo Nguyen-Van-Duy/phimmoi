@@ -82,7 +82,7 @@ function App() {
             element={<ViewMore />}
           />
           <Route
-            path="/:category/genre/:id"
+            path="/:category/genre/:id/:name"
             element={<ViewGenre />}
           />
           <Route

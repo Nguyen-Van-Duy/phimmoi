@@ -2,8 +2,8 @@ body {
   margin: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-image: url("https://i.pinimg.com/736x/43/2d/ab/432dab34007c9c6535313067a66530f7.jpg");
-  /* background-color: rgba(0, 0, 0, 1); */
+  /* background-image: url("https://i.pinimg.com/736x/43/2d/ab/432dab34007c9c6535313067a66530f7.jpg"); */
+  background-color: rgb(0, 0, 0);
 }
 
 code {
