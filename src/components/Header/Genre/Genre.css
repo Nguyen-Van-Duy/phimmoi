@@ -1,4 +1,3 @@
-
 .header__menu-genre {
     position: absolute;
     top: 5rem;
@@ -9,7 +8,20 @@
     margin-right: 5rem;
     left: 5rem;
     border-radius: 8px;
+    /* transition: all 0.2s ease-in-out;
+    animation: showMenuItem 0.5s ease-in-out; */
 }
+
+/* @keyframes showMenuItem {
+    0% {
+        opacity: 0;
+        transform: translateY(2rem);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+} */
 
 .list-genre {
     display: flex;

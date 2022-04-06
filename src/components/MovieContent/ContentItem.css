@@ -2,7 +2,9 @@
   position: relative;
   margin: 0 auto;
   max-width: 34rem;
-  margin: 0 1rem;
+  max-margin: 0 1rem;
+  padding: 0 1rem;
+  /* margin: 0 1rem; */
   transition: all 0.25s ease-in-out;
 
 }
@@ -128,5 +130,6 @@
   .content-item {
     margin: 0 1rem;
     max-width: 38rem;
+    padding: 0;
   }
 }
