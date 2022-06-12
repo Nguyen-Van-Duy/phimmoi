@@ -11,6 +11,7 @@ const Search = (props) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const [search, setSearch] = useState(false)
+  const [showSearch, setShowSearch] = useState(false)
 
   // const handleValueInput = e => {
 
@@ -33,6 +34,7 @@ const Search = (props) => {
 
   const handleShowSearch = () => {
     setSearch(!search)
+    setShowSearch(true)
   }
 
   const handleSubmit = (e) => {
@@ -46,21 +48,29 @@ const Search = (props) => {
 
   return (
     <div className="search-box">
-      <button className="search-mobile" onClick={() => handleShowSearch()}>
+      
+      <button className="search-mobile" onClick={handleShowSearch}>
         <i className="fas fa-search"></i>
       </button>
       <form className={`form-search ${search ? "show-search" : ""}`} onSubmit={handleSubmit}>
         <input
           ref={valueRef}
           type="text"
-          className="input-search"
+          className={`input-search ${showSearch ? "show-input-search" : ""}`}
           placeholder="Enter movie name..."
         />
-        <input type="submit" className="btn-search" value="Search" />
+        {/* <input type="submit" className="btn-search" value="Search" /> */}
 
           {/* Search
         </input> */}
+      {/* <div id="google_translate_element"></div> */}
       </form>
+      <button className="search-icon" onClick={()=>{
+        setShowSearch(!showSearch)
+        setSearch(false)
+      }}>
+        <i className="fas fa-search"></i>
+      </button>
     </div>
   );
 };

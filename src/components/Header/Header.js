@@ -5,6 +5,7 @@ import "./Header.css";
 import Search from "./Search/Search";
 import {category} from "../../API/MoviesApi";
 import Genre from "./Genre/Genre";
+import Login from "./Login/Login";
 
 const menu = [
   {
@@ -28,6 +29,8 @@ const menu = [
 const Header = () => {
   const [menuMobile, setMenuMobile] = useState(false)
   const [onSearch, setOnSearch] = useState(false)
+  const [showLanguage, setShowLanguage] = useState(false)
+  const [showFeature, setShowFeature] = useState(false)
   const headerRef = useRef(null)
   const navigate = useNavigate()
 
@@ -39,6 +42,11 @@ const Header = () => {
   const toggleSearch = () => {
     setOnSearch(!onSearch)
     setMenuMobile(false)
+  }
+
+  const handleShowLanguage = ()=> {
+    setShowLanguage(!showLanguage)
+    setShowFeature(!showFeature)
   }
 
   useEffect(() => {
@@ -79,7 +87,16 @@ const Header = () => {
             
           </ul>
         </nav>
-        <Search search={onSearch} onSearch={toggleSearch} />
+        <ul className="header-list__feature">
+          <li className="feature__item">
+             <Search search={onSearch} onSearch={toggleSearch} showFeature={showFeature} />
+          </li>
+          <li className="feature__item header-list__feature">
+            <div id="google_translate_element" className={showLanguage? "show-language": ""}></div>
+            <i onClick={handleShowLanguage} className="fa-solid fa-earth-americas"></i>
+          </li>
+          <li className="feature__item"><Login /></li>
+        </ul>
         {/* <SearchData /> */}
       </div>
     </header>

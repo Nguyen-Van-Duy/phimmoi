@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import {useParams } from 'react-router-dom';
 import { dataSearch } from '../../API/MoviesApi';
 import MovieItem from '../../components/MovieList/MovieItem';
+import '../../components/MovieList/MovieList.css';
+import '../ViewMore/ViewMore.css';
 
 const ResultSearch = () => {
 

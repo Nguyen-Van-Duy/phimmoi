@@ -23,6 +23,8 @@ const ViewMore = () => {
         setPage(page + 1)
     }
 
+    useEffect(() => {window.scrollTo(0, 0)}, [])
+
     useEffect(() => {
         const fetchDataFilm = async () => {
             let data

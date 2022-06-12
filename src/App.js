@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import "./App.css";
-import { useEffect, useState } from "react";
+import React,{ useEffect, useState } from "react";
 import Header from "./components/Header/Header";
 import Home from "./pages/Home/Home";
 import { dataMovie, trending } from "./API/MoviesApi";
@@ -9,12 +9,17 @@ import { dataFilmAction } from "./store/dataFilmSlice";
 import Footer from "./components/Footer/Footer";
 import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
 import Loading from "./components/Loading";
-import MovieDetails from "./pages/MovieDetails/MovieDetails";
-import Movie from "./pages/Movies/Movie";
-import ViewMore from "./pages/ViewMore/ViewMore";
-import ViewGenre from "./pages/ViewGenre/ViewMore";
-import ResultSearch from "./pages/ResultSearch/ResultSearch";
-import Watch from "./pages/Watch/Watch";
+// import MovieDetails from "./pages/MovieDetails/MovieDetails";
+// import ViewMore from "./pages/ViewMore/ViewMore";
+// import ViewGenre from "./pages/ViewGenre/ViewMore";
+// import ResultSearch from "./pages/ResultSearch/ResultSearch";
+// import Watch from "./pages/Watch/Watch";
+const Movie = React.lazy(()=>import("./pages/Movies/Movie"));
+const MovieDetails = React.lazy(()=>import("./pages/MovieDetails/MovieDetails"));
+const ViewMore = React.lazy(()=>import("./pages/ViewMore/ViewMore"));
+const ViewGenre = React.lazy(()=>import("./pages/ViewGenre/ViewMore"));
+const ResultSearch = React.lazy(()=>import("./pages/ResultSearch/ResultSearch"));
+const Watch = React.lazy(()=>import("./pages/Watch/Watch"));
 
 function App() {
   const [isLoading, setIsLoading] = useState(true)
@@ -79,7 +84,7 @@ function App() {
           
           <Route
             path="/:category"
-            element={<Movie />}
+            element={<React.Suspense fallback={<div className="loading"><Loading /></div>}><Movie /></React.Suspense>}
           />
           <Route
             path="/new-popular"
@@ -87,22 +92,22 @@ function App() {
           />
           <Route
             path="/:category/:id"
-            element={<MovieDetails />}
+            element={<React.Suspense fallback={<div className="loading"><Loading /></div>}><MovieDetails /></React.Suspense>}
           />
           <Route
             path="/:category/:type/view"
-            element={<ViewMore />}
+            element={<React.Suspense fallback={<div className="loading"><Loading /></div>}><ViewMore /></React.Suspense>}
           />
           <Route
             path="/:category/genre/:id/:name"
-            element={<ViewGenre />}
+            element={<React.Suspense fallback={<div className="loading"><Loading /></div>}><ViewGenre /></React.Suspense>}
           />
           <Route
             path="/results/:keyword"
-            element={<ResultSearch />}
+            element={<React.Suspense fallback={<div className="loading"><Loading /></div>}><ResultSearch /></React.Suspense>}
           />
-          <Route path="/:category/:id/watch" element={<Watch />} />
-          <Route path="/:category/:id/watch/season/:season/esp/:esp" element={<Watch />} />
+          <Route path="/:category/:id/watch" element={<React.Suspense fallback={<div className="loading"><Loading /></div>}><Watch /></React.Suspense>} />
+          <Route path="/:category/:id/watch/season/:season/esp/:esp" element={<React.Suspense fallback={<div className="loading"><Loading /></div>}><Watch /></React.Suspense>} />
         </Routes>}
         {isLoading && <div className="loading"><Loading /></div>}
       </main>
