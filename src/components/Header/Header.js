@@ -92,8 +92,8 @@ const Header = () => {
              <Search search={onSearch} onSearch={toggleSearch} showFeature={showFeature} />
           </li>
           <li className="feature__item header-list__feature">
-            <div id="google_translate_element" className={showLanguage? "show-language": ""}></div>
-            <i onClick={handleShowLanguage} className="fa-solid fa-earth-americas"></i>
+            <div id="google_translate_element" className={!showLanguage? "show-language": ""}></div>
+            <i onClick={handleShowLanguage} style={{fontSize: "2rem"}}  className="fa-solid fa-earth-americas"></i>
           </li>
           <li className="feature__item"><Login /></li>
         </ul>
