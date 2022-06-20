@@ -42,11 +42,21 @@ const Header = () => {
   const toggleSearch = () => {
     setOnSearch(!onSearch)
     setMenuMobile(false)
+    setShowLanguage(false)
+    setShowFeature(false)
+  }
+
+  const handleShowSearch = () => {
+    setShowFeature(!showFeature)
+    setOnSearch(true)
+    
   }
 
   const handleShowLanguage = ()=> {
+    setOnSearch(false)
     setShowLanguage(!showLanguage)
-    setShowFeature(!showFeature)
+    setShowFeature(false)
+    // setOnSearch(false)
   }
 
   useEffect(() => {
@@ -89,7 +99,7 @@ const Header = () => {
         </nav>
         <ul className="header-list__feature">
           <li className="feature__item">
-             <Search search={onSearch} onSearch={toggleSearch} showFeature={showFeature} />
+             <Search searchValue={onSearch} onSearch={toggleSearch} handleShowSearch={handleShowSearch} showFeature={showFeature} />
           </li>
           <li className="feature__item header-list__feature">
             <div id="google_translate_element" className={!showLanguage? "show-language": ""}></div>

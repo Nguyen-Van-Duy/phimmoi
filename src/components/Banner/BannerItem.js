@@ -22,7 +22,7 @@ const BannerItem = ({ item, category}) => {
       <div className="banner__content">
         <h2 className="banner__heading">{item.title || item.name} </h2>
         <p className="banner__desc">
-           {item.vote_average}/10<span className="banner__date">{item.release_date}</span>
+           {item.vote_average}/10<span className="banner__date">{item.release_date || item.first_air_date}</span>
         </p>
         <p className="banner__desc">
           {item.overview}

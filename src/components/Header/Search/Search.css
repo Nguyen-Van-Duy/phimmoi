@@ -92,7 +92,10 @@
   width: 40rem;
 } */
 
-@media (max-width: 1065px) {
+@media (max-width: 1200px) {
+  .input-search.show-input-search {
+    margin-right: 0;
+  }
   .form-search {
     position: fixed;
     left: 0;

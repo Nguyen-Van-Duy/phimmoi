@@ -1,17 +1,15 @@
-import React, { useRef, useState } from "react";
+import React, { useRef} from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 // import { dataSearch } from "../../../API/MoviesApi";
 import { dataFilmAction } from "../../../store/dataFilmSlice";
 import "./Search.css";
 
-const Search = (props) => {
+const Search = ({searchValue, onSearch, showFeature, handleShowSearch }) => {
   const valueRef = useRef(null);
   // const valueInputRef = useRef();
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const [search, setSearch] = useState(false)
-  const [showSearch, setShowSearch] = useState(false)
 
   // const handleValueInput = e => {
 
@@ -32,10 +30,10 @@ const Search = (props) => {
     // }, 500)
   // }
 
-  const handleShowSearch = () => {
-    setSearch(!search)
-    setShowSearch(true)
-  }
+  // const handleShowSearch = () => {
+  //   setSearch(!search)
+  //   // setShowSearch(true)
+  // }
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -52,23 +50,19 @@ const Search = (props) => {
       <button className="search-mobile" onClick={handleShowSearch}>
         <i className="fas fa-search"></i>
       </button>
-      <form className={`form-search ${search ? "show-search" : ""}`} onSubmit={handleSubmit}>
+      <form className={`form-search ${showFeature ? "show-search" : ""}`} onSubmit={handleSubmit}>
         <input
           ref={valueRef}
           type="text"
-          className={`input-search ${showSearch ? "show-input-search" : ""}`}
+          className={`input-search ${searchValue ? "show-input-search" : ""}`}
           placeholder="Enter movie name..."
         />
         {/* <input type="submit" className="btn-search" value="Search" /> */}
-
           {/* Search
         </input> */}
       {/* <div id="google_translate_element"></div> */}
       </form>
-      <button className="search-icon" onClick={()=>{
-        setShowSearch(!showSearch)
-        setSearch(false)
-      }}>
+      <button className="search-icon" onClick={()=>{onSearch()}}>
         <i className="fas fa-search"></i>
       </button>
     </div>
