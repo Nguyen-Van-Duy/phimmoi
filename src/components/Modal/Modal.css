@@ -14,7 +14,7 @@
 
 .show-modal {
     /* background-color: rgba(0, 0, 0, 0.7); */
-    z-index: 12;
+    z-index: 1001;
     width: 100%;
 }
 

@@ -6,6 +6,8 @@ import Search from "./Search/Search";
 import {category} from "../../API/MoviesApi";
 import Genre from "./Genre/Genre";
 import Login from "./Login/Login";
+import './Login/Login.css'
+// import BoxModal from "../BoxModal/BoxModal";
 
 const menu = [
   {
@@ -31,6 +33,7 @@ const Header = () => {
   const [onSearch, setOnSearch] = useState(false)
   const [showLanguage, setShowLanguage] = useState(false)
   const [showFeature, setShowFeature] = useState(false)
+  const [showModal, setShowModal] = useState(false)
   const headerRef = useRef(null)
   const navigate = useNavigate()
 
@@ -59,6 +62,10 @@ const Header = () => {
     // setOnSearch(false)
   }
 
+  const handleShowModal = () => {
+    setShowModal(!showModal)
+  }
+
   useEffect(() => {
     const fixedHeader = () => {
       if(window.scrollY > 80 & document.documentElement.scrollTop > 80) {
@@ -75,6 +82,7 @@ const Header = () => {
   }, [])
 
   return (
+    <>
     <header className="header" ref={headerRef}>
       <div onClick={toggleMenu}><Modal showModal={menuMobile} /></div>
       <div className="container">
@@ -105,11 +113,14 @@ const Header = () => {
             <div id="google_translate_element" className={!showLanguage? "show-language": ""}></div>
             <i onClick={handleShowLanguage} style={{fontSize: "2rem"}}  className="fa-solid fa-earth-americas"></i>
           </li>
-          <li className="feature__item"><Login /></li>
+          <li className="feature__item" onClick={handleShowModal}><span className="login-botton">Login</span></li>
+          <div onClick={()=>setShowModal(!showModal)}><Modal showModal={showModal} /></div>
         </ul>
         {/* <SearchData /> */}
       </div>
     </header>
+    {showModal && <Login closeModal={handleShowModal} />}
+  </>
   );
 };
 

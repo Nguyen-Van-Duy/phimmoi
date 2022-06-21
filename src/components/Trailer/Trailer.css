@@ -16,10 +16,10 @@
     /* height: 95vh; */
     max-width: 80rem;
     background-color: #141414;
-    z-index: 1000;
+    z-index: 1002;
     border-radius: 1rem;
     padding: 0 1.5rem;
-    animation: move1 0.4s ease-in-out;
+    animation: moveup 0.4s ease-in-out;
 
 }
 
@@ -103,7 +103,7 @@
     }
 }
 
-@keyframes move1 {
+@keyframes moveup {
     0% {
       transform: translateY(4rem);
       opacity: 0;
