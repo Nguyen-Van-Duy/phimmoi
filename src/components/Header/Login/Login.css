@@ -12,7 +12,7 @@
 }
 
 .trailer-content.box-login__content {
-    max-width:525px;
+    max-width:450px;
     padding: 0;
 }
 
@@ -24,8 +24,8 @@
 .login-wrap{
 	width:100%;
 	margin:auto;
-	max-width:525px;
-	min-height:670px;
+	max-width:450px;
+	min-height:600px;
 	position:relative;
     border-radius: 12px;
 	background:url('../../../image/b2.jpeg') no-repeat center;
@@ -100,7 +100,7 @@
 .login-form .group .input,
 .login-form .group .button{
 	border:none;
-	padding:15px 20px;
+	padding:10px 15px;
 	border-radius:25px;
 	background:rgba(255,255,255,.1);
 }
@@ -194,4 +194,15 @@
     cursor: pointer;
     justify-content: flex-end;
     font-size: 1.2rem !important;
+}
+
+.error {
+	font-size: 1.2rem;
+	margin-top: 0.5rem;
+	color: red;
+  }
+
+.button.disable-submit {
+	cursor: no-drop;
+	background-color: #446faf !important;
 }
