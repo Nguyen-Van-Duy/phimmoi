@@ -12,9 +12,9 @@ const MovieContent = ({dataFilm, titleFilm, category}) => {
         infinite: true,
         autoplay: true,
         // centerMode: true,
-        speed: 700,
+        speed: 500,
         slidesToShow: 4,
-        slidesToScroll: 4,
+        slidesToScroll: 1,
         initialSlide: 0,
         // centerPadding: '20px',
         nextArrow: <NextArrow />,
@@ -24,7 +24,7 @@ const MovieContent = ({dataFilm, titleFilm, category}) => {
             breakpoint: 1200,
             settings: {
               slidesToShow: 3,
-              slidesToScroll: 3,
+              slidesToScroll: 1,
               infinite: true,
               dots: false,
             },
@@ -33,7 +33,7 @@ const MovieContent = ({dataFilm, titleFilm, category}) => {
             breakpoint: 1024,
             settings: {
               slidesToShow: 3,
-              slidesToScroll: 3,
+              slidesToScroll: 1,
               infinite: true,
               dots: false,
             },
@@ -42,7 +42,7 @@ const MovieContent = ({dataFilm, titleFilm, category}) => {
             breakpoint: 910,
             settings: {
               slidesToShow: 2,
-              slidesToScroll: 2,
+              slidesToScroll: 1,
               infinite: true,
               dots: false,
             },
@@ -51,7 +51,7 @@ const MovieContent = ({dataFilm, titleFilm, category}) => {
             breakpoint: 769,
             settings: {
               slidesToShow: 2,
-              slidesToScroll: 2,
+              slidesToScroll: 1,
               infinite: true,
               dots: false,
             },
@@ -81,9 +81,10 @@ const MovieContent = ({dataFilm, titleFilm, category}) => {
         <span className="content-list__title">{titleFilm}</span>
       </div>
       <Slider {...settings}>
-        {dataFilm.map((item, index) => (
-          <ContentItem key={index} item={item} category={category} />
-        ))}
+        {dataFilm.map((item, index) => {
+          if(index > 9) { return null}
+          return <ContentItem key={index} item={item} category={category} />
+        })}
       </Slider>
     </div>
     );
