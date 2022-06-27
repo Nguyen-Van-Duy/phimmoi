@@ -9,6 +9,7 @@ import { dataFilmAction } from "./store/dataFilmSlice";
 import Footer from "./components/Footer/Footer";
 import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
 import Loading from "./components/Loading";
+
 // import MovieDetails from "./pages/MovieDetails/MovieDetails";
 // import ViewMore from "./pages/ViewMore/ViewMore";
 // import ViewGenre from "./pages/ViewGenre/ViewMore";

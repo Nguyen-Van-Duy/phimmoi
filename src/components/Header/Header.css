@@ -103,9 +103,18 @@
 
 .feature__item {
     list-style: none;
-    margin-left: 25px;
+    margin-left: 20px;
     cursor: pointer;
     font-size: 16px;
+    display: flex;
+    align-items: center;
+}
+
+.feature__item img {
+    width: 30px;
+    border-radius: 30px;
+    margin-right: 10px;
+    /* height: 30px; */
 }
 
 .show-language {
@@ -183,6 +192,14 @@
 
 .show-search {
     width: 300px;
-    
-    
 }
+
+/* #components-dropdown-demo-arrow .ant-btn {
+    margin-right: 8px;
+    margin-bottom: 8px;
+  }
+.ant-row-rtl #components-dropdown-demo-arrow .ant-btn {
+    margin-right: 0;
+    margin-bottom: 8px;
+    margin-left: 8px;
+} */

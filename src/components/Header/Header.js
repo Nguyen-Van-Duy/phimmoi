@@ -7,7 +7,11 @@ import {category} from "../../API/MoviesApi";
 import Genre from "./Genre/Genre";
 import Login from "./Login/Login";
 import './Login/Login.css'
+import { useDispatch, useSelector } from "react-redux";
 // import BoxModal from "../BoxModal/BoxModal";
+import axios from "axios"
+import { setUserId } from "../../store/LoginSlice";
+import avatar from '../../image/avatar.jpeg'
 
 const menu = [
   {
@@ -36,6 +40,35 @@ const Header = () => {
   const [showModal, setShowModal] = useState(false)
   const headerRef = useRef(null)
   const navigate = useNavigate()
+  const dataUser = useSelector((state) => state.loginSlice.dataUser)
+  console.log(dataUser);
+    const isLogin = useSelector((state) => state.loginSlice.isLogin)
+    const urlConnect = useSelector((state) => state.loginSlice.urlConnect)
+    const [loading, setLoading] = useState(true)
+  const dispatch = useDispatch()
+
+  const token = localStorage.getItem('token')
+  useEffect(()=> {
+    const authentication = async () => {
+        setLoading(true)
+        console.log(token);
+        if(token) {
+            try {
+                const result = await axios.get(urlConnect + 'account/refresh', { headers: {"Authorization" : `Bearer ${token}`} });
+                console.log("success authentication token: ",result);
+                dispatch(setUserId(result.data))
+                setLoading(false)
+            } catch (error) {
+                console.log(error);
+                setLoading(false)
+                return
+            }
+        } else {
+            setLoading(false)
+        }
+    }
+    authentication()
+  }, [token, dispatch, urlConnect])
 
   const toggleMenu = () => {
     setMenuMobile(!menuMobile)
@@ -113,7 +146,12 @@ const Header = () => {
             <div id="google_translate_element" className={!showLanguage? "show-language": ""}></div>
             <i onClick={handleShowLanguage} style={{fontSize: "2rem"}}  className="fa-solid fa-earth-americas"></i>
           </li>
-          <li className="feature__item" onClick={handleShowModal}><span className="login-botton">Login</span></li>
+          {!isLogin && !loading ? <li className="feature__item" onClick={handleShowModal}><span className="login-botton">Login</span></li> : 
+          <li className="feature__item login-botton">
+            <img src={avatar} alt="" />
+            <span>{dataUser?.user_name?.trim().split(' ').pop()}</span>
+            <i className="fa-solid fa-caret-down" style={{marginLeft: "10px"}}></i>
+          </li>}
           <div onClick={()=>setShowModal(!showModal)}><Modal showModal={showModal} /></div>
         </ul>
         {/* <SearchData /> */}
