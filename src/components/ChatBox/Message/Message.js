@@ -12,7 +12,7 @@ export default function Message({own, message}) {
               {!own && <img 
               className='messageImg'
               src={avatar} alt="" />}
-              <p className="messageText" onClick={()=>setShowTime(!showTime)}> {message.text}</p>
+              <p className={!own ? "messageText" : "messageText parker"} onClick={()=>setShowTime(!showTime)}> {message.text}</p>
           </div>
           {showTime && <div className="messageBottom">{format(message.createdAt)}</div>}
       </div>

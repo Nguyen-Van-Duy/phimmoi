@@ -134,8 +134,6 @@ const Header = () => {
                 <div className="menu-genre__container"><Genre /></div></span>}
               </li>
             ))}
-            
-            
           </ul>
         </nav>
         <ul className="header-list__feature">
@@ -147,7 +145,7 @@ const Header = () => {
             <i onClick={handleShowLanguage} style={{fontSize: "2rem"}}  className="fa-solid fa-earth-americas"></i>
           </li>
           {!isLogin && <li className="feature__item" onClick={handleShowModal}><span className="login-botton">Login</span></li>}
-          {isLogin && loading && <li className="feature__item login-botton">
+          {isLogin && !loading && <li className="feature__item login-botton">
             <img src={avatar} alt="" />
             <span>{dataUser?.user_name?.trim().split(' ').pop()}</span>
             <i className="fa-solid fa-caret-down" style={{marginLeft: "10px"}}></i>

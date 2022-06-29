@@ -6,6 +6,7 @@
     background: -moz-linear-gradient(#4768b5, #35488e);
     background: linear-gradient(#4768b5, #35488e);
     box-shadow: 0 10px 20px rgba(0,0,0,0.19);
+    /* border-left: 1px solid rgba(255,255,255,0.5); */
 }
 
 .box-menu__items {

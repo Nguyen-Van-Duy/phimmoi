@@ -24,6 +24,7 @@ const Watch = React.lazy(()=>import("./pages/Watch/Watch"));
 
 function App() {
   const [isLoading, setIsLoading] = useState(true)
+  const [showBoxChat, setShowBoxChat] = useState(false)
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -76,10 +77,15 @@ function App() {
     fetchDataFilm()
   }, [dispatch])
 
+  const handleShowBoxChat = () => {
+    setShowBoxChat(!showBoxChat)
+  }
+
   return (
     <div className="App">
       <Header />
-      <ChatBox />
+      <ChatBox showBoxChat={showBoxChat} handleShowBoxChat={handleShowBoxChat} />
+      <div className="message-icon__show" onClick={handleShowBoxChat}><i className="fa-solid fa-comment-dots"></i></div>
       <main className="main">
         {!isLoading && <Routes>
           <Route path="/" element={<Home />} />

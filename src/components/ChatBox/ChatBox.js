@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import "./ChatBox.css"
+import "./MessengerList/MessengerList.css"
 import avatar from '../../image/avatar.jpeg'
 import apiConfig from '../../API/configApi';
 import { io } from "socket.io-client";
@@ -9,23 +10,17 @@ import Message from './Message/Message';
 import MenuChatBox from './MenuChatBox/MenuChatBox';
 import MessengerList from './MessengerList/MessengerList';
 
-const ChatBox = () => {
+const ChatBox = ({showBoxChat, handleShowBoxChat}) => {
     const [showListFriend, setShowListFriend] = useState(false)
     const [isReceive, setIsReceive] = useState(false);
     const [arrivalMessage, setArrivalMessage] = useState(null);
     // null
-    const [message, setMessage] = useState([{
-        sender: "dfgdfgdfgfd",
-        text: "hi hi hi hihihi hihi hi hi hi hi hihi hihihi hi hi hihi hi hi hi hi hi hi hi",
-        createdAt: Date.now(),
-      }, {
-        sender: "dfgdfgdfgfd",
-        text: "hi",
-        createdAt: Date.now(),
-      }]);
+    const [message, setMessage] = useState(null);
     const [currentChat, setCurrentChat] = useState(null);
     const [userConversation, setUserConversation] = useState([]);
-    const userId = useSelector((state) => state.loginSlice.userId);
+    const dataUser = useSelector((state) => state.loginSlice.dataUser);
+    const userId = dataUser?.id;
+    console.log(dataUser);
     const [isAddFriend, setIsAddFriend] = useState(false);
     const [addNewFriend, setAddNewFriend] = useState(false);
     const [inputStr, setInputStr] = useState("");
@@ -33,75 +28,79 @@ const ChatBox = () => {
     const scrollRef = useRef();
     const token = localStorage.getItem('token')
 
-    //connect socket and get message
-    // useEffect(() => {
-    //     socket.current = io(apiConfig.urlConnectSocketIO);
-    //     //get message from socket
-    //     if (isReceive === false) {
-    //       socket.current.on("getMessage", (data) => {
-    //         console.log('get data message:', data);
-    //         setArrivalMessage({
-    //           sender: data.senderId,
-    //           text: data.text,
-    //           createdAt: Date.now(),
-    //         });
-    //       });
-    //     }
-    //     return () => {
-    //         //disconnect 
-    //       console.log('disconnect!');
-    //       setIsReceive(true);
-    //     };
-    // }, [isReceive]);
+    // connect socket and get message
+    useEffect(() => {
+        socket.current = io(apiConfig.urlConnectSocketIO);
+        //get message from socket
+        if (isReceive === false) {
+          socket.current.on("getMessage", (data) => {
+            console.log('get data message:', data);
+            setArrivalMessage({
+              sender: data.senderId,
+              text: data.text,
+              createdAt: Date.now(),
+            });
+          });
+        }
+        return () => {
+            //disconnect 
+          console.log('disconnect!');
+          setIsReceive(true);
+        };
+    }, [isReceive]);
 
-    // //Check the chat room, add new messages
-    // useEffect(() => {
-    //     arrivalMessage &&
-    //       currentChat?.members.includes(arrivalMessage.sender) &&
-    //       setMessage((prev) => [...prev, arrivalMessage]);
-    //   }, [arrivalMessage, currentChat]);
+    //Check the chat room, add new messages
+    useEffect(() => {
+        arrivalMessage &&
+          currentChat?.members.includes(arrivalMessage.sender) &&
+          setMessage((prev) => [...prev, arrivalMessage]);
+      }, [arrivalMessage, currentChat]);
 
-    //   // add user in chat room
-    // useEffect(() => {
-    // if (userId !== null) {
-    //     socket.current.emit("addUser", userId);
-    // }
-    // if(isAddFriend === false) {
-    //     socket.current.on("getUsers", (users) => {
-    //     console.log("user online: ", users);
-    //     });
-    // }
-    // return () => {
-    //     setIsAddFriend(true);
-    // };
-    // }, [userId, isAddFriend]);
+      // add user in chat room
+    useEffect(() => {
+    if (userId !== null) {
+        socket.current.emit("addUser", userId);
+    }
+    if(isAddFriend === false) {
+        socket.current.on("getUsers", (users) => {
+        console.log("user online: ", users);
+        });
+    }
+    return () => {
+        setIsAddFriend(true);
+    };
+    }, [userId, isAddFriend]);
 
-    // // add chat room in db
-    // useEffect(() => {
-    //     const getConversation = async () => {
-    //       const data = await axios.get(
-    //         apiConfig.urlConnect + "conversation/" + userId
-    //       );
-    //       setUserConversation(data.data);
-    //     };
-    //     getConversation();
-    //   }, [userId, addNewFriend]);
+    // add chat room in db
+    useEffect(() => {
+        const getConversation = async () => {
+          const data = await axios.get(
+            apiConfig.urlConnect + "conversation/" + userId
+          );
+          console.log(data.data);
+          setUserConversation(data.data);
+        };
+        getConversation();
+      }, [userId, addNewFriend]);
     
-    // //   get message from db
-    //   useEffect(() => {
-    //     const getMessages = async () => {
-    //       try {
-    //         const data = await axios.get(
-    //           apiConfig.urlConnect + "message/" + currentChat?._id
-    //         );
-    //         setMessage(data.data);
-    //         console.log("total message: ", data.data);
-    //       } catch (error) {
-    //         console.log(error);
-    //       }
-    //     };
-    //     getMessages();
-    //   }, [currentChat]);
+    //   get message from db
+      useEffect(() => {
+        const getMessages = async () => {
+          try {
+            const data = await axios.get(
+              apiConfig.urlConnect + "message/" + currentChat?._id
+            );
+            console.log(data.data);
+            setMessage(data.data);
+            console.log("total message: ", data.data);
+          } catch (error) {
+            console.log(error);
+          }
+        };
+        if(currentChat !== null) {
+          getMessages();
+        }
+      }, [currentChat]);
 
     //   handle send message
       const handleSendMessage = async (e) => {
@@ -157,9 +156,22 @@ const ChatBox = () => {
       }, [message]);
 
     return (
-        <div className='messenger'>
+        <div className={!showBoxChat ? 'messenger' : 'messenger show-messenger' }>
             <MenuChatBox setShowListFriend={setShowListFriend} showListFriend={showListFriend} />
-            <MessengerList  showListFriend={showListFriend}/>
+            <div className={!showListFriend ? "messenger__list" : 'messenger__list show-messenger__list'}>
+              <div className='messenger-list__header'>
+                <input type="text" placeholder="Enter your name or email" />
+              </div>
+              <div className='messenger-list__body'>
+                <ul className='messenger-friend__list'>
+                  {userConversation.length > 0 && userConversation?.map((item) => (
+                    <div key={item._id} onClick={() => setCurrentChat(item)}>
+                      <MessengerList currentId={userId} item={item} />
+                  </div>
+                  ))}
+                </ul>
+              </div>
+            </div>
             <div className="chat-box__containner">
                 <div className='chat-box__header'>
                     <div className='message-header__left'>
@@ -169,21 +181,25 @@ const ChatBox = () => {
                             <span className='message-header__desc'>Hôm nay là thứ 7</span>
                         </div>
                     </div>
-                    <div className='message-header__left'>
+                    <div className='message-header__left' onClick={()=>handleShowBoxChat()}>
                     <i className="fa-solid fa-xmark message-close"></i>
                     </div>
                 </div>
                 <div className='chat-box__body'>
-                    {message?.map((item, id) => (
-                        <div key={id} ref={scrollRef}>
-                        <Message own={item.sender === userId} message={item} />
-                        </div>
-                    ))}
+                  {currentChat ? (
+                    <>
+                      {message?.map((item, id) => (
+                          <div key={id} ref={scrollRef}>
+                          <Message own={item.sender === userId} message={item} />
+                          </div>
+                      ))}
+                  </>
+                  ) : (<span>Open a conversation to start a chat</span>)}
                 </div>
                 <div className='chat-box__bottom'>
                     <form onSubmit={handleSendMessage} className="chat-box__form">
                         <i className="fa-solid fa-face-laugh-beam message-icon"></i>
-                        <textarea name="mesage-send" className="chat-box__send" value={inputStr} onChange={(e) => setInputStr(e.target.value)} />
+                        <input name="mesage-send" className="chat-box__send" value={inputStr} onChange={(e) => setInputStr(e.target.value)} />
                         {/* <img
                         className="emoji-icon" alt=""
                         src="https://icons.getbootstrap.com/assets/icons/emoji-smile.svg"

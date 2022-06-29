@@ -1,10 +1,21 @@
 .messenger {
-    z-index: 2000;
+    /* z-index: 1000; */
     position: fixed;
-    right: 10rem;
+    right: 8rem;
     bottom: 0;
     height: 45rem;
     display: flex;
+    max-width: calc(63rem - 1px);
+    transition: all 0.2s ease-in-out;
+    opacity: 0;
+    z-index: -1;
+    
+}
+
+.messenger.show-messenger {
+    right: 10rem;
+    opacity: 1;
+    z-index: 1000;
 }
 
   /* container   */
@@ -31,6 +42,7 @@
     display: flex;
     align-items: center;
     font-size: 1.4rem;
+    cursor: pointer;
 }
 
 .message-header__left img {
@@ -83,6 +95,9 @@
     border: none;
     outline: none;
     padding: 0 10px;
+    height: 3rem;
+    max-height: 5rem;
+    line-height: 3rem;
     border-radius: 20px;
     flex: 1;
     margin: 0 1rem;

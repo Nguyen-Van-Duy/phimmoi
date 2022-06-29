@@ -2,6 +2,7 @@
     display: flex;
     flex-direction: column;
     margin-top: 5px;
+    margin-bottom: 5px;
   }
   
   .messageTop{
@@ -17,7 +18,7 @@
   }
   
   .messageText{
-      padding: 8px 12px;
+      padding: 6px 12px;
       /* border-radius: 20px; */
       background-color: #1877f2;
       color: white;
@@ -35,6 +36,12 @@
         0 0 2rem rgba(black, 0.075),
         0rem 1rem 1rem -1rem rgba(black, 0.1);
   }
+
+  .messageText.parker {
+    margin-right: 8px;
+    border-radius: 1.125rem 1.125rem 0 1.125rem;
+    color: white;
+}
   
   .messageBottom{
       font-size: 12px;
