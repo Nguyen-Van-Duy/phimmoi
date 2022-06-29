@@ -1,0 +1,81 @@
+.messenger__list {
+    width: 0;
+    height: 45rem;
+    background-color: #fff;
+    transition: all 0.2s ease-in-out;
+  }
+
+  .show-messenger__list {
+    width: 25rem;
+  }
+
+  .messenger-list__header {
+    height: 5rem;
+    background-color: rgb(139, 139, 139);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .messenger-list__header input {
+    height: 3rem;
+    width: 20rem;
+    padding: 0 10px;
+    border-radius: 20px;
+    border: none;
+    outline: none;
+    transform: translateX(20rem);
+    transition: all 0.2s ease-out;
+    z-index: 1;
+  }
+
+  .show-messenger__list .messenger-list__header input {
+    transform: translateX(0);
+  }
+
+  .messenger-list__body {
+    display: flex;
+  }
+
+  .messenger-friend__list {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .messenger-friend__container {
+    list-style: none;
+    padding: 1rem 0.8rem;
+    cursor: pointer;
+  }
+
+  .messenger-friend__item {
+    display: flex;
+  }
+
+  .messenger-friend__item img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    margin-right: 8px;
+  }
+
+  .messenger-friend__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .messenger-friend__name {
+    font-size: 1.3rem;
+  }
+
+  .messenger-friend__desc {
+    font-size: 1rem;
+  }
+
+  .messenger-friend__container:hover {
+    background-color: azure;
+  }

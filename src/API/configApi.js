@@ -1,5 +1,7 @@
 const apiConfig = {
     baseUrl: 'https://api.themoviedb.org/3',
+    urlConnect: process.env.REACT_APP_CONNECT_SERVER,
+    urlConnectSocketIO: process.env.REACT_APP_CONNECT_SOCKETIO,
     apiKey: process.env.REACT_APP_KEY,
     background: 'https://1.bp.blogspot.com/-aU-WA2rtcMM/Xo8nNMI-Y8I/AAAAAAAAb50/dcqECod409IxSklnP_cuELke_iHQnWobgCLcBGAsYHQ/s1600/Anh-gai-xinh-deo-kinh-2k%2B%252880%2529.jpg',
     backupPhoto: 'https://1.bp.blogspot.com/-taNL4-qb6UA/XoBShx5H8mI/AAAAAAAAabY/dIHUXHJUJZ4VrDTbdGNnCbPAOY50vCCcwCLcBGAsYHQ/s1600/Hinh-anh-con-gai-cute-de-thuong%2B%25285%2529.jpg',

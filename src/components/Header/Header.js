@@ -146,8 +146,8 @@ const Header = () => {
             <div id="google_translate_element" className={!showLanguage? "show-language": ""}></div>
             <i onClick={handleShowLanguage} style={{fontSize: "2rem"}}  className="fa-solid fa-earth-americas"></i>
           </li>
-          {!isLogin && !loading ? <li className="feature__item" onClick={handleShowModal}><span className="login-botton">Login</span></li> : 
-          <li className="feature__item login-botton">
+          {!isLogin && <li className="feature__item" onClick={handleShowModal}><span className="login-botton">Login</span></li>}
+          {isLogin && loading && <li className="feature__item login-botton">
             <img src={avatar} alt="" />
             <span>{dataUser?.user_name?.trim().split(' ').pop()}</span>
             <i className="fa-solid fa-caret-down" style={{marginLeft: "10px"}}></i>
