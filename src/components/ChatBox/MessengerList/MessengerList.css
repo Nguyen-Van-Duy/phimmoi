@@ -3,18 +3,21 @@
     height: 45rem;
     background-color: #fff;
     transition: all 0.2s ease-in-out;
+    
   }
 
-  .show-messenger__list {
+  .messenger__list.show-messenger__list {
     width: 25rem;
+    border-right: 1px solid rgb(234, 234, 234);
   }
 
   .messenger-list__header {
     height: 5rem;
-    background-color: rgb(139, 139, 139);
+    background-color: #e6eaea;
     display: flex;
     justify-content: center;
     align-items: center;
+    box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;
   }
 
   .messenger-list__header input {

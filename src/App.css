@@ -62,17 +62,17 @@ a {
   position: fixed;
   right: 3rem;
   bottom: 3rem;
-  z-index: 2000;
   right: 3.5rem;
   width: 5rem;
   height: 5rem;
-  background-color: rgba(0, 255, 47, 0.5);
+  background-color: rgba(0, 255, 47, 0.7);
   z-index: 1000;
   border-radius: 50%;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
+  border: 1px solid #fff;
 }
 
 .message-icon__show i {

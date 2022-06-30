@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import "./ChatBox.css"
 import "./MessengerList/MessengerList.css"
 import avatar from '../../image/avatar.jpeg'
+import img403 from '../../image/403.svg'
 import apiConfig from '../../API/configApi';
 import { io } from "socket.io-client";
 import axios from "axios";
@@ -9,6 +10,9 @@ import { useSelector } from 'react-redux';
 import Message from './Message/Message';
 import MenuChatBox from './MenuChatBox/MenuChatBox';
 import MessengerList from './MessengerList/MessengerList';
+import Picker from "emoji-picker-react";
+
+let showAvatar = false
 
 const ChatBox = ({showBoxChat, handleShowBoxChat}) => {
     const [showListFriend, setShowListFriend] = useState(false)
@@ -19,6 +23,7 @@ const ChatBox = ({showBoxChat, handleShowBoxChat}) => {
     const [currentChat, setCurrentChat] = useState(null);
     const [userConversation, setUserConversation] = useState([]);
     const dataUser = useSelector((state) => state.loginSlice.dataUser);
+    const isLogin = useSelector((state) => state.loginSlice.isLogin);
     const userId = dataUser?.id;
     console.log(dataUser);
     const [isAddFriend, setIsAddFriend] = useState(false);
@@ -27,6 +32,13 @@ const ChatBox = ({showBoxChat, handleShowBoxChat}) => {
     const socket = useRef(); 
     const scrollRef = useRef();
     const token = localStorage.getItem('token')
+    const [showPicker, setShowPicker] = useState(false);
+    const [userChat, setUserChat] = useState("");
+
+    const onEmojiClick = (event, emojiObject) => {
+      setInputStr((prevInput) => prevInput + emojiObject.emoji);
+      setShowPicker(false);
+    };
 
     // connect socket and get message
     useEffect(() => {
@@ -155,8 +167,10 @@ const ChatBox = ({showBoxChat, handleShowBoxChat}) => {
         scrollRef.current?.scrollIntoView({ behavior: "smooth" });
       }, [message]);
 
-    return (
-        <div className={!showBoxChat ? 'messenger' : 'messenger show-messenger' }>
+      console.log(currentChat);
+
+    return (<>
+        {isLogin ? <div className={!showBoxChat ? 'messenger' : 'messenger show-messenger' }>
             <MenuChatBox setShowListFriend={setShowListFriend} showListFriend={showListFriend} />
             <div className={!showListFriend ? "messenger__list" : 'messenger__list show-messenger__list'}>
               <div className='messenger-list__header'>
@@ -166,7 +180,7 @@ const ChatBox = ({showBoxChat, handleShowBoxChat}) => {
                 <ul className='messenger-friend__list'>
                   {userConversation.length > 0 && userConversation?.map((item) => (
                     <div key={item._id} onClick={() => setCurrentChat(item)}>
-                      <MessengerList currentId={userId} item={item} />
+                      <MessengerList setUserChat={setUserChat} currentId={userId} item={item} />
                   </div>
                   ))}
                 </ul>
@@ -177,8 +191,8 @@ const ChatBox = ({showBoxChat, handleShowBoxChat}) => {
                     <div className='message-header__left'>
                         <img src={avatar} alt='' />
                         <div className='message-header__title'>
-                            <span className='message-header__name'>Nguyễn Văn Duy</span>
-                            <span className='message-header__desc'>Hôm nay là thứ 7</span>
+                            <span className='message-header__name'>{userChat.user_name || "Box Chat"}</span>
+                            <span className='message-header__desc'></span>
                         </div>
                     </div>
                     <div className='message-header__left' onClick={()=>handleShowBoxChat()}>
@@ -188,34 +202,43 @@ const ChatBox = ({showBoxChat, handleShowBoxChat}) => {
                 <div className='chat-box__body'>
                   {currentChat ? (
                     <>
-                      {message?.map((item, id) => (
+                      {message?.map((item, id) => {
+                        if(item.sender !== userId && showAvatar === false) {
+                          showAvatar = true
+                        } else if(item.sender !== userId && showAvatar === true) {
+                          showAvatar = null
+                        } else if(item.sender === userId) {
+                          showAvatar = false
+                        }
+                        return (
                           <div key={id} ref={scrollRef}>
-                          <Message own={item.sender === userId} message={item} />
+                          <Message own={item.sender === userId} message={item} showAvatar={showAvatar} />
                           </div>
-                      ))}
+                      )
+                      })}
                   </>
                   ) : (<span>Open a conversation to start a chat</span>)}
                 </div>
                 <div className='chat-box__bottom'>
                     <form onSubmit={handleSendMessage} className="chat-box__form">
-                        <i className="fa-solid fa-face-laugh-beam message-icon"></i>
+                        <i className="fa-solid fa-face-laugh-beam message-icon"  onClick={() => setShowPicker((val) => !val)}></i>
                         <input name="mesage-send" className="chat-box__send" value={inputStr} onChange={(e) => setInputStr(e.target.value)} />
-                        {/* <img
-                        className="emoji-icon" alt=""
-                        src="https://icons.getbootstrap.com/assets/icons/emoji-smile.svg"
-                        onClick={() => setShowPicker((val) => !val)}
-                        /> */}
                         
-                        {/* {showPicker && <div>
-                            <Picker onEmojiClick={onEmojiClick} pickerStyle={{ width: '70%' }} />
-                        </div>} */}
+                        {showPicker && <div className='emoji-icon'>
+                            <Picker onEmojiClick={onEmojiClick} pickerStyle={{ width: '33rem' }} />
+                        </div>}
                         <button className="chat-submit-button" type="submit">
                             <i className="fa-solid fa-paper-plane message-icon"></i>
                         </button>
                     </form>
                 </div>
             </div>
-        </div>
+        </div> : <div className={`messenger messenger-information ${showBoxChat && 'show-messenger'}`}>
+          <img src={img403} alt="" />
+          <span>You need to be logged in to perform this function!</span>
+          {/* <span class="button red"><i class="fas fa-play-circle"></i>Login Now</span> */}
+          </div>}
+        </>
     );
 };
 

@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios"
 import { setUserId } from "../../store/LoginSlice";
 import avatar from '../../image/avatar.jpeg'
+import MenuListFeature from "./MenuListFeature/MenuListFeature";
 
 const menu = [
   {
@@ -144,11 +145,15 @@ const Header = () => {
             <div id="google_translate_element" className={!showLanguage? "show-language": ""}></div>
             <i onClick={handleShowLanguage} style={{fontSize: "2rem"}}  className="fa-solid fa-earth-americas"></i>
           </li>
-          {!isLogin && <li className="feature__item" onClick={handleShowModal}><span className="login-botton">Login</span></li>}
-          {isLogin && !loading && <li className="feature__item login-botton">
+          {isLogin && !loading && <li className="feature__item header-list__feature">
+            <i style={{fontSize: "2rem"}}  className="fa-solid fa-bell"></i>
+          </li>}
+          {!isLogin && <li className="feature__item" onClick={handleShowModal}><span className="login-bottom">Login</span></li>}
+          {isLogin && !loading && <li className="feature__item login-bottom">
             <img src={avatar} alt="" />
             <span>{dataUser?.user_name?.trim().split(' ').pop()}</span>
             <i className="fa-solid fa-caret-down" style={{marginLeft: "10px"}}></i>
+            <div className="header-list__feature-menu"><MenuListFeature /></div>
           </li>}
           <div onClick={()=>setShowModal(!showModal)}><Modal showModal={showModal} /></div>
         </ul>

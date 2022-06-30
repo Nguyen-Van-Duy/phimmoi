@@ -22,7 +22,7 @@
     overflow: hidden;
     cursor: pointer;
     transition: all 0.25s ease-in-out;
-    z-index: 1000;
+    z-index: 999;
 }
 
 .movie-item__content:hover {

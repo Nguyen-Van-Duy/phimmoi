@@ -4,7 +4,7 @@ import avatar from '../../../image/avatar.jpeg'
 import apiConfig from '../../../API/configApi';
 import axios from 'axios';
 
-function MessengerList({item, currentId}) {
+function MessengerList({item, currentId,setUserChat}) {
   const [user, setUser] = useState(null)
 
   useEffect(()=> {
@@ -17,7 +17,7 @@ function MessengerList({item, currentId}) {
   }, [currentId, item.members])
 
   return (
-    <li className='messenger-friend__container'>
+    <li className='messenger-friend__container' onClick={()=>setUserChat(user)}>
       <div className='messenger-friend__item'>
         <img src={avatar} alt='' />
         <div className='messenger-friend__content'>

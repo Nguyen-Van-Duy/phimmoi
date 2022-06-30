@@ -18,10 +18,15 @@ const loginSlice = createSlice({
     setConversationId: (state, action) => {
       state.conversationId = action.payload
     },
+    logout: (state, action) => {
+      state.conversationId = ""
+      state.isLogin = false
+      state.dataUser = null
+    },
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { setUserId, setConversationId } = loginSlice.actions
+export const { setUserId, setConversationId, logout } = loginSlice.actions
 
 export default loginSlice.reducer;

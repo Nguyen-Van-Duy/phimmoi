@@ -9,6 +9,7 @@
       display: flex;
   }
   
+  .image-chat,
   .messageImg {
     width: 28px;
     height: 28px;
@@ -24,7 +25,6 @@
       color: white;
       font-size: 1.5rem;
       max-width: 180px;
-
       box-sizing: border-box;
 			
     border-radius: 1.125rem 1.125rem 1.125rem 0;
