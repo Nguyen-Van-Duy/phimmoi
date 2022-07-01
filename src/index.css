@@ -5,6 +5,7 @@ body {
   /* background-image: url("https://i.pinimg.com/736x/43/2d/ab/432dab34007c9c6535313067a66530f7.jpg"); */
   background-color: rgb(0, 0, 0);
   top:0!important;
+  min-height: 0 !important;
 }
 
 code {

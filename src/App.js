@@ -10,6 +10,7 @@ import Footer from "./components/Footer/Footer";
 import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
 import Loading from "./components/Loading";
 import ChatBox from "./components/ChatBox/ChatBox";
+import UserMannager from "./components/UserMannager/UserMannager";
 // import MovieDetails from "./pages/MovieDetails/MovieDetails";
 // import ViewMore from "./pages/ViewMore/ViewMore";
 // import ViewGenre from "./pages/ViewGenre/ViewMore";
@@ -90,6 +91,10 @@ function App() {
         {!isLoading && <Routes>
           <Route path="/" element={<Home />} />
           
+          <Route
+            path="/manager/*"
+            element={<UserMannager />}
+          />
           <Route
             path="/:category"
             element={<React.Suspense fallback={<div className="loading"><Loading /></div>}><Movie /></React.Suspense>}
