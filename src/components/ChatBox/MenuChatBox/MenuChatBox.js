@@ -1,22 +1,40 @@
 import React from 'react'
 import "./MenuChatBox.css"
+let listMenuChat = [
+    {
+        icon: "fa-solid fa-sliders",
+        title: "menu",
+    },
+    {
+        icon: "fa-solid fa-user-lock",
+        title: "admin",
+    },
+    {
+        icon: "fa-solid fa-user-group",
+        title: "user",
+    },
+    {
+        icon: "fa-solid fa-user-group",
+        title: "message",
+    }
+]
 
-function MenuChatBox({setShowListFriend, showListFriend }) {
+function MenuChatBox({setShowListFriend, showListFriend, setValueContentMenu }) {
+    const handleShowContentMenu = (value)=>{
+        if(value === "menu") {
+            setShowListFriend(!showListFriend)
+        } else {
+            setShowListFriend(true)
+        }
+        // console.log("Show", value);
+        setValueContentMenu(value)
+    }
   return (
     <nav className='chat-box__menu'>
         <ul className="box-menu__items">
-            <li className="box-menu__item" onClick={()=>{
-                console.log("Show");
-                setShowListFriend(!showListFriend)
-            }}>
-                <i className="fa-solid fa-sliders"></i>
-            </li>
-            <li className="box-menu__item">
-                <i className="fa-solid fa-user-lock"></i>
-            </li>
-            <li className="box-menu__item">
-                <i className="fa-solid fa-user-group"></i>
-            </li>
+            {listMenuChat.map((item, index)=> <li key={index} className="box-menu__item" onClick={()=>handleShowContentMenu(item.title)}>
+                <i className={item.icon}></i>
+            </li>)}
         </ul>
     </nav>
   )

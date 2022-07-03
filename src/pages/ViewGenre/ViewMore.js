@@ -10,7 +10,7 @@ const ViewGenreMovie = () => {
     const [page, setPage] = useState(1)
     const params = useParams()
 
-    console.log(params)
+    // console.log(params)
 
     const handlePage = () => {
         setPage(page + 1)

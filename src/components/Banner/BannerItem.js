@@ -5,7 +5,6 @@ import Loading from "../Loading";
 import "./BannerItem.css";
 
 const BannerItem = ({ item, category}) => {
-
   let pathUrl
   if(category === 'movie') {
     pathUrl = `/${category}/${item.id}/watch`

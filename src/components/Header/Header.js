@@ -42,7 +42,6 @@ const Header = () => {
   const headerRef = useRef(null)
   const navigate = useNavigate()
   const dataUser = useSelector((state) => state.loginSlice.dataUser)
-  console.log(dataUser);
     const isLogin = useSelector((state) => state.loginSlice.isLogin)
     const urlConnect = useSelector((state) => state.loginSlice.urlConnect)
     const [loading, setLoading] = useState(true)
@@ -52,11 +51,9 @@ const Header = () => {
   useEffect(()=> {
     const authentication = async () => {
         setLoading(true)
-        console.log(token);
         if(token) {
             try {
                 const result = await axios.get(urlConnect + 'account/refresh', { headers: {"Authorization" : `Bearer ${token}`} });
-                console.log("success authentication token: ",result);
                 dispatch(setUserId(result.data))
                 setLoading(false)
             } catch (error) {

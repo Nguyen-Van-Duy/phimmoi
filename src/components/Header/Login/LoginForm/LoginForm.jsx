@@ -28,13 +28,12 @@ function LoginForm({setShowForgot, showForgot, handleCloseModal}) {
       })
     
       const onSubmitLogin = async (values, {resetForm}) => {
-        console.log('Form data', values)
+        // console.log('Form data', values)
         const result = await axios.post(urlConnect + 'account/login', {
             email: values.email,
             password: values.password
         })
         if(result.data.status === 200) {
-            console.log(result);
             localStorage.setItem("token", result.data.token)
             dispatch(setUserId(result.data))
             handleCloseModal()

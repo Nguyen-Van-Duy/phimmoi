@@ -10,7 +10,7 @@ const ViewMore = () => {
     const [page, setPage] = useState(1)
     const params = useParams()
 
-    console.log(params)
+    // console.log(params)
 
     let title
     if(params.category === 'movie') {

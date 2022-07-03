@@ -41,9 +41,11 @@ const ResultSearch = () => {
                     <span className="movie-list__title">Results for "{params.keyword}" ({totalResults})</span>
                 </div>
                 <div className="movie-list__view-more">
-                    {dataFilm.map((item, index) => <div className="view-more__item" key={index} >
+                    {dataFilm.map((item, index) => {
+                        return item.media_type !== "person" && <div className="view-more__item" key={index} >
                         <MovieItem item={item} category={item.media_type} />
-                        </div>)}
+                        </div>
+                    })}
                 </div>
                 {totalPage > page && <div className="load-more">
                     <span className="button green" onClick={handlePage}>Load More</span>

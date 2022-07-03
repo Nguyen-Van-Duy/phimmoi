@@ -26,7 +26,7 @@ function RegisterForm({setShowForgot, showForgot}) {
       })
     
       const onSubmitLogin = async (values, {resetForm}) => {
-        console.log('Form data', values)
+        // console.log('Form data', values)
         const result = await axios.post(urlConnect + 'account/create-account', {
             user_name: values.user_name,
             email: values.email,
@@ -47,7 +47,7 @@ function RegisterForm({setShowForgot, showForgot}) {
     onSubmit={onSubmitLogin}
     >
     {formik => {
-        console.log(formik)
+        // console.log(formik)
         return (
         <Form  className="sign-up-htm">
             <FormikControl

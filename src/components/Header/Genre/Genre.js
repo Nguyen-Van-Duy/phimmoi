@@ -12,7 +12,6 @@ const Genre = () => {
         const fetchData = async() => {
             const dataMovie = await genreMovies('movie')
             const dataTV = await genreMovies('tv')
-            console.log(dataMovie, dataTV)
             setMovieGenre(dataMovie.genres)
             setTVGenre(dataTV.genres)
         }

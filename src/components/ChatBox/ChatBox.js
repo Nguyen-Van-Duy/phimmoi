@@ -25,15 +25,16 @@ const ChatBox = ({showBoxChat, handleShowBoxChat}) => {
     const dataUser = useSelector((state) => state.loginSlice.dataUser);
     const isLogin = useSelector((state) => state.loginSlice.isLogin);
     const userId = dataUser?.id;
-    console.log(dataUser);
     const [isAddFriend, setIsAddFriend] = useState(false);
     const [addNewFriend, setAddNewFriend] = useState(false);
     const [inputStr, setInputStr] = useState("");
     const socket = useRef(); 
     const scrollRef = useRef();
-    const token = localStorage.getItem('token')
+    // const token = localStorage.getItem('token')
     const [showPicker, setShowPicker] = useState(false);
     const [userChat, setUserChat] = useState("");
+    const [valueContentMenu, setValueContentMenu] = useState("admin")
+    const [listUser, setListUser] = useState(null)
 
     const onEmojiClick = (event, emojiObject) => {
       setInputStr((prevInput) => prevInput + emojiObject.emoji);
@@ -46,7 +47,6 @@ const ChatBox = ({showBoxChat, handleShowBoxChat}) => {
         //get message from socket
         if (isReceive === false) {
           socket.current.on("getMessage", (data) => {
-            console.log('get data message:', data);
             setArrivalMessage({
               sender: data.senderId,
               text: data.text,
@@ -56,7 +56,7 @@ const ChatBox = ({showBoxChat, handleShowBoxChat}) => {
         }
         return () => {
             //disconnect 
-          console.log('disconnect!');
+          // console.log('disconnect!');
           setIsReceive(true);
         };
     }, [isReceive]);
@@ -75,7 +75,7 @@ const ChatBox = ({showBoxChat, handleShowBoxChat}) => {
     }
     if(isAddFriend === false) {
         socket.current.on("getUsers", (users) => {
-        console.log("user online: ", users);
+        // console.log("user online: ", users);
         });
     }
     return () => {
@@ -89,10 +89,20 @@ const ChatBox = ({showBoxChat, handleShowBoxChat}) => {
           const data = await axios.get(
             apiConfig.urlConnect + "conversation/" + userId
           );
-          console.log(data.data);
           setUserConversation(data.data);
+          const listFriend = [userId]
+          data.data.map((item)=> {
+            return listFriend.push(item.members.find(item=> item !== userId))
+          })
+
+          const dataListUser = await axios.get(apiConfig.urlConnect + 'account/user')
+          const listUserOthers = dataListUser.data.filter(item=>!listFriend.includes(item._id))
+          setListUser(listUserOthers)
+          
         };
-        getConversation();
+        if(userId) {
+          getConversation();
+        }
       }, [userId, addNewFriend]);
     
     //   get message from db
@@ -102,9 +112,7 @@ const ChatBox = ({showBoxChat, handleShowBoxChat}) => {
             const data = await axios.get(
               apiConfig.urlConnect + "message/" + currentChat?._id
             );
-            console.log(data.data);
             setMessage(data.data);
-            console.log("total message: ", data.data);
           } catch (error) {
             console.log(error);
           }
@@ -125,7 +133,6 @@ const ChatBox = ({showBoxChat, handleShowBoxChat}) => {
         // });
     
         const receiverId = currentChat.members.find((member) => member !== userId);
-        console.log(receiverId);
         socket.current.emit("sendMessage", {
           senderId: userId,
           receiverId,
@@ -146,41 +153,51 @@ const ChatBox = ({showBoxChat, handleShowBoxChat}) => {
               text: inputStr,
             },
           ]);
+          setInputStr("")
         } catch (error) {
           console.log(error);
         }
       };
 
     //   add friend db
-      const addFriend = async (receiverId) => {
-        const result = await axios.post(apiConfig.urlConnect + 'conversation/add-friend',{receiverId, senderId: userId }, { headers: {"Authorization" : `Bearer ${token}`} })
-        console.log(result);
-        if(result.status === 200) {
-          setAddNewFriend(!addNewFriend)
-          alert("Success")
-        }
-      }
+      // const addFriend = async (receiverId) => {
+      //   const result = await axios.post(apiConfig.urlConnect + 'conversation/add-friend',{receiverId, senderId: userId }, apiConfig.headers )
+      //   console.log(result);
+      //   if(result.status === 200) {
+      //     setAddNewFriend(!addNewFriend)
+      //     alert("Success")
+      //   }
+      // }
 
     //   handle scroll message
       useEffect(() => {
-        console.log(scrollRef.current);
         scrollRef.current?.scrollIntoView({ behavior: "smooth" });
       }, [message]);
 
-      console.log(currentChat);
+      useEffect(() => {
+        if(!isLogin) {
+          setMessage(null)
+          setValueContentMenu("admin")
+        }
+      }, [isLogin, handleShowBoxChat]);
 
     return (<>
         {isLogin ? <div className={!showBoxChat ? 'messenger' : 'messenger show-messenger' }>
-            <MenuChatBox setShowListFriend={setShowListFriend} showListFriend={showListFriend} />
+            <MenuChatBox setShowListFriend={setShowListFriend} showListFriend={showListFriend} setValueContentMenu={setValueContentMenu} />
             <div className={!showListFriend ? "messenger__list" : 'messenger__list show-messenger__list'}>
               <div className='messenger-list__header'>
                 <input type="text" placeholder="Enter your name or email" />
               </div>
               <div className='messenger-list__body'>
                 <ul className='messenger-friend__list'>
-                  {userConversation.length > 0 && userConversation?.map((item) => (
+                  {isLogin && valueContentMenu !== 'message' && userConversation.length > 0 && userConversation?.map((item) => (
                     <div key={item._id} onClick={() => setCurrentChat(item)}>
-                      <MessengerList setUserChat={setUserChat} currentId={userId} item={item} />
+                      <MessengerList setUserChat={setUserChat} currentId={userId} item={item} valueContentMenu={valueContentMenu} />
+                  </div>
+                  ))}
+                  {valueContentMenu === 'message' && listUser.length > 0 && listUser?.map((item) => (
+                    <div key={item._id}>
+                      <MessengerList setUserChat={setUserChat} currentId={userId} item={item} valueContentMenu={valueContentMenu} />
                   </div>
                   ))}
                 </ul>

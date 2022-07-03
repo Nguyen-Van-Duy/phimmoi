@@ -18,7 +18,7 @@ function UserMannager() {
             </div>
             <div className='manager-menu__body'>
                 <ul className='manager-menu__list'>
-                    <li className='manager-menu__item'><Link to="/manager/profile">Profile</Link></li>
+                <Link to="/manager/profile"><li className='manager-menu__item'>Profile</li></Link>
                     <li className='manager-menu__item'>Nguyễn Văn Duy</li>
                     <li className='manager-menu__item'>Nguyễn Văn Duy</li>
                     <li className='manager-menu__item'>Nguyễn Văn Duy</li>

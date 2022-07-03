@@ -38,6 +38,8 @@
 
   .messenger-list__body {
     display: flex;
+    height: 40rem;
+    overflow-y: auto;
   }
 
   .messenger-friend__list {
@@ -56,6 +58,7 @@
 
   .messenger-friend__item {
     display: flex;
+    margin-bottom: 1rem;
   }
 
   .messenger-friend__item img {
@@ -72,13 +75,26 @@
   }
 
   .messenger-friend__name {
-    font-size: 1.3rem;
+    font-size: 1.5rem;
+    font-weight: 500;
   }
 
   .messenger-friend__desc {
-    font-size: 1rem;
+    font-size: 1.2rem;
   }
 
   .messenger-friend__container:hover {
     background-color: azure;
+  }
+
+  .message-friend__button {
+    margin-top: 1rem;
+    color: #fff;
+    font-size: 1.3rem;
+  }
+
+  .message-friend__button span {
+    border-radius: 4px;
+    padding: 0.6rem 1.2rem;
+    margin-right: 1rem;
   }

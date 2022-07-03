@@ -92,8 +92,8 @@ const MovieDetails = () => {
                             <VoteAverage dataDetails={dataDetails} />
                         </p>
                         <div className="banner__button detail-content__button">
-                            <Link to={(params.category === 'movie' && `/${params.category}/${params.id}/watch`) || 
-                            (params.category === 'tv' && `/${params.category}/${params.id}/watch/season/1/esp/1`)} className="button red">
+                            <Link to={(params.category === 'movie' && `/${params.category}/${ params.id}/watch`) || 
+                            (params.category === 'tv' && `/${params.category}/${ params.id}/watch/season/1/esp/1`)} className="button red">
                                 <i className="fas fa-play-circle"></i>Play Now
                             </Link>
                             <span className="button green" onClick={toggleModal}>

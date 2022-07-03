@@ -4,7 +4,7 @@ import React,{ useEffect, useState } from "react";
 import Header from "./components/Header/Header";
 import Home from "./pages/Home/Home";
 import { dataMovie, trending } from "./API/MoviesApi";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { dataFilmAction } from "./store/dataFilmSlice";
 import Footer from "./components/Footer/Footer";
 import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
@@ -27,6 +27,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(true)
   const [showBoxChat, setShowBoxChat] = useState(false)
   const dispatch = useDispatch()
+  const isLogin = useSelector((state) => state.loginSlice.isLogin);
 
   useEffect(() => {
     const fetchDataFilm = async () => {
@@ -85,7 +86,7 @@ function App() {
   return (
     <div className="App">
       <Header />
-      <ChatBox showBoxChat={showBoxChat} handleShowBoxChat={handleShowBoxChat} />
+      {isLogin && <ChatBox showBoxChat={showBoxChat} handleShowBoxChat={handleShowBoxChat} />}
       <div className="message-icon__show" onClick={handleShowBoxChat}><i className="fa-solid fa-comment-dots"></i></div>
       <main className="main">
         {!isLoading && <Routes>
