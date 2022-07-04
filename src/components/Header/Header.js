@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 // import BoxModal from "../BoxModal/BoxModal";
 import axios from "axios"
 import { setUserId } from "../../store/LoginSlice";
-import avatar from '../../image/avatar.jpeg'
+import apiConfig from "../../API/configApi"
 import MenuListFeature from "./MenuListFeature/MenuListFeature";
 
 const menu = [
@@ -147,7 +147,7 @@ const Header = () => {
           </li>}
           {!isLogin && <li className="feature__item" onClick={handleShowModal}><span className="login-bottom">Login</span></li>}
           {isLogin && !loading && <li className="feature__item login-bottom">
-            <img src={avatar} alt="" />
+            <img src={ apiConfig.urlConnectSocketIO + "image/avatar.jpeg" } alt="" />
             <span>{dataUser?.user_name?.trim().split(' ').pop()}</span>
             <i className="fa-solid fa-caret-down" style={{marginLeft: "10px"}}></i>
             <div className="header-list__feature-menu"><MenuListFeature /></div>

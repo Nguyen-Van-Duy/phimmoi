@@ -86,7 +86,7 @@ function App() {
   return (
     <div className="App">
       <Header />
-      {isLogin && <ChatBox showBoxChat={showBoxChat} handleShowBoxChat={handleShowBoxChat} />}
+      {<ChatBox showBoxChat={showBoxChat} handleShowBoxChat={handleShowBoxChat} />}
       <div className="message-icon__show" onClick={handleShowBoxChat}><i className="fa-solid fa-comment-dots"></i></div>
       <main className="main">
         {!isLoading && <Routes>

@@ -52,7 +52,7 @@
 
   .messenger-friend__container {
     list-style: none;
-    padding: 1rem 0.8rem;
+    padding: 0.5rem 0.8rem;
     cursor: pointer;
   }
 
@@ -77,6 +77,14 @@
   .messenger-friend__name {
     font-size: 1.5rem;
     font-weight: 500;
+    display: -webkit-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    /* white-space: nowrap; */
+    /* overflow: hidden; */
+    /* text-overflow: ellipsis;  */
   }
 
   .messenger-friend__desc {

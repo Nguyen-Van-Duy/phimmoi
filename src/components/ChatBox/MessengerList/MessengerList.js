@@ -4,9 +4,10 @@ import avatar from '../../../image/avatar.jpeg'
 import apiConfig from '../../../API/configApi';
 import axios from 'axios';
 
-function MessengerList({item, currentId, setUserChat, valueContentMenu}) {
+function MessengerList({item, currentId, setUserChat, valueContentMenu, listInvitation, handleAddFriendClient}) {
   const [user, setUser] = useState(null)
-  const [invitation, setInvitation] = useState()
+  const [invitation, setInvitation] = useState(valueContentMenu === 'message' && listInvitation)
+  console.log(listInvitation);
 
   //   add friend db
   const handleSendFriend = async (data) => {
@@ -23,15 +24,18 @@ function MessengerList({item, currentId, setUserChat, valueContentMenu}) {
       setInvitation(dataInvitation.data)
   }
 
+  // useEffect(()=>{
+  //   setInvitation(listInvitation)
+  // }, [])
   
-  useEffect(()=>{
-    const getInvitation = async () => {
-      const result = await axios.get(apiConfig.urlConnect + 'message/invitation/' + currentId )
-      console.log(result);
-      setInvitation(result.data)
-    }
-    getInvitation()
-  }, [currentId])
+  // useEffect(()=>{
+  //   const getInvitation = async () => {
+  //     const result = await axios.get(apiConfig.urlConnect + 'message/invitation/' + currentId )
+  //     console.log(result);
+  //     setInvitation(result.data)
+  //   }
+  //   getInvitation()
+  // }, [currentId])
 
   useEffect(()=> {
     const getUser = async () => {
@@ -53,12 +57,29 @@ function MessengerList({item, currentId, setUserChat, valueContentMenu}) {
   }, [currentId, item ,valueContentMenu])
 
   const handleDeleteInvitation = async (sender_id, receiver_id) => {
-    const dataInvitationDelete = invitation.find(item => item.sender_id === sender_id && item.receiver_id === receiver_id)
+    const dataInvitationDelete = invitation?.find(item => item.sender_id === sender_id && item.receiver_id === receiver_id)
     try {
       const dataInvitation = await axios.delete(apiConfig.urlConnect + 'message/invitation/' + dataInvitationDelete._id )
       console.log(dataInvitation);
-      const dataAfterDelete = invitation.filter(item=>item._id !== dataInvitationDelete._id)
+      const dataAfterDelete = invitation?.filter(item=>item._id !== dataInvitationDelete._id)
       setInvitation(dataAfterDelete)
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  const handleAddFriend = async (receiver_id) => {
+    try {
+      const result = await axios.post(apiConfig.urlConnect + 'conversation/add-friend',{receiver_id: receiver_id, sender_id: currentId }, apiConfig.headers )
+        console.log(result);
+        if(result.status === 200) {
+          const dataAfterDelete = invitation?.filter(item=>item._id !== receiver_id)
+          setInvitation(dataAfterDelete)
+          handleAddFriendClient(receiver_id)
+          alert("Success")
+        } else {
+          console.log("2");
+        }
     } catch (e) {
       console.log(e);
     }
@@ -81,7 +102,7 @@ function MessengerList({item, currentId, setUserChat, valueContentMenu}) {
             <span className='messenger-friend__name'>{item?.user_name}</span>
             <span className='messenger-friend__desc'>Chưa kết bạn</span>
             {((invitation?.filter((items =>items.sender_id === item._id && items.receiver_id === currentId))).length > 0) ? <div className='message-friend__button'>
-              <span className='green'>Xác nhận</span>
+              <span className='green' onClick={()=>handleAddFriend(item._id)}>Xác nhận</span>
               <span className='red' onClick={()=>handleDeleteInvitation(item._id, currentId)}>Từ chối</span>
             </div> : ((invitation?.filter((items =>items.sender_id === currentId && items.receiver_id === item._id))).length > 0) ? <div className='message-friend__button'>
               <span className='blue'>Chờ xác nhận</span>
