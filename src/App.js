@@ -4,7 +4,7 @@ import React,{ useEffect, useState } from "react";
 import Header from "./components/Header/Header";
 import Home from "./pages/Home/Home";
 import { dataMovie, trending } from "./API/MoviesApi";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { dataFilmAction } from "./store/dataFilmSlice";
 import Footer from "./components/Footer/Footer";
 import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
@@ -27,7 +27,6 @@ function App() {
   const [isLoading, setIsLoading] = useState(true)
   const [showBoxChat, setShowBoxChat] = useState(false)
   const dispatch = useDispatch()
-  const isLogin = useSelector((state) => state.loginSlice.isLogin);
 
   useEffect(() => {
     const fetchDataFilm = async () => {

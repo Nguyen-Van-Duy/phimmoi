@@ -106,3 +106,24 @@
     padding: 0.6rem 1.2rem;
     margin-right: 1rem;
   }
+
+  .user-status.user-online {
+    background-color: #31a24c;
+  }
+
+  .user-status.user-offline {
+    background-color: rgb(148, 148, 148);
+  }
+
+  .messenger-friend__avatar {
+    position: relative;
+  }
+
+  .user-status {
+    position: absolute;
+    width: 10px;
+    top: 0;
+    right: 5px;
+    height: 10px;
+    border-radius: 50%;
+  }

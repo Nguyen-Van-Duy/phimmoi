@@ -72,6 +72,7 @@
     background-color: rgb(61, 61, 61);
     min-height: calc(100vh - 28rem);
     border-radius: 12px;
+    padding: 2rem 3rem;
 }
 
 

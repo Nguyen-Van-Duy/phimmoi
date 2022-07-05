@@ -11,6 +11,7 @@ import Message from './Message/Message';
 import MenuChatBox from './MenuChatBox/MenuChatBox';
 import MessengerList from './MessengerList/MessengerList';
 import Picker from "emoji-picker-react";
+import ListFriend from './ListFriend/ListFriend';
 
 let showAvatar = false
 
@@ -26,16 +27,17 @@ const ChatBox = ({showBoxChat, handleShowBoxChat}) => {
     const isLogin = useSelector((state) => state.loginSlice.isLogin);
     const userId = dataUser?.id;
     const [isAddFriend, setIsAddFriend] = useState(false);
-    const [addNewFriend, setAddNewFriend] = useState(false);
     const [inputStr, setInputStr] = useState("");
     const socket = useRef(); 
     const scrollRef = useRef();
     // const token = localStorage.getItem('token')
     const [showPicker, setShowPicker] = useState(false);
     const [userChat, setUserChat] = useState("");
-    const [valueContentMenu, setValueContentMenu] = useState("admin")
+    const [valueContentMenu, setValueContentMenu] = useState("menu")
     const [listUser, setListUser] = useState(null)
     const [inviation, setInvitation] = useState()
+    const [userOnline, setUserOnline] = useState([])
+    const [idAdmin, setIdAdmin] = useState()
 
     const onEmojiClick = (event, emojiObject) => {
       setInputStr((prevInput) => prevInput + emojiObject.emoji);
@@ -76,7 +78,7 @@ const ChatBox = ({showBoxChat, handleShowBoxChat}) => {
     }
     if(isAddFriend === false) {
         socket.current.on("getUsers", (users) => {
-        // console.log("user online: ", users);
+          setUserOnline(users)
         });
     }
     return () => {
@@ -90,6 +92,8 @@ const ChatBox = ({showBoxChat, handleShowBoxChat}) => {
           const data = await axios.get(
             apiConfig.urlConnect + "conversation/" + userId
           );
+          const dataAdmin = await axios.get(apiConfig.urlConnect + 'account/admin')
+          setIdAdmin(dataAdmin.data[0]._id)
           setUserConversation(data.data);
           const listFriend = [userId]
           data.data.map((item)=> {
@@ -104,7 +108,7 @@ const ChatBox = ({showBoxChat, handleShowBoxChat}) => {
         if(userId) {
           getConversation();
         }
-      }, [userId, addNewFriend]);
+      }, [userId]);
     
     //   get message from db
       useEffect(() => {
@@ -126,12 +130,6 @@ const ChatBox = ({showBoxChat, handleShowBoxChat}) => {
     //   handle send message
       const handleSendMessage = async (e) => {
         e.preventDefault();
-        // console.log(e.target[0].value);
-        // console.log({
-        //   conversationId: currentChat._id,
-        //   sender: userId,
-        //   text: inputStr,
-        // });
     
         const receiverId = currentChat.members.find((member) => member !== userId);
         socket.current.emit("sendMessage", {
@@ -178,22 +176,24 @@ const ChatBox = ({showBoxChat, handleShowBoxChat}) => {
       useEffect(() => {
         if(!isLogin) {
           setMessage(null)
-          setValueContentMenu("admin")
+          setValueContentMenu("menu")
+          setShowListFriend()
         }
       }, [isLogin, handleShowBoxChat]);
 
       useEffect(()=>{
         const getInvitation = async () => {
           const result = await axios.get(apiConfig.urlConnect + 'message/invitation/' + userId )
-          console.log(result);
           setInvitation(result.data)
         }
         getInvitation()
       }, [userId, valueContentMenu])
 
       const handleAddFriendClient = (receiver_id) => {
-        console.log("receiver_id: ", receiver_id);
+        const dataListUserAfterAdd = listUser.filter(user=>user._id !== receiver_id)
+        setListUser(dataListUserAfterAdd)
       }
+
 
     return (<>
         {isLogin ? <div className={!showBoxChat ? 'messenger' : 'messenger show-messenger' }>
@@ -204,14 +204,31 @@ const ChatBox = ({showBoxChat, handleShowBoxChat}) => {
               </div>
               <div className='messenger-list__body'>
                 <ul className='messenger-friend__list'>
-                  {isLogin && inviation && valueContentMenu !== 'message' && userConversation.length > 0 && userConversation?.map((item) => (
-                    <div key={item._id} onClick={() => setCurrentChat(item)}>
-                      <MessengerList setUserChat={setUserChat} currentId={userId} item={item} valueContentMenu={valueContentMenu}/>
-                  </div>
-                  ))}
+                  {isLogin && inviation && valueContentMenu === 'user' && userConversation.length > 0 && userConversation?.map((item, id) => {
+                      if(item.members.includes(idAdmin) && dataUser.role === 'user') {
+                        return []
+                      }
+                    return (
+                      <div key={item._id} onClick={() => setCurrentChat(item)}>
+                        <ListFriend online={userOnline} setUserChat={setUserChat} currentId={userId} item={item} valueContentMenu={valueContentMenu}/>
+                    </div>
+                    )
+                  })}
+
+                  {isLogin && inviation && valueContentMenu === 'admin' && userConversation.length > 0 && userConversation?.map((item, id) => {
+                    if(id !== 0) {
+                      return []
+                    }
+                    return (
+                      <div key={item._id} onClick={() => setCurrentChat(item)}>
+                        <ListFriend online={userOnline} setUserChat={setUserChat} currentId={userId} item={item} valueContentMenu={valueContentMenu}/>
+                    </div>
+                    )
+                  })}
+
                   {valueContentMenu === 'message' && listUser.length > 0 && listUser?.map((item) => (
                     <div key={item._id}>
-                      <MessengerList setUserChat={setUserChat} currentId={userId} item={item} valueContentMenu={valueContentMenu} listInvitation={inviation} handleAddFriendClient={handleAddFriendClient}  />
+                      <MessengerList online={userOnline.some(user=>user.userId === item._id)} setUserChat={setUserChat} currentId={userId} item={item} valueContentMenu={valueContentMenu} listInvitation={inviation} handleAddFriendClient={handleAddFriendClient}  />
                   </div>
                   ))}
                 </ul>

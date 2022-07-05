@@ -1,6 +1,7 @@
 import React from 'react'
+import { useSelector } from 'react-redux';
 import "./MenuChatBox.css"
-let listMenuChat = [
+const listMenuChat = [
     {
         icon: "fa-solid fa-sliders",
         title: "menu",
@@ -20,9 +21,18 @@ let listMenuChat = [
 ]
 
 function MenuChatBox({setShowListFriend, showListFriend, setValueContentMenu }) {
+    const dataUser = useSelector((state) => state.loginSlice.dataUser);
+    let menu
+    if(dataUser.role === 'admin') {
+        menu = listMenuChat.filter(d=>d.title !== "admin" && d.title !== "message")
+    } else {
+        menu = [...listMenuChat]
+    }
     const handleShowContentMenu = (value)=>{
         if(value === "menu") {
             setShowListFriend(!showListFriend)
+            setValueContentMenu("admin")
+            return
         } else {
             setShowListFriend(true)
         }
@@ -32,7 +42,7 @@ function MenuChatBox({setShowListFriend, showListFriend, setValueContentMenu }) 
   return (
     <nav className='chat-box__menu'>
         <ul className="box-menu__items">
-            {listMenuChat.map((item, index)=> <li key={index} className="box-menu__item" onClick={()=>handleShowContentMenu(item.title)}>
+            {menu.map((item, index)=> <li key={index} className="box-menu__item" onClick={()=>handleShowContentMenu(item.title)}>
                 <i className={item.icon}></i>
             </li>)}
         </ul>

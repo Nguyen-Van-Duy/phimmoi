@@ -2,6 +2,7 @@ import React from 'react'
 import { Link, Route, Routes } from 'react-router-dom'
 import "./UserManager.css"
 import avatar from "../../image/avatar.jpeg"
+import Profile from './Profile/Profile'
 
 function UserMannager() {
 // const history = createBrowserHistory();
@@ -28,7 +29,7 @@ function UserMannager() {
         </div>
         <div className='manager-content'>
             <Routes>
-                <Route path="profile" element={<h2 style={{color: '#fff'}}>Hello</h2>} />
+                <Route path="profile" element={<Profile />} />
                 <Route path="history" element={<h2 style={{color: '#fff'}}>No</h2>} />
             </Routes>
         </div>
