@@ -44,6 +44,8 @@ const ChatBox = ({showBoxChat, handleShowBoxChat}) => {
       setShowPicker(false);
     };
 
+    console.log(inviation);
+
     // connect socket and get message
     useEffect(() => {
         socket.current = io(apiConfig.urlConnectSocketIO);
@@ -56,13 +58,14 @@ const ChatBox = ({showBoxChat, handleShowBoxChat}) => {
               createdAt: Date.now(),
             });
           });
+
         }
         return () => {
             //disconnect 
           // console.log('disconnect!');
           setIsReceive(true);
         };
-    }, [isReceive]);
+    }, [isReceive, inviation]);
 
     //Check the chat room, add new messages
     useEffect(() => {
@@ -158,16 +161,6 @@ const ChatBox = ({showBoxChat, handleShowBoxChat}) => {
         }
       };
 
-    //   add friend db
-      // const addFriend = async (receiverId) => {
-      //   const result = await axios.post(apiConfig.urlConnect + 'conversation/add-friend',{receiverId, senderId: userId }, apiConfig.headers )
-      //   console.log(result);
-      //   if(result.status === 200) {
-      //     setAddNewFriend(!addNewFriend)
-      //     alert("Success")
-      //   }
-      // }
-
     //   handle scroll message
       useEffect(() => {
         scrollRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -185,6 +178,7 @@ const ChatBox = ({showBoxChat, handleShowBoxChat}) => {
         const getInvitation = async () => {
           const result = await axios.get(apiConfig.urlConnect + 'message/invitation/' + userId )
           setInvitation(result.data)
+          console.log(result.data);
         }
         getInvitation()
       }, [userId, valueContentMenu])
@@ -228,7 +222,14 @@ const ChatBox = ({showBoxChat, handleShowBoxChat}) => {
 
                   {valueContentMenu === 'message' && listUser.length > 0 && listUser?.map((item) => (
                     <div key={item._id}>
-                      <MessengerList online={userOnline.some(user=>user.userId === item._id)} setUserChat={setUserChat} currentId={userId} item={item} valueContentMenu={valueContentMenu} listInvitation={inviation} handleAddFriendClient={handleAddFriendClient}  />
+                      <MessengerList socket={socket.current} 
+                      online={userOnline.some(user=>user.userId === item._id)} 
+                      setUserChat={setUserChat} 
+                      currentId={userId} 
+                      item={item} 
+                      valueContentMenu={valueContentMenu} 
+                      listInvitation={inviation} 
+                      handleAddFriendClient={handleAddFriendClient}  />
                   </div>
                   ))}
                 </ul>

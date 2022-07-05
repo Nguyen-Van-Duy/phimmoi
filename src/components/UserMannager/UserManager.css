@@ -1,8 +1,9 @@
 .manager__container {
     
     min-height: calc(100vh - 28rem);
-    margin: 6rem 5rem 0;
+    
     display: flex;
+    padding: 6.8rem 5rem 8px;
 }
 
 .manager-menu {

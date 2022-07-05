@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import "./MessengerList.css"
 import avatar from '../../../image/avatar.jpeg'
 import apiConfig from '../../../API/configApi';
 import axios from 'axios';
 // import { useSelector } from 'react-redux';
 
-function MessengerList({item, currentId, setUserChat, valueContentMenu, listInvitation, handleAddFriendClient, online}) {
+function MessengerList({item, currentId, socket, valueContentMenu, listInvitation, handleAddFriendClient, online}) {
   const [invitation, setInvitation] = useState(valueContentMenu === 'message' && listInvitation)
   // const dataUser = useSelector((state) => state.loginSlice.dataUser);
 
@@ -24,18 +24,16 @@ function MessengerList({item, currentId, setUserChat, valueContentMenu, listInvi
       setInvitation(dataInvitation.data)
   }
 
-  // useEffect(()=>{
-  //   setInvitation(listInvitation)
-  // }, [])
-  
-  // useEffect(()=>{
-  //   const getInvitation = async () => {
-  //     const result = await axios.get(apiConfig.urlConnect + 'message/invitation/' + currentId )
-  //     console.log(result);
-  //     setInvitation(result.data)
-  //   }
-  //   getInvitation()
-  // }, [currentId])
+  useEffect(()=>{
+    
+  socket.on("getDeleteInvitation", (data) => {
+    console.log(data, invitation);
+    if(invitation && invitation.length > 0) {
+      const dataFilter = invitation.filter(item=>item.sender_id !== data.sender_id && item.receiver_id !== data.receiver_id)
+    setInvitation(dataFilter);
+    }
+  });
+  }, [currentId, invitation, socket])
 
   const handleDeleteInvitation = async (sender_id, receiver_id) => {
     const dataInvitationDelete = invitation?.find(item => item.sender_id === sender_id && item.receiver_id === receiver_id)
@@ -44,6 +42,10 @@ function MessengerList({item, currentId, setUserChat, valueContentMenu, listInvi
       console.log(dataInvitation);
       const dataAfterDelete = invitation?.filter(item=>item._id !== dataInvitationDelete._id)
       setInvitation(dataAfterDelete)
+      socket.emit("deleteInvitation", {
+        sender_id,
+        receiver_id
+      })
     } catch (e) {
       console.log(e);
     }
