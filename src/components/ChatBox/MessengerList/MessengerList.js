@@ -8,6 +8,8 @@ import axios from 'axios';
 function MessengerList({item, currentId, socket, valueContentMenu, listInvitation, handleAddFriendClient, online}) {
   const [invitation, setInvitation] = useState(valueContentMenu === 'message' && listInvitation)
   // const dataUser = useSelector((state) => state.loginSlice.dataUser);
+  const [isSend, setIsSend] = useState(true)
+  const [isDelete, setIsDelete] = useState(true)
 
   //   add friend db
   const handleSendFriend = async (data) => {
@@ -18,22 +20,42 @@ function MessengerList({item, currentId, socket, valueContentMenu, listInvitatio
       sender_name: data.user_name,
     }
     const result = await axios.post(apiConfig.urlConnect + 'message/invitation', params , apiConfig.headers )
-    console.log(result);
-    const dataInvitation = await axios.get(apiConfig.urlConnect + 'message/invitation/' + currentId )
-      console.log(dataInvitation);
-      setInvitation(dataInvitation.data)
+    console.log("result", result);
+    socket.emit("sendInvitationAddFriend", result.data );
+    // const dataInvitation = await axios.get(apiConfig.urlConnect + 'message/invitation/' + currentId )
+    //   console.log(dataInvitation);
+    //   setInvitation(dataInvitation.data)
   }
 
-  useEffect(()=>{
-    
-  socket.on("getDeleteInvitation", (data) => {
-    console.log(data, invitation);
-    if(invitation && invitation.length > 0) {
-      const dataFilter = invitation.filter(item=>item.sender_id !== data.sender_id && item.receiver_id !== data.receiver_id)
-    setInvitation(dataFilter);
+  useEffect(()=> {
+    if(isSend) {
+      socket.on("getInvitationAddFriend", data=> {
+        if(invitation && invitation.filter(item=>item._id === data._id).length<=0) {
+          setInvitation(d=>[...d, data])
+        }
+      })
     }
-  });
-  }, [currentId, invitation, socket])
+    return ()=>{
+      setIsSend(false)
+    }
+  }, [invitation, socket, isSend])
+
+  useEffect(()=>{
+    if(isDelete) {
+      socket.on("getDeleteInvitation", (data) => {
+        console.log(data, invitation);
+        if(invitation && invitation.length >= 0) {
+          const dataAfterDelete = invitation?.filter(item=>item._id !== data.id)
+          setInvitation(dataAfterDelete)
+        }
+      });
+    }
+
+    return () => {
+      setIsDelete(false)
+    }
+    
+  }, [currentId, invitation, socket, isDelete])
 
   const handleDeleteInvitation = async (sender_id, receiver_id) => {
     const dataInvitationDelete = invitation?.find(item => item.sender_id === sender_id && item.receiver_id === receiver_id)
@@ -43,8 +65,7 @@ function MessengerList({item, currentId, socket, valueContentMenu, listInvitatio
       const dataAfterDelete = invitation?.filter(item=>item._id !== dataInvitationDelete._id)
       setInvitation(dataAfterDelete)
       socket.emit("deleteInvitation", {
-        sender_id,
-        receiver_id
+        id: dataInvitationDelete._id
       })
     } catch (e) {
       console.log(e);
@@ -58,6 +79,7 @@ function MessengerList({item, currentId, socket, valueContentMenu, listInvitatio
           const dataAfterDelete = invitation?.filter(item=>item._id !== receiver_id)
           setInvitation(dataAfterDelete)
           handleAddFriendClient(receiver_id)
+          handleDeleteInvitation(currentId, receiver_id)
           alert("Success")
         } else {
           console.log("2");

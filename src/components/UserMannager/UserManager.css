@@ -1,14 +1,12 @@
 .manager__container {
-    
-    min-height: calc(100vh - 28rem);
-    
+    min-height: calc(100vh - 29.6rem);
     display: flex;
-    padding: 6.8rem 5rem 8px;
+    padding: 68px 5rem 8px;
 }
 
 .manager-menu {
     width: 27%;
-    min-height: calc(100vh - 28rem);
+    min-height: calc(100vh - 29.6rem);
     margin-right: 3rem;
     border: 1px solid rgb(67, 67, 67);
     border-radius: 12px;

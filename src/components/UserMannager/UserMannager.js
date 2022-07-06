@@ -29,7 +29,7 @@ function UserMannager() {
         </div>
         <div className='manager-content'>
             <Routes>
-                <Route path="profile" element={<Profile />} />
+                <Route path="" element={<Profile />} />
                 <Route path="history" element={<h2 style={{color: '#fff'}}>No</h2>} />
             </Routes>
         </div>

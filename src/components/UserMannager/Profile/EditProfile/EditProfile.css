@@ -1,0 +1,42 @@
+.update-profile__form .group {
+    display: flex;
+    flex-direction: column;
+    padding: 0.5rem 0 1rem;
+}
+
+.update-profile__form .group .label {
+    font-size: 1.6rem;
+}
+
+input[type="file"],
+.update-profile__form .group input,
+.update-profile__form .group .input {
+    padding: 1rem;
+    outline: none;
+    border-radius: 4px;
+    border: none;
+
+}
+
+input[type="file"] {
+	width: 30%;
+	height: 40px;
+	background: #7a7a7a;
+}
+
+.update-profile__form .group .date {
+    padding: 1rem;
+    width: 15rem;
+}
+
+.update-profile__form .textarea {
+    padding: 10px;
+   height: 10rem;
+   outline: none;
+   max-width: 100%;
+}
+
+.button.blue {
+    color: #fff;
+    border: none;
+}

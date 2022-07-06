@@ -10,8 +10,6 @@ import { setUserId } from '../../../../store/LoginSlice'
 
 function LoginForm({setShowForgot, showForgot, handleCloseModal}) {
 
-    // const userId = useSelector((state) => state.loginSlice.userId)
-    // const isLogin = useSelector((state) => state.loginSlice.isLogin)
     const urlConnect = useSelector((state) => state.loginSlice.urlConnect)
     const dispatch = useDispatch()
     // const navigate = useNavigate()

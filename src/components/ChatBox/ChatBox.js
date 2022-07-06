@@ -44,13 +44,13 @@ const ChatBox = ({showBoxChat, handleShowBoxChat}) => {
       setShowPicker(false);
     };
 
-    console.log(inviation);
-
     // connect socket and get message
     useEffect(() => {
-        socket.current = io(apiConfig.urlConnectSocketIO);
+        if(isLogin) {
+          socket.current = io(apiConfig.urlConnectSocketIO);
+        }
         //get message from socket
-        if (isReceive === false) {
+        if (isReceive === false && isLogin) {
           socket.current.on("getMessage", (data) => {
             setArrivalMessage({
               sender: data.senderId,
@@ -76,10 +76,10 @@ const ChatBox = ({showBoxChat, handleShowBoxChat}) => {
 
       // add user in chat room
     useEffect(() => {
-    if (userId !== null) {
+    if (userId !== null && isLogin) {
         socket.current.emit("addUser", userId);
     }
-    if(isAddFriend === false) {
+    if(isAddFriend === false && isLogin) {
         socket.current.on("getUsers", (users) => {
           setUserOnline(users)
         });
