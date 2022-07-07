@@ -1,14 +1,14 @@
 import React, { useState } from 'react'
 import { Form, Formik } from 'formik'
-import FormikControl from '../../../Form/FormikControl'
+import FormikControl from '../../Form/FormikControl'
 import * as Yup from 'yup'
 import axios from "axios"
-import apiConfig from '../../../../API/configApi'
-import './EditProfile.css'
+import apiConfig from '../../../API/configApi'
+import '../Profile/EditProfile/EditProfile.css'
 import { useDispatch, useSelector } from 'react-redux'
-import { setUserId } from '../../../../store/LoginSlice'
+import { setUserId } from '../../../store/LoginSlice'
 
-function EditProfile({handleShowEditProfile}) {
+function UploadMovie({handleShowEditProfile}) {
 
     const dataUser = useSelector((state) => state.loginSlice.dataUser);
     const [selectedFile, setSelectedFile] = useState();
@@ -60,7 +60,7 @@ function EditProfile({handleShowEditProfile}) {
 
   return (
     <div className='profile'>
-        <h2 className='profile_title'>Update Profile</h2>
+        <h2 className='profile_title'>Update Movie</h2>
         <Formik
     initialValues={initialValues}
     validationSchema={validationSchema}
@@ -80,17 +80,13 @@ function EditProfile({handleShowEditProfile}) {
             />
             <FormikControl
             control='radio'
-            label='Gender'
+            label='Radio topic'
             name='gender'
             options={radioOptions}
           />
             <div className='group'>
             <label htmlFor="image_movie" className="label">Avatar</label>
                 <input className='input' type="file" name="image_movie" onChange={handleChangeImage} />
-            </div>
-            <div className='group'>
-            <label htmlFor="image_movie" className="label">Avatar</label>
-                <input className='input' type="file" name="image_movie2" onChange={handleChangeImage} />
             </div>
             <FormikControl
                 control='date'
@@ -152,4 +148,4 @@ function EditProfile({handleShowEditProfile}) {
   )
 }
 
-export default EditProfile
+export default UploadMovie

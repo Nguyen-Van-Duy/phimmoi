@@ -51,7 +51,7 @@ const Header = () => {
   useEffect(()=> {
     const authentication = async () => {
         setLoading(true)
-        if(token) {
+        if(token && !isLogin) {
             try {
                 const result = await axios.get(urlConnect + 'account/refresh', { headers: {"Authorization" : `Bearer ${token}`} });
                 dispatch(setUserId(result.data))
@@ -66,7 +66,7 @@ const Header = () => {
         }
     }
     authentication()
-  }, [token, dispatch, urlConnect])
+  }, [token, dispatch, urlConnect, isLogin])
 
   const toggleMenu = () => {
     setMenuMobile(!menuMobile)
@@ -112,6 +112,8 @@ const Header = () => {
     }
   }, [])
 
+  console.log("dataUser: ", dataUser);
+
   return (
     <>
     <header className="header" ref={headerRef}>
@@ -147,7 +149,7 @@ const Header = () => {
           </li>}
           {!isLogin && <li className="feature__item" onClick={handleShowModal}><span className="login-bottom">Login</span></li>}
           {isLogin && !loading && <li className="feature__item login-bottom">
-            <img src={ apiConfig.urlConnectSocketIO + "image/avatar.jpeg" } alt="" />
+            <img src={ apiConfig.urlConnectSocketIO + dataUser.avatar } alt="" />
             <span>{dataUser?.user_name?.trim().split(' ').pop()}</span>
             <i className="fa-solid fa-caret-down" style={{marginLeft: "10px"}}></i>
             <div className="header-list__feature-menu"><MenuListFeature /></div>

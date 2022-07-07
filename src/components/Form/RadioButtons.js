@@ -7,6 +7,7 @@ function RadioButtons (props) {
   return (
     <div className='group'>
       <label className='label'>{label}</label>
+      <div className='radio-group'>
       <Field className='radio' name={name} >
         {({ field }) => {
           return options.map(option => {
@@ -20,12 +21,13 @@ function RadioButtons (props) {
                   value={option.value}
                   checked={field.value === option.value}
                 />
-                <label htmlFor={option.value}>{option.key}</label>
+                <label style={{marginRight: "20px"}} htmlFor={option.value}>{option.key}</label>
               </React.Fragment>
             )
           })
         }}
       </Field>
+      </div>
       <ErrorMessage component={TextError} name={name} />
     </div>
   )

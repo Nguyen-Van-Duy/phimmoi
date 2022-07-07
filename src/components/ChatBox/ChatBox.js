@@ -25,7 +25,7 @@ const ChatBox = ({showBoxChat, handleShowBoxChat}) => {
     const [userConversation, setUserConversation] = useState([]);
     const dataUser = useSelector((state) => state.loginSlice.dataUser);
     const isLogin = useSelector((state) => state.loginSlice.isLogin);
-    const userId = dataUser?.id;
+    const userId = dataUser?._id;
     const [isAddFriend, setIsAddFriend] = useState(false);
     const [inputStr, setInputStr] = useState("");
     const socket = useRef(); 

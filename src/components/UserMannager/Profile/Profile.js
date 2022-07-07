@@ -1,10 +1,18 @@
 import React, { useState } from 'react'
+import { useSelector } from 'react-redux';
+import apiConfig from '../../../API/configApi';
 import EditProfile from './EditProfile/EditProfile'
+import { useNavigate } from "react-router-dom";
 import './Profile.css'
 
 function Profile() {
     const [showEditProfile, setShowEditProfile] = useState(false)
-
+    const dataUser = useSelector((state) => state.loginSlice.dataUser);
+    const isLogin = useSelector((state) => state.loginSlice.isLogin);
+    const navigate = useNavigate()
+    if(isLogin === false) {
+        navigate('/')
+    }
     const handleShowEditProfile = () => {
         setShowEditProfile(!showEditProfile)
     }
@@ -13,33 +21,33 @@ function Profile() {
         {/* <h2 className='profile_title'>Profile</h2> */}
         <div className='profile_head'>
             <div className='profile_header-image'>
-                <img src='http://localhost:8080/image/avatar.jpeg' alt="" />
-                <span>Edit image</span>
+                <img src={ apiConfig.urlConnectSocketIO + dataUser.avatar} alt="" />
+                {/* <span>Edit image</span> */}
             </div>
             <div className='profile_content'>
-                <span className='profile__name'>Name</span>
-                <span className='profile__desc'>This code is close to the previous case except that the condition for the callback to be executed is to wait 5000ms.</span>
+                <span className='profile__name'>{dataUser.user_name}</span>
+                <span className='profile__desc'>{dataUser.description|| "hello world!"}</span>
             </div>
         </div>
         <div className='profile_body'>
         <ul className="profile_list">
             <li className='profile_item'>
-                <span className='profile_item-title'>Full name:</span> Nguyễn Văn Duy
+                <span className='profile_item-title'>Full name:</span> {dataUser.user_name}
             </li>
             <li className='profile_item'>
-                <span className='profile_item-title'>Date of birth:</span> 23/34/1234
+                <span className='profile_item-title'>Date of birth:</span> {dataUser.date_of_birth}
             </li>
             <li className='profile_item'>
-                <span className='profile_item-title'>Hometown:</span> 2343645675467
+                <span className='profile_item-title'>Hometown:</span> {dataUser.hometown}
             </li>
             <li className='profile_item'>
-                <span className='profile_item-title'>Phone:</span> 2343645675467
+                <span className='profile_item-title'>Phone:</span> {dataUser.phone}
             </li>
             <li className='profile_item'>
-                <span className='profile_item-title'>Loves:</span> 2343645675467
+                <span className='profile_item-title'>Loves:</span> {dataUser.loves}
             </li>
             <li className='profile_item'>
-                <span className='profile_item-title'>Hates:</span> 2343645675467
+                <span className='profile_item-title'>Hates:</span> {dataUser.hates}
             </li>
         </ul>
         <div className='profile-edit'>

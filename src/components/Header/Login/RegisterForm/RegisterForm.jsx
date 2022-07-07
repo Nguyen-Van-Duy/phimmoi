@@ -33,6 +33,7 @@ function RegisterForm({setShowForgot, showForgot}) {
             password: values.password
         })
         console.log(result);
+        console.log("result resgister: ", result);
         if(result.status === 200) {
             alert("Đăng ký thành công!")
         } else {

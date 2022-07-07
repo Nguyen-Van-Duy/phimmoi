@@ -3,6 +3,7 @@ import "./MessengerList.css"
 import avatar from '../../../image/avatar.jpeg'
 import apiConfig from '../../../API/configApi';
 import axios from 'axios';
+import { useSelector } from 'react-redux';
 // import { useSelector } from 'react-redux';
 
 function MessengerList({item, currentId, socket, valueContentMenu, listInvitation, handleAddFriendClient, online}) {
@@ -10,6 +11,7 @@ function MessengerList({item, currentId, socket, valueContentMenu, listInvitatio
   // const dataUser = useSelector((state) => state.loginSlice.dataUser);
   const [isSend, setIsSend] = useState(true)
   const [isDelete, setIsDelete] = useState(true)
+  const isLogin = useSelector((state) => state.loginSlice.isLogin);
 
   //   add friend db
   const handleSendFriend = async (data) => {
@@ -28,7 +30,7 @@ function MessengerList({item, currentId, socket, valueContentMenu, listInvitatio
   }
 
   useEffect(()=> {
-    if(isSend) {
+    if(isSend && isLogin) {
       socket.on("getInvitationAddFriend", data=> {
         if(invitation && invitation.filter(item=>item._id === data._id).length<=0) {
           setInvitation(d=>[...d, data])
@@ -38,10 +40,10 @@ function MessengerList({item, currentId, socket, valueContentMenu, listInvitatio
     return ()=>{
       setIsSend(false)
     }
-  }, [invitation, socket, isSend])
+  }, [invitation, socket, isSend,isLogin])
 
   useEffect(()=>{
-    if(isDelete) {
+    if(isDelete && isLogin) {
       socket.on("getDeleteInvitation", (data) => {
         console.log(data, invitation);
         if(invitation && invitation.length >= 0) {
@@ -55,7 +57,7 @@ function MessengerList({item, currentId, socket, valueContentMenu, listInvitatio
       setIsDelete(false)
     }
     
-  }, [currentId, invitation, socket, isDelete])
+  }, [currentId, invitation, socket, isDelete, isLogin])
 
   const handleDeleteInvitation = async (sender_id, receiver_id) => {
     const dataInvitationDelete = invitation?.find(item => item.sender_id === sender_id && item.receiver_id === receiver_id)

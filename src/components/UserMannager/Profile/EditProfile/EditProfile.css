@@ -24,6 +24,10 @@ input[type="file"] {
 	background: #7a7a7a;
 }
 
+.radio-group {
+    font-size: 1.3rem;
+}
+
 .update-profile__form .group .date {
     padding: 1rem;
     width: 15rem;
