@@ -116,17 +116,21 @@ function UploadMovie() {
     // }
     const handleCheckUrl = () => {
         console.log(urlRef.current.value);
+        const listItem = document.getElementById('test'); 
+        const newItem = document.createElement('div');
+        const att = document.createAttribute("id");
+            att.value = "test";
         if(urlRef.current.value.includes("<iframe")) {
             setCheckTypeUrl("iframe")
-            // const listItem = document.getElementById("test");
-            // let newItem = document.createElement('div');
-            // let text = document.createTextNode(urlRef.current.value)
-            // newItem.appendChild(text)
-            // listItem.appendChild(newItem)
+            newItem.innerHTML = urlRef.current.value;
+            listItem.parentNode.replaceChild(newItem, listItem);
+            console.log(urlRef.current.value);
             return
-        }
-        if(urlRef.current.value.includes("http")) {
+        } else if(urlRef.current.value.includes("http")) {
             setCheckTypeUrl("video")
+        } else {
+            newItem.innerHTML = "";
+            listItem.parentNode.replaceChild(newItem, listItem);
         }
     }
 
@@ -185,7 +189,8 @@ function UploadMovie() {
                         {checkBackdrop === false && <span className='error'>Required</span>}
                     </div>
                     <span className='button green' onClick={handleCheckUrl}>Check</span>
-                    {checkTypeUrl === "iframe" && urlRef.current.value }
+                    <div id="test"></div> 
+                    
                     <FormikControl
                         control='checkbox'
                         label='Checkbox genres'
