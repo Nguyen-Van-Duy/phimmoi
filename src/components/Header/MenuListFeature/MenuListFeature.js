@@ -1,5 +1,6 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
+import { Link } from 'react-router-dom'
 import { logout } from '../../../store/LoginSlice'
 import './MenuListFeature.css'
 
@@ -13,10 +14,12 @@ function MenuListFeature() {
   return (
     <div className='list-feature__container'>
         <ul className='list-feature__list'>
+            <Link to='/manager'>
             <li className='list-feature__item'>
                 <i className="fa-solid fa-id-card icon-feature"></i>
                 Profile
             </li>
+            </Link>
             <li className='list-feature__item'>
             <i className="fa-solid fa-film icon-feature"></i>
                 My Film

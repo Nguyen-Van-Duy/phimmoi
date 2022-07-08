@@ -34,9 +34,9 @@ const navigate = useNavigate()
             <ul className='manager-menu__list'>
             <Link to="/manager"><li className='manager-menu__item'>Profile</li></Link>
             <Link to="/manager/upload-movie"><li className='manager-menu__item'>Upload Movie</li></Link>
-                <li className='manager-menu__item'>Nguyễn Văn Duy</li>
-                <li className='manager-menu__item'>Nguyễn Văn Duy</li>
-                <li className='manager-menu__item'>Nguyễn Văn Duy</li>
+            <Link to="/manager/history"><li className='manager-menu__item'>History</li></Link>
+            <Link to="/manager/movie"><li className='manager-menu__item'>My Movies</li></Link>
+            <Link to="/manager/change-password"><li className='manager-menu__item'>Change Password</li></Link>
             </ul>
         </div>
     </div>

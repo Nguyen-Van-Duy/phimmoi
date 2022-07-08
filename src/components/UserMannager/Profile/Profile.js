@@ -32,22 +32,22 @@ function Profile() {
         <div className='profile_body'>
         <ul className="profile_list">
             <li className='profile_item'>
-                <span className='profile_item-title'>Full name:</span> {dataUser.user_name}
+                <span className='profile_item-title'>Full name:</span><span> {dataUser.user_name}</span>
             </li>
             <li className='profile_item'>
-                <span className='profile_item-title'>Date of birth:</span> {dataUser.date_of_birth}
+                <span className='profile_item-title'>Date of birth:</span><span> {dataUser.date_of_birth}</span>
             </li>
             <li className='profile_item'>
-                <span className='profile_item-title'>Hometown:</span> {dataUser.hometown}
+                <span className='profile_item-title'>Hometown:</span><span> {dataUser.hometown}</span>
             </li>
             <li className='profile_item'>
-                <span className='profile_item-title'>Phone:</span> {dataUser.phone}
+                <span className='profile_item-title'>Phone:</span><span> {dataUser.phone}</span>
             </li>
             <li className='profile_item'>
-                <span className='profile_item-title'>Loves:</span> {dataUser.loves}
+                <span className='profile_item-title'>Loves:</span><span> {dataUser.loves}</span>
             </li>
             <li className='profile_item'>
-                <span className='profile_item-title'>Hates:</span> {dataUser.hates}
+                <span className='profile_item-title'>Hates:</span><span> {dataUser.hates}</span>
             </li>
         </ul>
         <div className='profile-edit'>

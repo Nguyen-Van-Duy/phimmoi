@@ -38,16 +38,16 @@
     align-items: center;
 }
 
-.manager-menu__header-name {
-}
+/* .manager-menu__header-name {
+} */
 
 .manager-menu__header-email {
     font-size: 1.6rem;
-    margin-top: 1rem;
+    margin-top: 0.5rem;
 }
 
-.manager-menu__body {
-}
+/* .manager-menu__body {
+} */
 
 .manager-menu__list {
     display: flex;

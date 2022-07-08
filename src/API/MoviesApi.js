@@ -6,6 +6,85 @@ export const category = {
   tv: 'tv',
 };
 
+export const genderMovie = [
+  {
+    value: "28",
+    key: "Action"
+  },
+  {
+    value: "12",
+    key: "Adventure"
+  },
+  {
+    value: "16",
+    key: "Animation"
+  },
+  {
+    value: "35",
+    key: "Comedy"
+  },
+  {
+    value: "80",
+    key: "Crime"
+  },
+  {
+    value: "99",
+    key: "Documentary"
+  },
+  {
+    value: "18",
+    key: "Drama"
+  },
+  {
+    value: "10751",
+    key: "Family"
+  },
+  {
+    value: "14",
+    key: "Fantasy"
+  },
+  {
+    value: "36",
+    key: "History"
+  },
+  {
+    value: "27",
+    key: "Horror"
+  },
+  {
+    value: "10402",
+    key: "Music"
+  },
+  {
+    value: "9648",
+    key: "Mystery"
+  },
+  {
+    value: "10749",
+    key: "Romance"
+  },
+  {
+    value: "878",
+    key: "Science Fiction"
+  },
+  {
+    value: "10770",
+    key: "TV Movie"
+  },
+  {
+    value: "53",
+    key: "Thriller"
+  },
+  {
+    value: "10752",
+    key: "War"
+  },
+  {
+    value: "37",
+    key: "Western"
+  }
+]
+
 export const movieType = [
   {
     category: 'popular', name: 'Movie Popular'

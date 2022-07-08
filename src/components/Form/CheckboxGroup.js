@@ -7,11 +7,12 @@ function CheckboxGroup (props) {
   return (
     <div className='group'>
       <label className='label'>{label}</label>
-      <Field className='checkBox' name={name}>
+      <div className='checkbox-group'>
+      <Field className='checkbox_list' name={name}>
         {({ field }) => {
           return options.map(option => {
             return (
-              <React.Fragment key={option.key}>
+              <div className='checkbox_item' key={option.key}>
                 <input
                   type='checkbox'
                   id={option.value}
@@ -20,12 +21,13 @@ function CheckboxGroup (props) {
                   value={option.value}
                   checked={field.value.includes(option.value)}
                 />
-                <label htmlFor={option.value}>{option.key}</label>
-              </React.Fragment>
+                <label className='label-checkbox' htmlFor={option.value}>{option.key}</label>
+              </div>
             )
           })
         }}
       </Field>
+      </div>
       <ErrorMessage component={TextError} name={name} />
     </div>
   )

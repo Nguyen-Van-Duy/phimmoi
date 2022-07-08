@@ -129,6 +129,23 @@ a {
   color:rgb(223, 222, 222);
 }
 
+.checkout-group {
+  font-size: 1.5rem;
+  display: flex;
+}
+
+.checkbox_list {
+  display: flex;
+}
+
+.radio-group,
+.checkbox_item {
+  display: inline-block;
+  font-size: 1.5rem;
+  min-width: 14rem;
+  padding: 0.2rem;
+}
+
 @media (max-width: 1024px) {
 
 }
