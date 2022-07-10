@@ -21,6 +21,7 @@ input[type="file"],
 
 input[type="file"] {
 	width: 30%;
+    min-width: 22rem;
 	height: 40px;
 	background: #7a7a7a;
 }

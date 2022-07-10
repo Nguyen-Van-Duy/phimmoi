@@ -6,6 +6,8 @@ import { useSelector } from 'react-redux'
 import apiConfig from '../../API/configApi'
 import { useNavigate } from "react-router-dom";
 import UploadMovie from './UploadMovie/UploadMovie'
+import MovieWaiting from './MovieWaiting/MovieWaiting'
+import MyMovie from './MyMovie/MyMovie'
 
 
 function UserMannager() {
@@ -34,8 +36,9 @@ const navigate = useNavigate()
             <ul className='manager-menu__list'>
             <Link to="/manager"><li className='manager-menu__item'>Profile</li></Link>
             <Link to="/manager/upload-movie"><li className='manager-menu__item'>Upload Movie</li></Link>
+            <Link to="/manager/movie-waiting"><li className='manager-menu__item'>Movie waiting</li></Link>
             <Link to="/manager/history"><li className='manager-menu__item'>History</li></Link>
-            <Link to="/manager/movie"><li className='manager-menu__item'>My Movies</li></Link>
+            <Link to="/manager/my-movie"><li className='manager-menu__item'>My Movies</li></Link>
             <Link to="/manager/change-password"><li className='manager-menu__item'>Change Password</li></Link>
             </ul>
         </div>
@@ -44,6 +47,8 @@ const navigate = useNavigate()
         <Routes>
             <Route path="" element={<Profile />} />
             <Route path="upload-movie" element={<UploadMovie />} />
+            <Route path="movie-waiting" element={<MovieWaiting />} />
+            <Route path="my-movie" element={<MyMovie />} />
             <Route path="history" element={<h2 style={{color: '#fff'}}>No</h2>} />
         </Routes>
     </div>

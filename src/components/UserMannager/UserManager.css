@@ -38,6 +38,17 @@
     align-items: center;
 }
 
+#url-video {
+    display: flex;
+    justify-content: center;
+}
+
+.video-url,
+#url-video>iframe {
+    max-width: 560px !important;
+    max-height:315px !important;
+}
+
 /* .manager-menu__header-name {
 } */
 
@@ -75,5 +86,21 @@
     border-radius: 12px;
     padding: 2rem 3rem;
 }
+
+.my-movie__container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.my-movie__container .movie-item {
+    /* display: flex; */
+    /* justify-content: flex-start; */
+    margin: 0;
+}
+
+.my-movie__container .view-more__item {
+    min-width: 20%;
+}
+
 
 

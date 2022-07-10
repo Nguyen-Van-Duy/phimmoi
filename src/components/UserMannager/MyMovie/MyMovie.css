@@ -1,0 +1,14 @@
+.my-movie__container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.my-movie__container .movie-item {
+    /* display: flex; */
+    /* justify-content: flex-start; */
+    margin: 0;
+}
+
+.my-movie__container .view-more__item {
+    min-width: 20%;
+}
