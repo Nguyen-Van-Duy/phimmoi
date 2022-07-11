@@ -77,7 +77,6 @@ function UploadMovie() {
 
     const onSubmitLogin = async (values, {resetForm}) => {
         if(valueUrl === "") {
-            console.log("eeeeeeeeeeeeee");
             return
         }
         console.log('Form data', values)
@@ -104,7 +103,6 @@ function UploadMovie() {
         formData.append('data', JSON.stringify(dataRequest));
 
         const result = await axios.post(apiConfig.urlConnect + 'upload/upload-movie', formData)
-        console.log(result);
         if(result.status === 200) {
             const listItem = document.getElementById('url-video'); 
             const newItem = document.createElement('div');
@@ -121,7 +119,6 @@ function UploadMovie() {
     }
 
     const handleCheckUrl = (e) => {
-        console.log(e.target.value);
         setValueUrl(e.target.value)
         const listItem = document.getElementById('url-video'); 
         const newItem = document.createElement('div');
@@ -144,7 +141,6 @@ function UploadMovie() {
         }
         listItem.parentNode.replaceChild(newItem, listItem);
     }
-    console.log("checkBackdrop", checkBackdrop);
 
   return (
     <div className='profile'>
@@ -155,8 +151,8 @@ function UploadMovie() {
             onSubmit={onSubmitLogin}
             >
             {formik => {
-                console.log(formik)
-                console.log(formik.values.url_type);
+                // console.log(formik)
+                // console.log(formik.values.url_type);
                 if(formik.values.url_type && formik.values.url_type !== typeUrl) {
                     setValueUrl("")
                     setTypeUrl(formik.values.url_type)
@@ -251,14 +247,14 @@ function UploadMovie() {
                         placeholder='Director'
                         name='director'
                     />
-                <div className='profile-edit'>
-                    <button type="submit" className={`button blue ${!formik.isValid ? "disable-submit" : ""}`} disabled={!formik.isValid}>
-                        <i className="fa-solid fa-check"></i>Update
-                    </button>
-                    <button className="button red" type='reset'>
-                    <i className="fa-solid fa-xmark"></i>Cancel
-                    </button>
-                </div>
+                    <div className='profile-edit'>
+                        <button type="submit" className={`button blue ${!formik.isValid ? "disable-submit" : ""}`} disabled={!formik.isValid}>
+                            <i className="fa-solid fa-check"></i>Update
+                        </button>
+                        <button className="button red" type='reset'>
+                        <i className="fa-solid fa-xmark"></i>Cancel
+                        </button>
+                    </div>
                 </Form>
                 )
             }}

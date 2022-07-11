@@ -146,6 +146,24 @@ a {
   padding: 0.2rem;
 }
 
+.favourite {
+  margin-left: 2rem;
+  display: flex;
+  align-items: center;
+}
+
+.favourite i {
+  font-size: 2.5rem;
+  color: #fff;
+  margin-left: 1rem;
+}
+
+.favourite-add i,
+.favourite i:hover {
+  color: red;
+  cursor: pointer;
+}
+
 @media (max-width: 1024px) {
 
 }

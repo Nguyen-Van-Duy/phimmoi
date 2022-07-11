@@ -96,11 +96,66 @@
     /* display: flex; */
     /* justify-content: flex-start; */
     margin: 0;
+    min-width: 20rem;
+}
+
+.my-movie__container .view-more__item {
+    min-width: 20%;
+    width: 20rem;
+}
+
+.change-password {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.change-password .input {
+    min-width: 60rem;
+}
+
+.update-movie {
+    width: 100%;
+    position: absolute;
+    top: 70%;
+    left: 50%;
+    transform: translate(-50%);
+}
+
+.update-movie__button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    display: none;
+}
+
+.movie-item__content:hover .update-movie__button  {
+    display: flex;
+}
+
+.update-movie__button span {
+    color: #fff;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+    margin-right: 1rem;
+    border-radius: 4px;
+}
+
+.update-movie__button span:last-child {
+    margin-right: 0;
+}
+
+.my-movie__container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.my-movie__container .movie-item {
+    margin: 0;
 }
 
 .my-movie__container .view-more__item {
     min-width: 20%;
 }
-
 
 

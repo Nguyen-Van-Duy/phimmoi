@@ -14,6 +14,7 @@ import { handleShowProfileCast } from '../../store/profileCastSlice';
 import Loading from '../../components/Loading';
 import VoteAverage from '../../components/VoteAverage/VoteAverage';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
+import axios from 'axios';
 
 const MovieDetails = () => {
     const [dataDetails, setDAtaDetails] = useState({})
@@ -21,9 +22,13 @@ const MovieDetails = () => {
     const [listCrew, setListCrew] = useState([])
     const [isLoading, setIsLoading] = useState(true)
     const [showModal, setShowModal] = useState(false)
+    const [favourite, setFavourite] = useState()
     const showProfileCast = useSelector( state => state.profileCast.isShowProfile)
+    const dataUser = useSelector((state) => state.loginSlice.dataUser);
     const params = useParams()
     const dispatch = useDispatch()
+
+    console.log("dataUser:", dataUser);
 
     const toggleShowProfile = () => {
         dispatch(handleShowProfileCast.handleShowProfile())
@@ -35,8 +40,8 @@ const MovieDetails = () => {
         setShowModal(!showModal)
     }
 
+    
     useEffect(() => {
-        
         const fetchDataFilm = async () => {
             // fetch dataFilm
             const data = await movieDetails(params.category, params.id)
@@ -51,6 +56,45 @@ const MovieDetails = () => {
         }
         fetchDataFilm()
     }, [params.category, params.id])
+    
+    useEffect(()=> {
+        const getFavourite = async () => {
+            const data = await axios.get(apiConfig.urlConnect + 'movie/favourite/' + dataUser._id + '/' + dataDetails.id)
+            console.log("favourite:", data.data);
+            setFavourite(data.data[0])
+        }
+        if(dataUser && dataUser._id) {
+            getFavourite()
+        }
+    }, [dataUser, dataUser?._id, dataDetails.id])
+    
+    const handleAddFavourite = async () => {
+        if(dataUser && dataUser._id) {
+            const result = await axios.post(apiConfig.urlConnect + 'movie/add-favourite', {
+                user_id: dataUser._id,
+                movie_id: dataDetails.id,
+                category: params.category
+            })
+            console.log({
+                user_id: dataUser._id,
+                movie_id: dataDetails.id,
+                category: params.category
+            });
+            setFavourite(result.data)
+        } else {
+            alert("You need to be logged in to perform this function!")
+        }
+    }
+
+    const handleRemoveFavourite = async () => {
+        if(dataUser && dataUser._id) {
+            const result = await axios.delete(apiConfig.urlConnect + 'movie/delete-favourite/' + favourite._id)
+            console.log(result);
+            setFavourite(null)
+        } else {
+            alert("You need to be logged in to perform this function!")
+        }
+    }
 
     return (<>
         {/* modal show trailer */}
@@ -90,6 +134,9 @@ const MovieDetails = () => {
                         </div>
                         <p className="detail-content__desc">
                             <VoteAverage dataDetails={dataDetails} />
+                            {!favourite && <span className='favourite' onClick={handleAddFavourite}>Favourite:<i className="fa-solid fa-heart "></i></span>}
+                            {favourite && favourite.movie_id === dataDetails.id.toString() && 
+                            <span className='favourite favourite-add' onClick={handleRemoveFavourite}>Favourite:<i className="fa-solid fa-heart"></i></span>}
                         </p>
                         <div className="banner__button detail-content__button">
                             <Link to={(params.category === 'movie' && `/${params.category}/${ params.id}/watch`) || 

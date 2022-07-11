@@ -1,4 +1,4 @@
-.my-movie__container {
+.movie-favourite__container {
     display: flex;
     flex-wrap: wrap;
 }

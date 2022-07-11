@@ -6,11 +6,15 @@ import { movieDetails } from '../../API/MoviesApi';
 import PlayMovieMore from '../PlayMovieMore/PlayMovieMore';
 import VoteAverage from '../VoteAverage/VoteAverage';
 import './WatchMovie.css';
+import { useSelector } from 'react-redux';
+import axios from 'axios';
 
 const WatchMovie = () => {
 
     const params = useParams()
     const [dataFilm, setDataFim] = useState({})
+    const [favourite, setFavourite] = useState()
+    const dataUser = useSelector((state) => state.loginSlice.dataUser);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -21,6 +25,45 @@ const WatchMovie = () => {
         }
         fetchData()
     }, [params.category, params.id])
+
+    useEffect(()=> {
+        const getFavourite = async () => {
+            const data = await axios.get(apiConfig.urlConnect + 'movie/favourite/' + dataUser._id + '/' + dataFilm.id)
+            console.log("favourite:", data.data);
+            setFavourite(data.data[0])
+        }
+        if(dataUser && dataUser._id) {
+            getFavourite()
+        }
+    }, [dataUser, dataUser?._id, dataFilm.id])
+    
+    const handleAddFavourite = async () => {
+        if(dataUser && dataUser._id) {
+            const result = await axios.post(apiConfig.urlConnect + 'movie/add-favourite', {
+                user_id: dataUser._id,
+                movie_id: dataFilm.id,
+                category: params.category
+            })
+            console.log({
+                user_id: dataUser._id,
+                movie_id: dataFilm.id,
+                category: params.category
+            });
+            setFavourite(result.data)
+        } else {
+            alert("You need to be logged in to perform this function!")
+        }
+    }
+
+    const handleRemoveFavourite = async () => {
+        if(dataUser && dataUser._id) {
+            const result = await axios.delete(apiConfig.urlConnect + 'movie/delete-favourite/' + favourite._id)
+            console.log(result);
+            setFavourite(null)
+        } else {
+            alert("You need to be logged in to perform this function!")
+        }
+    }
     return (
         <>
         {dataFilm && <div className="watch-movie" style={{
@@ -43,7 +86,14 @@ const WatchMovie = () => {
                         <div className="detail-content__genres watch-content__desc">
                             {dataFilm.genres !== undefined && dataFilm.genres.map((items, id) => <span key={id}>{items.name}</span>)}
                         </div>
-                        <p className="watch-content__desc"><VoteAverage dataDetails={dataFilm} /></p>
+                        <p className="watch-content__desc">
+                            <VoteAverage dataDetails={dataFilm} />
+                        </p>
+                        <p className="watch-content__desc">
+                        {!favourite && <span className='favourite' onClick={handleAddFavourite}>Favourite:<i className="fa-solid fa-heart "></i></span>}
+                            {favourite && favourite.movie_id === dataFilm.id.toString() && 
+                            <span className='favourite favourite-add' onClick={handleRemoveFavourite}>Favourite:<i className="fa-solid fa-heart"></i></span>}
+                        </p>
                         
                     </div>
                     <div className="watch-movie__trending">

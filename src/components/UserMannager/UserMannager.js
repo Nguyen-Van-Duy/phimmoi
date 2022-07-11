@@ -8,6 +8,8 @@ import { useNavigate } from "react-router-dom";
 import UploadMovie from './UploadMovie/UploadMovie'
 import MovieWaiting from './MovieWaiting/MovieWaiting'
 import MyMovie from './MyMovie/MyMovie'
+import ChangePassword from './ChangePassword/ChangePassword'
+import Favourite from './Favourite/Favourite'
 
 
 function UserMannager() {
@@ -36,7 +38,9 @@ const navigate = useNavigate()
             <ul className='manager-menu__list'>
             <Link to="/manager"><li className='manager-menu__item'>Profile</li></Link>
             <Link to="/manager/upload-movie"><li className='manager-menu__item'>Upload Movie</li></Link>
-            <Link to="/manager/movie-waiting"><li className='manager-menu__item'>Movie waiting</li></Link>
+            {dataUser.role !== "admin" && 
+            <Link to="/manager/movie-waiting"><li className='manager-menu__item'>Movie waiting</li></Link>}
+            <Link to="/manager/my-favourite"><li className='manager-menu__item'>favourite</li></Link>
             <Link to="/manager/history"><li className='manager-menu__item'>History</li></Link>
             <Link to="/manager/my-movie"><li className='manager-menu__item'>My Movies</li></Link>
             <Link to="/manager/change-password"><li className='manager-menu__item'>Change Password</li></Link>
@@ -49,6 +53,8 @@ const navigate = useNavigate()
             <Route path="upload-movie" element={<UploadMovie />} />
             <Route path="movie-waiting" element={<MovieWaiting />} />
             <Route path="my-movie" element={<MyMovie />} />
+            <Route path="my-favourite" element={<Favourite />} />
+            <Route path="change-password" element={<ChangePassword />} />
             <Route path="history" element={<h2 style={{color: '#fff'}}>No</h2>} />
         </Routes>
     </div>

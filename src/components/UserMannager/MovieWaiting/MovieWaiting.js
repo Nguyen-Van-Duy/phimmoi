@@ -7,22 +7,19 @@ import MovieItem from '../../MovieList/MovieItem';
 const MovieWaiting = () => {
     const [movie, setMovie] = useState(null)
     const dataUser = useSelector((state) => state.loginSlice.dataUser);
-    console.log(dataUser);
     useEffect(() => {
         const fetchMovieUpload = async () => {
-            const data = await axios.get(apiConfig.urlConnect + "movie/my-movie/" + dataUser._id)
+            const data = await axios.get(apiConfig.urlConnect + "movie/movie-waiting/" + dataUser._id)
             console.log(data);
-            setMovie([...data.data,...data.data,...data.data,...data.data,...data.data,
-                ...data.data,...data.data,...data.data, ...data.data,...data.data,
-                ...data.data,...data.data,...data.data,...data.data,...data.data,...data.data])
+            setMovie(data.data)
         }
         fetchMovieUpload()
-    }, [])
+    }, [dataUser._id])
     return (
         <div className="my-movie__container">
-            {movie && movie.map((item, index) => <div className="view-more__item" key={index} >
+            {movie &&movie.length > 0 ? movie.map((item, index) => <div className="view-more__item" key={index} >
                 <MovieItem item={item} category={item.media_type} />
-            </div>)}
+            </div>) : <span>Not data</span>}
             
         </div>
     );
