@@ -142,3 +142,18 @@
     width: 30rem;
     right: 3rem;
 }
+
+.create-group {
+    width: 90%;
+    display: block;
+    background-color: rgb(121, 121, 121);
+    padding: 0.5rem;
+    margin: 0.2rem 1rem;
+    border-radius: 4px;
+    font-size: 1.3rem;
+}
+
+.message-header__title:hover .feature-chat__list {
+    display: block;
+}
+

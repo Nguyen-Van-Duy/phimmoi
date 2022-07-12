@@ -15,8 +15,12 @@ const listMenuChat = [
         title: "user",
     },
     {
-        icon: "fa-solid fa-user-group",
+        icon: "fa-solid fa-user-plus",
         title: "message",
+    },
+    {
+        icon: "fa-solid fa-users",
+        title: "group",
     }
 ]
 

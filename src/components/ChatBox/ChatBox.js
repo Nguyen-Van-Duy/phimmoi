@@ -12,6 +12,7 @@ import MenuChatBox from './MenuChatBox/MenuChatBox';
 import MessengerList from './MessengerList/MessengerList';
 import Picker from "emoji-picker-react";
 import ListFriend from './ListFriend/ListFriend';
+import ListFetureFriend from './ListFeatureFriend/ListFetureFriend';
 
 let showAvatar = false
 
@@ -35,7 +36,7 @@ const ChatBox = ({showBoxChat, handleShowBoxChat}) => {
     const [userChat, setUserChat] = useState("");
     const [valueContentMenu, setValueContentMenu] = useState("menu")
     const [listUser, setListUser] = useState(null)
-    const [inviation, setInvitation] = useState()
+    const [invitation, setInvitation] = useState()
     const [userOnline, setUserOnline] = useState([])
     const [idAdmin, setIdAdmin] = useState()
 
@@ -98,6 +99,7 @@ const ChatBox = ({showBoxChat, handleShowBoxChat}) => {
           const dataAdmin = await axios.get(apiConfig.urlConnect + 'account/admin')
           setIdAdmin(dataAdmin.data[0]._id)
           setUserConversation(data.data);
+          console.log("dataAdmin", data);
           const listFriend = [userId]
           data.data.map((item)=> {
             return listFriend.push(item.members.find(item=> item !== userId))
@@ -188,6 +190,7 @@ const ChatBox = ({showBoxChat, handleShowBoxChat}) => {
         setListUser(dataListUserAfterAdd)
       }
 
+      console.log(userChat);
 
     return (<>
         {isLogin ? <div className={!showBoxChat ? 'messenger' : 'messenger show-messenger' }>
@@ -198,7 +201,8 @@ const ChatBox = ({showBoxChat, handleShowBoxChat}) => {
               </div>
               <div className='messenger-list__body'>
                 <ul className='messenger-friend__list'>
-                  {isLogin && inviation && valueContentMenu === 'user' && userConversation.length > 0 && userConversation?.map((item, id) => {
+                {/* user */}
+                  {isLogin && invitation && valueContentMenu === 'user' && userConversation.length > 0 && userConversation?.map((item, id) => {
                       if(item.members.includes(idAdmin) && dataUser.role === 'user') {
                         return []
                       }
@@ -209,10 +213,11 @@ const ChatBox = ({showBoxChat, handleShowBoxChat}) => {
                     )
                   })}
 
-                  {isLogin && inviation && valueContentMenu === 'admin' && userConversation.length > 0 && userConversation?.map((item, id) => {
-                    if(id !== 0) {
-                      return []
-                    }
+                {/* admin */}
+                  {isLogin && invitation && valueContentMenu === 'admin' && userConversation.length > 0 && userConversation?.map((item, id) => {
+                    // if(id !== 0) {
+                    //   return []
+                    // }
                     return (
                       <div key={item._id} onClick={() => setCurrentChat(item)}>
                         <ListFriend online={userOnline} setUserChat={setUserChat} currentId={userId} item={item} valueContentMenu={valueContentMenu}/>
@@ -220,6 +225,7 @@ const ChatBox = ({showBoxChat, handleShowBoxChat}) => {
                     )
                   })}
 
+                  {/* message */}
                   {valueContentMenu === 'message' && listUser.length > 0 && listUser?.map((item) => (
                     <div key={item._id}>
                       <MessengerList socket={socket.current} 
@@ -228,19 +234,24 @@ const ChatBox = ({showBoxChat, handleShowBoxChat}) => {
                       currentId={userId} 
                       item={item} 
                       valueContentMenu={valueContentMenu} 
-                      listInvitation={inviation} 
+                      listInvitation={invitation} 
                       handleAddFriendClient={handleAddFriendClient}  />
                   </div>
                   ))}
                 </ul>
               </div>
             </div>
+
             <div className="chat-box__containner">
                 <div className='chat-box__header'>
                     <div className='message-header__left'>
                         <img src={avatar} alt='' />
                         <div className='message-header__title'>
-                            <span className='message-header__name'>{userChat.user_name || "Box Chat"}</span>
+                            <span className='message-header__name'>
+                              {userChat.user_name || "Box Chat"}
+                              <i className="fa-solid fa-caret-down"></i>
+                              {userChat.user_name && <ListFetureFriend userChatId={userChat._id} idAdmin={idAdmin} />}
+                            </span>
                             <span className='message-header__desc'></span>
                         </div>
                     </div>

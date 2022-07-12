@@ -46,7 +46,7 @@ function Favourite() {
             const result = await axios.delete(apiConfig.urlConnect + 'movie/delete-favourite/' + favouriteId)
             console.log(result);
             if(result.status === 200) {
-                const newListMovie = listMovie.filter(item=> item._id === favouriteId)
+                const newListMovie = listMovie.filter(item=> item._id !== favouriteId)
                 getListFavourite(newListMovie)
             } else {
                 alert("404!")

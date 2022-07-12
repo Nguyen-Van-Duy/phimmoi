@@ -1,0 +1,30 @@
+.feature-chat__list {
+    padding: 0;
+    position: absolute;
+    top: 2rem;
+    background-color: #fff;
+    border: 1px solid rgb(188, 188, 188);
+    font-weight: 400;
+    display: none;
+}
+
+.feature-chat__item {
+    list-style: none;
+    padding: 0.8rem 1rem;
+}
+
+.feature-chat__item:hover {
+    background-color: rgb(200, 200, 200);
+}
+
+.feature-chat__item i {
+    margin-right: 0.5rem;
+}
+
+.new-group {
+    position: absolute;
+    top: 3rem;
+    z-index: 1000;
+    height: 30rem;
+    background-color: rgb(136, 136, 136);
+}
