@@ -32,7 +32,6 @@ function LoginForm({setShowForgot, showForgot, handleCloseModal}) {
             password: values.password
         })
         if(result.data.status === 200) {
-            console.log("login :", result);
             localStorage.setItem("token", result.data.token)
             dispatch(setUserId(result.data))
             handleCloseModal()

@@ -23,8 +23,47 @@
 
 .new-group {
     position: absolute;
-    top: 3rem;
+    top: 0;
+    right: 0;
     z-index: 1000;
-    height: 30rem;
+    height: 100%;
+    width: 33rem;
     background-color: rgb(136, 136, 136);
+    z-index: 1001;
+}
+
+.new-group__header {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+    align-items: center;
+    background-color: #fff;
+    height: 5rem;
+}
+
+.message-form {
+    padding: 0.5rem;
+    display: flex;
+}
+
+.message-form input {
+    border: none;
+    outline: none;
+    flex: 1;
+    padding: 0 1.5rem;
+}
+
+.message-form button {
+    border: none;
+    outline: none;
+    padding: 1rem 1.5rem;
+}
+
+.message-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
 }

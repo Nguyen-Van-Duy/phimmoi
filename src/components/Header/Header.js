@@ -112,8 +112,6 @@ const Header = () => {
     }
   }, [])
 
-  console.log("dataUser: ", dataUser);
-
   return (
     <>
     <header className="header" ref={headerRef}>

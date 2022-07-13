@@ -9,10 +9,9 @@ import axios from "axios";
 import { useSelector } from 'react-redux';
 import Message from './Message/Message';
 import MenuChatBox from './MenuChatBox/MenuChatBox';
-import MessengerList from './MessengerList/MessengerList';
 import Picker from "emoji-picker-react";
-import ListFriend from './ListFriend/ListFriend';
 import ListFetureFriend from './ListFeatureFriend/ListFetureFriend';
+import ListFeatureChat from './ListFeatureChat';
 
 let showAvatar = false
 
@@ -93,13 +92,17 @@ const ChatBox = ({showBoxChat, handleShowBoxChat}) => {
     // add chat room in db
     useEffect(() => {
         const getConversation = async () => {
-          const data = await axios.get(
-            apiConfig.urlConnect + "conversation/" + userId
-          );
+          let data
+          if(valueContentMenu !== "group") {
+            data = await axios.get(apiConfig.urlConnect + "conversation/" + userId);
+          } else {
+            data = await axios.get(apiConfig.urlConnect + "conversation/group/" + userId);
+          }
+          console.log(data.data);
+          setUserConversation(data.data);
+          console.log(data.data);
           const dataAdmin = await axios.get(apiConfig.urlConnect + 'account/admin')
           setIdAdmin(dataAdmin.data[0]._id)
-          setUserConversation(data.data);
-          console.log("dataAdmin", data);
           const listFriend = [userId]
           data.data.map((item)=> {
             return listFriend.push(item.members.find(item=> item !== userId))
@@ -113,7 +116,7 @@ const ChatBox = ({showBoxChat, handleShowBoxChat}) => {
         if(userId) {
           getConversation();
         }
-      }, [userId]);
+      }, [userId, valueContentMenu]);
     
     //   get message from db
       useEffect(() => {
@@ -143,12 +146,11 @@ const ChatBox = ({showBoxChat, handleShowBoxChat}) => {
           text: inputStr,
         });
         try {
-          const data = await axios.post( apiConfig.urlConnect + "message", {
+          await axios.post( apiConfig.urlConnect + "message", {
             conversationId: currentChat._id,
             sender: userId,
             text: inputStr,
           });
-          console.log(data);
           setMessage((d) => [
             ...d,
             {
@@ -180,7 +182,6 @@ const ChatBox = ({showBoxChat, handleShowBoxChat}) => {
         const getInvitation = async () => {
           const result = await axios.get(apiConfig.urlConnect + 'message/invitation/' + userId )
           setInvitation(result.data)
-          console.log(result.data);
         }
         getInvitation()
       }, [userId, valueContentMenu])
@@ -190,7 +191,7 @@ const ChatBox = ({showBoxChat, handleShowBoxChat}) => {
         setListUser(dataListUserAfterAdd)
       }
 
-      console.log(userChat);
+
 
     return (<>
         {isLogin ? <div className={!showBoxChat ? 'messenger' : 'messenger show-messenger' }>
@@ -200,45 +201,19 @@ const ChatBox = ({showBoxChat, handleShowBoxChat}) => {
                 <input type="text" placeholder="Enter your name or email" />
               </div>
               <div className='messenger-list__body'>
-                <ul className='messenger-friend__list'>
-                {/* user */}
-                  {isLogin && invitation && valueContentMenu === 'user' && userConversation.length > 0 && userConversation?.map((item, id) => {
-                      if(item.members.includes(idAdmin) && dataUser.role === 'user') {
-                        return []
-                      }
-                    return (
-                      <div key={item._id} onClick={() => setCurrentChat(item)}>
-                        <ListFriend online={userOnline} setUserChat={setUserChat} currentId={userId} item={item} valueContentMenu={valueContentMenu}/>
-                    </div>
-                    )
-                  })}
-
-                {/* admin */}
-                  {isLogin && invitation && valueContentMenu === 'admin' && userConversation.length > 0 && userConversation?.map((item, id) => {
-                    // if(id !== 0) {
-                    //   return []
-                    // }
-                    return (
-                      <div key={item._id} onClick={() => setCurrentChat(item)}>
-                        <ListFriend online={userOnline} setUserChat={setUserChat} currentId={userId} item={item} valueContentMenu={valueContentMenu}/>
-                    </div>
-                    )
-                  })}
-
-                  {/* message */}
-                  {valueContentMenu === 'message' && listUser.length > 0 && listUser?.map((item) => (
-                    <div key={item._id}>
-                      <MessengerList socket={socket.current} 
-                      online={userOnline.some(user=>user.userId === item._id)} 
-                      setUserChat={setUserChat} 
-                      currentId={userId} 
-                      item={item} 
-                      valueContentMenu={valueContentMenu} 
-                      listInvitation={invitation} 
-                      handleAddFriendClient={handleAddFriendClient}  />
-                  </div>
-                  ))}
-                </ul>
+                  {isLogin && <ListFeatureChat 
+                    socket={socket.current} 
+                    invitation={invitation} 
+                    handleAddFriendClient={handleAddFriendClient}
+                    valueContentMenu={valueContentMenu} 
+                    userConversation={userConversation} 
+                    idAdmin={idAdmin} dataUser={dataUser} 
+                    setCurrentChat={setCurrentChat} 
+                    userOnline={userOnline} 
+                    setUserChat={setUserChat} 
+                    userId={userId} 
+                    listUser={listUser}  
+                  />}
               </div>
             </div>
 
@@ -248,9 +223,11 @@ const ChatBox = ({showBoxChat, handleShowBoxChat}) => {
                         <img src={avatar} alt='' />
                         <div className='message-header__title'>
                             <span className='message-header__name'>
-                              {userChat.user_name || "Box Chat"}
-                              <i className="fa-solid fa-caret-down"></i>
-                              {userChat.user_name && <ListFetureFriend userChatId={userChat._id} idAdmin={idAdmin} />}
+                              {userChat.room_name|| userChat.user_name || "Box Chat"}
+                              {userChat.user_name && <i className="fa-solid fa-caret-down"></i>}
+                              {userChat.user_name && 
+                              <ListFetureFriend userChat={userChat} idAdmin={idAdmin} setMessage={setMessage} setCurrentChat={setCurrentChat} setUserChat={setUserChat}
+                              userConversation={userConversation} setUserConversation={setUserConversation} />}
                             </span>
                             <span className='message-header__desc'></span>
                         </div>
@@ -279,7 +256,7 @@ const ChatBox = ({showBoxChat, handleShowBoxChat}) => {
                   </>
                   ) : (<span>Open a conversation to start a chat</span>)}
                 </div>
-                <div className='chat-box__bottom'>
+                {currentChat && <div className='chat-box__bottom'>
                     <form onSubmit={handleSendMessage} className="chat-box__form">
                         <i className="fa-solid fa-face-laugh-beam message-icon"  onClick={() => setShowPicker((val) => !val)}></i>
                         <input name="mesage-send" className="chat-box__send" value={inputStr} onChange={(e) => setInputStr(e.target.value)} />
@@ -291,12 +268,11 @@ const ChatBox = ({showBoxChat, handleShowBoxChat}) => {
                             <i className="fa-solid fa-paper-plane message-icon"></i>
                         </button>
                     </form>
-                </div>
+                </div>}
             </div>
         </div> : <div className={`messenger messenger-information ${showBoxChat && 'show-messenger'}`}>
           <img src={img403} alt="" />
           <span>You need to be logged in to perform this function!</span>
-          {/* <span class="button red"><i class="fas fa-play-circle"></i>Login Now</span> */}
           </div>}
         </>
     );

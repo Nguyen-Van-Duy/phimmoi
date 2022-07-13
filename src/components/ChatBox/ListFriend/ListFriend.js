@@ -11,6 +11,7 @@ function ListFriend({item, currentId, setUserChat, valueContentMenu, online}) {
 //   const [invitation, setInvitation] = useState(valueContentMenu === 'message' && listInvitation)
   const dataUser = useSelector((state) => state.loginSlice.dataUser);
 
+  console.log(item);
   useEffect(()=> {
     const getUser = async () => {
       const friendId = item.members.find(f=> f !== currentId)
@@ -39,14 +40,14 @@ function ListFriend({item, currentId, setUserChat, valueContentMenu, online}) {
   }, [currentId, item, valueContentMenu, dataUser.role, online])
 
   return (<>
-    {valueContentMenu !== 'message' && <li className='messenger-friend__container' onClick={()=>setUserChat(user)}>
+    {valueContentMenu !== 'message' && <li className='messenger-friend__container' onClick={()=>setUserChat({...user, conversationId: item._id, room_name: item?.room_name})}>
       <div className='messenger-friend__item'>
         <div className='messenger-friend__avatar user-offline'>
           <img src={avatar} alt='' />
           <div className={`user-status ${isOnline ? "user-online" : "user-offline"}`}></div>
         </div>
         <div className='messenger-friend__content'>
-            <span className='messenger-friend__name'>{user?.user_name}</span>
+            <span className='messenger-friend__name'>{item.room_name || user?.user_name}</span>
             <span className='messenger-friend__desc'>{isOnline ? "Online" : "Offline"}</span>
         </div>
       </div>

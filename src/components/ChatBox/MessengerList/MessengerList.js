@@ -45,7 +45,6 @@ function MessengerList({item, currentId, socket, valueContentMenu, listInvitatio
   useEffect(()=>{
     if(isDelete && isLogin) {
       socket.on("getDeleteInvitation", (data) => {
-        console.log(data, invitation);
         if(invitation && invitation.length >= 0) {
           const dataAfterDelete = invitation?.filter(item=>item._id !== data.id)
           setInvitation(dataAfterDelete)
@@ -63,7 +62,6 @@ function MessengerList({item, currentId, socket, valueContentMenu, listInvitatio
     const dataInvitationDelete = invitation?.find(item => item.sender_id === sender_id && item.receiver_id === receiver_id)
     try {
       const dataInvitation = await axios.delete(apiConfig.urlConnect + 'message/invitation/' + dataInvitationDelete._id )
-      console.log(dataInvitation);
       const dataAfterDelete = invitation?.filter(item=>item._id !== dataInvitationDelete._id)
       setInvitation(dataAfterDelete)
       socket.emit("deleteInvitation", {

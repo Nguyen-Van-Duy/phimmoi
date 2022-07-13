@@ -28,12 +28,11 @@ function RegisterForm({setShowForgot, showForgot}) {
       const onSubmitLogin = async (values, {resetForm}) => {
         // console.log('Form data', values)
         const result = await axios.post(urlConnect + 'account/create-account', {
-            user_name: values.user_name,
-            email: values.email,
-            password: values.password
+            user_name: values.user_name.trim(),
+            email: values.email.trim(),
+            password: values.password.trim()
         })
         console.log(result);
-        console.log("result resgister: ", result);
         if(result.status === 200) {
             alert("Đăng ký thành công!")
         } else {

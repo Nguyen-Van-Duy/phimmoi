@@ -81,6 +81,10 @@
     font-weight: 500;
 }
 
+.message-header__name i {
+    margin-left: 0.5rem;
+}
+
 .message-header__desc {
     font-size: 1.2rem;
 }

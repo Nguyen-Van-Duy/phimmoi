@@ -11,6 +11,7 @@ import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
 import Loading from "./components/Loading";
 import ChatBox from "./components/ChatBox/ChatBox";
 import UserMannager from "./components/UserMannager/UserMannager";
+import RTC from "./pages/RTC/RTC";
 // import MovieDetails from "./pages/MovieDetails/MovieDetails";
 // import ViewMore from "./pages/ViewMore/ViewMore";
 // import ViewGenre from "./pages/ViewGenre/ViewMore";
@@ -100,8 +101,8 @@ function App() {
             element={<React.Suspense fallback={<div className="loading"><Loading /></div>}><Movie /></React.Suspense>}
           />
           <Route
-            path="/new-popular"
-            element={<Home />}
+            path="/RTC"
+            element={<RTC />}
           />
           <Route
             path="/:category/:id"

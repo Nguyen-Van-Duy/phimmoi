@@ -4,7 +4,7 @@ const initialState = {
   isLogin: false,
   conversationId: '',
   dataUser: null,
-  urlConnect: process.env.REACT_APP_CONNECT_SERVER
+  urlConnect: process.env.REACT_APP_CONNECT_SERVER,
 }
 
 const loginSlice = createSlice({
@@ -23,6 +23,7 @@ const loginSlice = createSlice({
       state.isLogin = false
       state.dataUser = null
     },
+    
   },
 })
 
