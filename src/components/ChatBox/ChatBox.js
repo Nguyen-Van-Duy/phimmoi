@@ -12,10 +12,13 @@ import MenuChatBox from './MenuChatBox/MenuChatBox';
 import Picker from "emoji-picker-react";
 import ListFetureFriend from './ListFeatureFriend/ListFetureFriend';
 import ListFeatureChat from './ListFeatureChat';
+import { Peer } from "peerjs";
 
 let showAvatar = false
 
 const ChatBox = ({showBoxChat, handleShowBoxChat}) => {
+    const [shareScreenId, setShareScreenId] = useState()
+    const peer = useRef()
     const [showListFriend, setShowListFriend] = useState(false)
     const [isReceive, setIsReceive] = useState(false);
     const [arrivalMessage, setArrivalMessage] = useState(null);
@@ -43,6 +46,14 @@ const ChatBox = ({showBoxChat, handleShowBoxChat}) => {
       setInputStr((prevInput) => prevInput + emojiObject.emoji);
       setShowPicker(false);
     };
+
+    peer.current = new Peer()
+    useEffect(()=> {
+      peer.current.on('open', ids => {
+        setShareScreenId(ids)
+          console.log(ids);
+      })
+  }, [])
 
     // connect socket and get message
     useEffect(() => {
@@ -76,8 +87,8 @@ const ChatBox = ({showBoxChat, handleShowBoxChat}) => {
 
       // add user in chat room
     useEffect(() => {
-    if (userId !== null) {
-        socket.current.emit("addUser", userId);
+    if (userId !== null && shareScreenId && userId) {
+        socket.current.emit("addUser", {userId, shareScreenId});
     }
     if(isAddFriend === false) {
         socket.current.on("getUsers", (users) => {
@@ -87,7 +98,7 @@ const ChatBox = ({showBoxChat, handleShowBoxChat}) => {
     return () => {
         setIsAddFriend(true);
     };
-    }, [userId, isAddFriend]);
+    }, [userId, isAddFriend, shareScreenId]);
 
     // add chat room in db
     useEffect(() => {
@@ -191,7 +202,7 @@ const ChatBox = ({showBoxChat, handleShowBoxChat}) => {
         setListUser(dataListUserAfterAdd)
       }
 
-
+console.log(userOnline);
 
     return (<>
         {isLogin ? <div className={!showBoxChat ? 'messenger' : 'messenger show-messenger' }>

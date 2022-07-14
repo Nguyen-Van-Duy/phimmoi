@@ -1,16 +1,37 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Peer } from "peerjs";
+import { io } from "socket.io-client";
+import apiConfig from '../../API/configApi';
 
 function RTC() {
     const [id, setId] = useState()
     const peer = useRef()
+    const socket = useRef();
+    const [isReceive, setIsReceive] = useState(false);
+
+
+    useEffect(() => {
+          socket.current = io(apiConfig.urlConnectSocketIO);
+        if (isReceive === false) {
+          socket.current.on("getRTC", (data) => {
+           
+          });
+
+        }
+        return () => {
+            //disconnect 
+          // console.log('disconnect!');
+          setIsReceive(true);
+        };
+    }, [isReceive]);
+
     const openStream = () => {
-        const config = {audio: false, video: true}
-        return navigator.mediaDevices.getUserMedia(config)
-        // return navigator.mediaDevices.getDisplayMedia({
-        //     audio: true,
-        //     video: { mediaSource: "screen" }
-        // })
+        // const config = {audio: false, video: true}
+        // return navigator.mediaDevices.getUserMedia(config)
+        return navigator.mediaDevices.getDisplayMedia({
+            audio: true,
+            video: { mediaSource: "screen" }
+        })
     }
 
     const playStream = (idVideoTag, stream) => {
@@ -20,41 +41,33 @@ function RTC() {
         video.play()
     }
 
+    peer.current = new Peer()
     useEffect(()=> {
-        peer.current = new Peer()
-        peer.current.on('open', ids => setId(ids))
+        peer.current.on('open', ids => {
+            setId(ids)
+            console.log(ids);
+        })
         peer.current.on("call", call => {
-            openStream()
-            .then(stream => {
-                call.answer(stream)
-                playStream("localStream", stream)
-                call.on("stream", remoteStream => playStream("remoteStream", remoteStream))
-            })
+            call.answer()
+            call.on("stream", remoteStream => playStream("localStream", remoteStream))
+            // openStream1()
+            // .then(stream => {
+            //     call.answer(stream)
+            //     // playStream("localStream", stream
+            //     call.on("stream", remoteStream => playStream("localStream", remoteStream))
+            // })
         })
     }, [])
 
-    useEffect(()=> {
-        peer.current.on('open', ids => setId(ids))
-        peer.current.on("call", call => {
-            openStream()
-            .then(stream => {
-                call.answer(stream)
-                playStream("localStream", stream)
-                call.on("stream", remoteStream => playStream("remoteStream", remoteStream))
-            })
-        })
-    })
-
     const handleCall = (e) => {
         e.preventDefault()
+        socket.current.emit("sendRTC", id)
         openStream()
         .then(stream => {
             playStream("localStream", stream);
         const call = peer.current.call(e.target[0].value, stream)
-        call.on("stream", remoteStream => playStream("remoteStream", remoteStream))
-        })
-        .catch(err=> {
-            console.log(err);
+        const call2 = peer.current.call(e.target[1].value, stream)
+        // call.on("stream", remoteStream => playStream("remoteStream", remoteStream))
         })
     }
 
@@ -64,10 +77,11 @@ function RTC() {
         <h2 style={{color: '#fff', marginTop: '100px'}}>RTC: {id}</h2>
         <video id="localStream" width="900" controls></video>
         <br /><br />
-        <video id="remoteStream" width="300" controls></video>
+        {/* <video id="remoteStream" width="900" controls></video> */}
         <br /><br />
         <form onSubmit={handleCall}>
         <input id="remoteId" type="text" placeholder="Remote ID" />
+        <input id="remoteId2" type="text" placeholder="Remote ID" />
         <button id="btnCall" type="submit">Call</button>
         </form>
     </div>
