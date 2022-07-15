@@ -1,22 +1,34 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Peer } from "peerjs";
-import { io } from "socket.io-client";
 import apiConfig from '../../API/configApi';
+import './RTC.css'
+import socketIO from "../../API/Socket"
+import { useSelector } from 'react-redux';
 
 function RTC() {
     const [id, setId] = useState()
+    const [userOnline, setUserOnline] = useState([]);
     const peer = useRef()
     const socket = useRef();
     const [isReceive, setIsReceive] = useState(false);
+    const online = useSelector(state=>state.loginSlice.online)
+    console.log(online);
 
-
+    useEffect(()=> {
+        setUserOnline(online)
+    }, [])
+    
     useEffect(() => {
-          socket.current = io(apiConfig.urlConnectSocketIO);
+        socket.current = socketIO
+        peer.current = new Peer()
         if (isReceive === false) {
-          socket.current.on("getRTC", (data) => {
+            socket.current.on("getUsers", (users) => {
+              setUserOnline(users);
+              console.log( "22222222222222",users);
+            });
+        //   socket.current.on("getRTC", (data) => {
            
-          });
-
+        //   });
         }
         return () => {
             //disconnect 
@@ -41,11 +53,9 @@ function RTC() {
         video.play()
     }
 
-    peer.current = new Peer()
     useEffect(()=> {
         peer.current.on('open', ids => {
             setId(ids)
-            console.log(ids);
         })
         peer.current.on("call", call => {
             call.answer()
@@ -71,19 +81,22 @@ function RTC() {
         })
     }
 
+    console.log( userOnline);
+    console.log(id);
 
   return (
-    <div>
-        <h2 style={{color: '#fff', marginTop: '100px'}}>RTC: {id}</h2>
-        <video id="localStream" width="900" controls></video>
-        <br /><br />
-        {/* <video id="remoteStream" width="900" controls></video> */}
-        <br /><br />
-        <form onSubmit={handleCall}>
-        <input id="remoteId" type="text" placeholder="Remote ID" />
-        <input id="remoteId2" type="text" placeholder="Remote ID" />
-        <button id="btnCall" type="submit">Call</button>
-        </form>
+    <div className='RTC__container'>
+        <div className='RTC__share'>
+            {/* <h2 style={{color: '#fff'}}>RTC: {id}</h2> */}
+            <video id="localStream" width="100%" controls></video>
+            {/* <video id="remoteStream" width="900" controls></video> */}
+            {/* <form onSubmit={handleCall}>
+                <input id="remoteId" type="text" placeholder="Remote ID" />
+                <input id="remoteId2" type="text" placeholder="Remote ID" />
+                <button id="btnCall" type="submit">Call</button>
+            </form> */}
+        </div>
+        <div className='RTC__message'></div>
     </div>
   )
 }

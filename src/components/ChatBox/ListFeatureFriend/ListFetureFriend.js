@@ -1,5 +1,5 @@
 import axios from 'axios'
-import React, { useEffect, useState } from 'react'
+import React, {useState } from 'react'
 import { useSelector } from 'react-redux'
 import apiConfig from '../../../API/configApi'
 import "./ListFeatureFriend.css"
@@ -16,7 +16,6 @@ function ListFetureFriend({idAdmin, userChat, setUserConversation, userConversat
             receiver_id: userConversation[0].members[1],
             room_master: dataUser._id
         }
-        console.log(userConversation[0], params);
         try {
             const dataInvitation = await axios.post(apiConfig.urlConnect + 'conversation/add-group', params)
             console.log(dataInvitation);
@@ -40,8 +39,6 @@ function ListFetureFriend({idAdmin, userChat, setUserConversation, userConversat
         }
     }
 
-
-    console.log(dataUser);
   return (
     <>
     {isShowCreate && <div className='message-modal' onClick={()=>setIsShowCreate(false)}></div>}

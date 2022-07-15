@@ -1,0 +1,16 @@
+.RTC__container {
+    min-height: calc(100vh - 29.6rem);
+    display: flex;
+    padding: 68px 5rem 8px;
+}
+
+.RTC__share {
+    width: 70%;
+    flex: 1;
+    margin-right: 2rem;
+}
+
+.RTC__message {
+    width: 37rem;
+    background-color: #fff;
+}

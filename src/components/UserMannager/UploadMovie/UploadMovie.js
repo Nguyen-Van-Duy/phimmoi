@@ -110,6 +110,7 @@ function UploadMovie() {
             att.value = "url-video";
             newItem.setAttributeNode(att);
             newItem.innerHTML = ""
+            listItem.parentNode.replaceChild(newItem, listItem);
             setBackdrop(null)
             setPoster(null)
             setValueUrl("")

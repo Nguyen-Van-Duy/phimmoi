@@ -62,6 +62,7 @@ function MessengerList({item, currentId, socket, valueContentMenu, listInvitatio
     const dataInvitationDelete = invitation?.find(item => item.sender_id === sender_id && item.receiver_id === receiver_id)
     try {
       const dataInvitation = await axios.delete(apiConfig.urlConnect + 'message/invitation/' + dataInvitationDelete._id )
+      console.log(dataInvitation);
       const dataAfterDelete = invitation?.filter(item=>item._id !== dataInvitationDelete._id)
       setInvitation(dataAfterDelete)
       socket.emit("deleteInvitation", {

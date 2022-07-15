@@ -1,9 +1,10 @@
-import React from 'react'
+import axios from 'axios';
+import React, { useEffect, useState } from 'react'
+import apiConfig from '../../API/configApi';
 import ListFriend from './ListFriend/ListFriend';
 import MessengerList from './MessengerList/MessengerList';
 
 function ListFeatureChat({
-  invitation, 
   socket, 
   handleAddFriendClient,
   valueContentMenu, 
@@ -16,7 +17,16 @@ function ListFeatureChat({
   userId, 
   listUser
 }) {
-  console.log(userConversation);
+  const [invitation, setInvitation] = useState()
+
+  useEffect(()=>{
+    const getInvitation = async () => {
+      const result = await axios.get(apiConfig.urlConnect + 'message/invitation/' + userId )
+      setInvitation(result.data)
+    }
+    getInvitation()
+  }, [userId, valueContentMenu])
+
   return (
     <ul className='messenger-friend__list'>
     {/* user */}
@@ -33,7 +43,7 @@ function ListFeatureChat({
 
     {/* admin */}
       {invitation && valueContentMenu === 'admin' && userConversation.length > 0 && userConversation?.map((item, id) => {
-        console.log(item);
+        // console.log(item);
         // if(id !== 0) {
         //   return []
         // }
@@ -46,7 +56,7 @@ function ListFeatureChat({
 
       {/* group */}
       {invitation && valueContentMenu === 'group' && userConversation.length > 0 && userConversation?.map((item, id) => {
-        console.log(item);
+        // console.log(item);
         
         return (
           <div key={item._id} onClick={() => setCurrentChat(item)}>

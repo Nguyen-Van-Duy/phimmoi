@@ -5,6 +5,7 @@ const initialState = {
   conversationId: '',
   dataUser: null,
   urlConnect: process.env.REACT_APP_CONNECT_SERVER,
+  online: null
 }
 
 const loginSlice = createSlice({
@@ -23,11 +24,14 @@ const loginSlice = createSlice({
       state.isLogin = false
       state.dataUser = null
     },
+    setOnline: (state, action) => {
+      state.online = action.payload
+    },
     
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { setUserId, setConversationId, logout } = loginSlice.actions
+export const { setUserId, setConversationId, logout, setOnline } = loginSlice.actions
 
 export default loginSlice.reducer;

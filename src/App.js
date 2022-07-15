@@ -101,7 +101,7 @@ function App() {
             element={<React.Suspense fallback={<div className="loading"><Loading /></div>}><Movie /></React.Suspense>}
           />
           <Route
-            path="/RTC"
+            path="/RTC/:roomId"
             element={<RTC />}
           />
           <Route
