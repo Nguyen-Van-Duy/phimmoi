@@ -4,7 +4,7 @@ import "./MessengerList/MessengerList.css";
 import avatar from "../../image/avatar.jpeg";
 import img403 from "../../image/403.svg";
 import apiConfig from "../../API/configApi";
-import { io } from "socket.io-client";
+// import { io } from "socket.io-client";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import Message from "./Message/Message";
@@ -43,6 +43,8 @@ const ChatBox = ({ showBoxChat, handleShowBoxChat }) => {
   const socket = useRef();
   const scrollRef = useRef();
   const dispatch = useDispatch()
+
+  console.log(dataUser);
 
   const onEmojiClick = (event, emojiObject) => {
     setInputStr((prevInput) => prevInput + emojiObject.emoji);
@@ -86,9 +88,9 @@ const ChatBox = ({ showBoxChat, handleShowBoxChat }) => {
 
   // add user in chat room
   useEffect(() => {
-    if (userId !== null && shareScreenId && userId) {
-      socket.current.emit("addUser", { userId, shareScreenId });
-    }
+    // if (userId !== null && shareScreenId && userId) {
+    //   socket.current.emit("addUser", { userId, shareScreenId });
+    // }
     if (isAddFriend === false) {
       socket.current.on("getUsers", (users) => {
         setUserOnline(users);
@@ -98,7 +100,7 @@ const ChatBox = ({ showBoxChat, handleShowBoxChat }) => {
     return () => {
       setIsAddFriend(true);
     };
-  }, [userId, isAddFriend, shareScreenId]);
+  }, [userId, isAddFriend, shareScreenId, dispatch]);
 
   // add chat room in db
   useEffect(() => {
@@ -231,6 +233,10 @@ const ChatBox = ({ showBoxChat, handleShowBoxChat }) => {
           >
             <div className="messenger-list__header">
               <input type="text" placeholder="Enter your name or email" />
+            <i
+              className="fa-solid fa-xmark message-close"
+              onClick={() => handleShowBoxChat()}
+            ></i>
             </div>
             <div className="messenger-list__body">
               {isLogin && (

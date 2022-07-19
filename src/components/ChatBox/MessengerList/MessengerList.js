@@ -40,7 +40,7 @@ function MessengerList({item, currentId, socket, valueContentMenu, listInvitatio
     return ()=>{
       setIsSend(false)
     }
-  }, [invitation, socket, isSend,isLogin])
+  }, [ socket, isSend,isLogin])
 
   useEffect(()=>{
     if(isDelete && isLogin) {

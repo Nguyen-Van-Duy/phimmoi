@@ -69,11 +69,11 @@
 
 .link__menu-genre:hover,
 .header__menu-link:hover {
-    color: rgb(245, 62, 62);
+    color: rgb(245, 62, 62) !important;
 }
 
 .active {
-    color: red;
+    color: red !important;
 }
 
 .menu-genre__container {

@@ -10,6 +10,7 @@ import MovieWaiting from './MovieWaiting/MovieWaiting'
 import MyMovie from './MyMovie/MyMovie'
 import ChangePassword from './ChangePassword/ChangePassword'
 import Favourite from './Favourite/Favourite'
+import History from './History/History'
 
 
 function UserMannager() {
@@ -55,7 +56,7 @@ const navigate = useNavigate()
             <Route path="my-movie" element={<MyMovie />} />
             <Route path="my-favourite" element={<Favourite />} />
             <Route path="change-password" element={<ChangePassword />} />
-            <Route path="history" element={<h2 style={{color: '#fff'}}>No</h2>} />
+            <Route path="history" element={<History />} />
         </Routes>
     </div>
 </div>}</>

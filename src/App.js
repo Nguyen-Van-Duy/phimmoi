@@ -1,4 +1,5 @@
 import { Routes, Route } from "react-router-dom";
+import 'antd/dist/antd.css'; 
 import "./App.css";
 import React,{ useEffect, useState } from "react";
 import Header from "./components/Header/Header";

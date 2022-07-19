@@ -119,7 +119,7 @@ const Header = () => {
       <div className="container">
         <nav className="header__menu">
           <div className="header__menu-bar" onClick={toggleMenu}><i className="fas fa-bars"></i></div>
-          <h2 className="header__logo" onClick={() => navigate('/')}>DUY FILM</h2>
+          <h2 className="header__logo logo-movie" onClick={() => navigate('/')}>DUY FILM</h2>
           <ul className={`header__menu-list ${menuMobile ? "show-menu" : ""}`}>
             {menu.map((item, index) => (
               <li key={index} className="header__menu-item">

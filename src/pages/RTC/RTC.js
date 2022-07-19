@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Peer } from "peerjs";
-import apiConfig from '../../API/configApi';
+// import apiConfig from '../../API/configApi';
 import './RTC.css'
 import socketIO from "../../API/Socket"
 import { useSelector } from 'react-redux';
@@ -16,7 +16,7 @@ function RTC() {
 
     useEffect(()=> {
         setUserOnline(online)
-    }, [])
+    }, [online])
     
     useEffect(() => {
         socket.current = socketIO

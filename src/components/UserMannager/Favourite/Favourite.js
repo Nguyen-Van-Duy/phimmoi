@@ -59,7 +59,7 @@ function Favourite() {
     console.log(listMovie);
     return (
         <div className="movie-favourite__container">
-            {movie && movie.length > 0 && movie.map((item, index) => <div className="view-more__item" key={index} >
+            {movie && movie.length > 0 && movie.map((item, index) => <div className="view-more__item movie-favourite__item" key={index} >
                 <MovieItem item={item} category={listMovie[index].category}  userId={dataUser._id} handleRemoveFavourite={()=>handleRemoveFavourite(listMovie[index]._id)} />
             </div>)}
         </div>

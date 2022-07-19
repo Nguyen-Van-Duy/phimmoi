@@ -27,12 +27,29 @@ const WatchMovie = () => {
     }, [params.category, params.id])
 
     useEffect(()=> {
+        const addMovieHistory = async () => {
+            console.log(dataFilm);
+            const dataRequest = {
+                user_id: dataUser._id,
+                movie_id: dataFilm.id,
+                category: params.category,
+                genres: dataFilm.genres,
+            }
+            const data = await axios.post(apiConfig.urlConnect + 'movie/add-movie-history/', dataRequest)
+            console.log("favourite:", dataRequest);
+        }
+        if(dataFilm.id && dataFilm.genres && dataUser._id) {
+            addMovieHistory()
+        }
+    }, [dataFilm, params.category, dataUser._id])
+
+    useEffect(()=> {
         const getFavourite = async () => {
             const data = await axios.get(apiConfig.urlConnect + 'movie/favourite/' + dataUser._id + '/' + dataFilm.id)
             console.log("favourite:", data.data);
             setFavourite(data.data[0])
         }
-        if(dataUser && dataUser._id) {
+        if(dataUser && dataUser._id && dataFilm.id) {
             getFavourite()
         }
     }, [dataUser, dataUser?._id, dataFilm.id])
@@ -72,14 +89,14 @@ const WatchMovie = () => {
             <div className="watch-movie__containers">
                 <div className="watch-movie__content">
                     <div className="watch-movie__video">
-                        <iframe
+                        {/* <iframe
                             src={((params.category === 'movie' && apiConfig.embedMovie(params.id)) || 
                             (params.category === 'tv' && apiConfig.embedEpisode(params.id, params.season, params.esp)))}
                             width="100%"
                             title="Movie player"
                             frameBorder="0"
                             allowFullScreen
-                        />
+                        /> */}
                         <h2 className="watch-content__title">{dataFilm.title || dataFilm.name}</h2>
                         {params.season && <p className="watch-content__desc">Season {params.season} episode {params.esp}</p>}
                         <p className="watch-content__desc">{(dataFilm.seasons && dataFilm.seasons[params.season]?.overview) || dataFilm.overview}</p>

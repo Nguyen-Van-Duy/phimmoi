@@ -10,3 +10,29 @@
 .my-movie__container .view-more__item {
     min-width: 20%;
 }
+
+.movie-favourite__item .movie-item {
+
+}
+
+
+@media (max-width: 1440px) {
+    .movie-favourite__container .view-more__item {
+        max-width: 25%;
+        flex: 0 0 25%;
+    }
+}
+
+@media (max-width: 1024px) {
+    .movie-favourite__container .view-more__item {
+        max-width: 33.3333%;
+        flex: 0 0 33.3333%;
+    }
+}
+
+@media (max-width: 786px) {
+    .movie-favourite__container .view-more__item {
+        max-width: 50%;
+        flex: 0 0 50%;
+    }
+}

@@ -24,7 +24,9 @@ function ListFeatureChat({
       const result = await axios.get(apiConfig.urlConnect + 'message/invitation/' + userId )
       setInvitation(result.data)
     }
-    getInvitation()
+    if(valueContentMenu !== "menu") {
+      getInvitation()
+    }
   }, [userId, valueContentMenu])
 
   return (
@@ -66,9 +68,9 @@ function ListFeatureChat({
       })}
 
       {/* message */}
-      {valueContentMenu === 'message' && listUser.length > 0 && listUser?.map((item) => (
+      {invitation && valueContentMenu === 'message' && listUser.length > 0 && listUser?.map((item) => (
         <div key={item._id}>
-          <MessengerList socket={socket.current} 
+          <MessengerList socket={socket} 
           online={userOnline.some(user=>user.userId === item._id)} 
           setUserChat={setUserChat} 
           currentId={userId} 

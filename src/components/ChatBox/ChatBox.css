@@ -95,7 +95,7 @@
     color: rgb(117, 116, 116);
 }
 
-.message-header__left i.message-close {
+.message-close {
     font-size: 24px;
     padding-right: 6px;
     color: rgb(117, 116, 116);
@@ -165,5 +165,30 @@
 
 .message-header__title:hover .feature-chat__list {
     display: block;
+}
+
+@media (max-width: 786px) {
+    .messenger.show-messenger {
+        top: 0;
+        left: 0;
+        right: 0 !important;
+        bottom: 0;
+        height: 100%;
+        width: 100vw;
+        z-index: 10001;
+    }
+    .messenger__list .show-messenger__list,
+    .chat-box__containner {
+        width: 100%;
+        height: 100%;
+    }
+
+    .messenger__list.show-messenger__list {
+        width: 100%;
+        height: 100%;
+        margin-left: 4.5rem;
+        position: absolute;
+        z-index: 10;
+    }
 }
 

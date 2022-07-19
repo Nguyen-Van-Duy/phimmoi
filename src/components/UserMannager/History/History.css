@@ -1,0 +1,12 @@
+.history__container {
+    width: 100%;
+}
+
+.history__filter {
+    display: flex;
+
+}
+
+.history__filter .ant-picker {
+    margin-right: 2rem;
+}

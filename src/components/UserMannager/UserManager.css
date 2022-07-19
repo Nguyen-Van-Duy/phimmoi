@@ -67,6 +67,8 @@
 }
 
 .manager-menu__item {
+    font-weight: 500;
+    color: #000;
     font-size: 1.6rem;
     list-style: none;
     padding: 1.3rem 2rem;
@@ -165,5 +167,11 @@
 .my-movie__container .view-more__item {
     min-width: 20%;
 }
+
+
+.radio-group label,
+.label-checkbox {
+    margin: 1rem !important;
+  }
 
 

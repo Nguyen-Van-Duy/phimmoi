@@ -19,6 +19,7 @@
   }
   
   .messageText{
+    margin-bottom: 0;
       padding: 6px 12px;
       /* border-radius: 20px; */
       background-color: #1877f2;

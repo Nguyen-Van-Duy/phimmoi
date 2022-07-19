@@ -1,6 +1,6 @@
 .list-feature__container {
     position: absolute;
-    width: 20rem;
+    width: 24rem;
     min-height: 20rem;
     top: 6rem;
     right: 5rem;
@@ -34,7 +34,7 @@
 }
 
 .list-feature__item:last-child {
-    border-top: 1px solid rgb(85, 85, 85);
+    /* border-top: 1px solid rgb(85, 85, 85); */
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
 }

@@ -103,6 +103,7 @@
 	padding:10px 15px;
 	border-radius:25px;
 	background:rgba(255,255,255,.1);
+	color: #fff !important;
 }
 .login-form .group input[data-type="password"]{
 	text-security:circle;

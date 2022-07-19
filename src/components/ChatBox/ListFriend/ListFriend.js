@@ -37,7 +37,7 @@ function ListFriend({item, currentId, setUserChat, valueContentMenu, online}) {
     if(valueContentMenu !== 'message') {
       getUser()
     }
-  }, [currentId, item, valueContentMenu, dataUser.role, online])
+  }, [currentId, item.members, valueContentMenu, dataUser.role, online])
 
   return (<>
     {valueContentMenu !== 'message' && <li className='messenger-friend__container' onClick={()=>setUserChat({...user, conversationId: item._id, room_name: item?.room_name})}>

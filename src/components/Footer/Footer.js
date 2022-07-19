@@ -7,7 +7,7 @@ const Footer = () => {
     <footer className="footer">
       <div className="container footer__container">
       <div className="footer__list" onClick={() => navigate('/')}>
-        <h2>DUY FILM</h2>
+        <h2 className="logo-movie">DUY FILM</h2>
       </div>
       <div className="footer__list">
           <h4 className="footer__list--title">About</h4>
