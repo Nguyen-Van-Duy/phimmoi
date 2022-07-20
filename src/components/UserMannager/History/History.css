@@ -1,12 +1,62 @@
 .history__container {
     width: 100%;
+    padding: 0.8rem 0 1rem;
+    display: flex;
+    justify-content: space-between;
 }
 
 .history__filter {
     display: flex;
+}
 
+.history__button {
+    padding: 0.5rem 1.2rem;
 }
 
 .history__filter .ant-picker {
     margin-right: 2rem;
+}
+
+.history__title {
+    font-size: 1.6rem;
+    color: yellow;
+}
+
+.history__time {
+    min-width: 15rem;
+}
+
+.history__search {
+    min-width: 35rem;
+}
+
+.history__checkbox {
+    
+}
+
+.history__list td {
+}
+
+tr, th {
+    border-bottom: 1px solid rgb(91, 91, 91);
+}
+
+.history__center {
+    display: flex;
+    justify-content: center;
+}
+
+.history__item img {
+    width: 12rem;
+}
+
+.history__list th {
+    text-align: center;
+}
+
+.history__content-genres,
+.history__content-name {
+}
+
+.history__content-name {
 }

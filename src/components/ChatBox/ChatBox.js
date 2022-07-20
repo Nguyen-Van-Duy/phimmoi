@@ -44,8 +44,6 @@ const ChatBox = ({ showBoxChat, handleShowBoxChat }) => {
   const scrollRef = useRef();
   const dispatch = useDispatch()
 
-  console.log(dataUser);
-
   const onEmojiClick = (event, emojiObject) => {
     setInputStr((prevInput) => prevInput + emojiObject.emoji);
     setShowPicker(false);
@@ -55,7 +53,6 @@ const ChatBox = ({ showBoxChat, handleShowBoxChat }) => {
   useEffect(() => {
     peer.current.on("open", (ids) => {
       setShareScreenId(ids);
-      console.log(ids);
     });
   }, []);
 
@@ -89,7 +86,7 @@ const ChatBox = ({ showBoxChat, handleShowBoxChat }) => {
   // add user in chat room
   useEffect(() => {
     // if (userId !== null && shareScreenId && userId) {
-    //   socket.current.emit("addUser", { userId, shareScreenId });
+      socket.current.emit("addUser", { userId });
     // }
     if (isAddFriend === false) {
       socket.current.on("getUsers", (users) => {
@@ -113,9 +110,7 @@ const ChatBox = ({ showBoxChat, handleShowBoxChat }) => {
           apiConfig.urlConnect + "conversation/group/" + userId
         );
       }
-      console.log(data.data);
       setUserConversation(data.data);
-      console.log(data.data);
       const dataAdmin = await axios.get(apiConfig.urlConnect + "account/admin");
       setIdAdmin(dataAdmin.data[0]._id);
       const listFriend = [userId];
@@ -210,8 +205,6 @@ const ChatBox = ({ showBoxChat, handleShowBoxChat }) => {
     );
     setListUser(dataListUserAfterAdd);
   };
-
-  console.log(currentChat);
 
   return (
     <>

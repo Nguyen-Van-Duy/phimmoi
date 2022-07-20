@@ -11,6 +11,15 @@ a {
   color: white !important;
 }
 
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  list-style: none;
+}
+
 .group textarea,
 .group input {
   color: #000 !important;

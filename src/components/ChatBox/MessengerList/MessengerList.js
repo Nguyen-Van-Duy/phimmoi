@@ -30,6 +30,7 @@ function MessengerList({item, currentId, socket, valueContentMenu, listInvitatio
   }
 
   useEffect(()=> {
+    console.log('222222222222');
     if(isSend && isLogin) {
       socket.on("getInvitationAddFriend", data=> {
         if(invitation && invitation.filter(item=>item._id === data._id).length<=0) {
@@ -40,9 +41,10 @@ function MessengerList({item, currentId, socket, valueContentMenu, listInvitatio
     return ()=>{
       setIsSend(false)
     }
-  }, [ socket, isSend,isLogin])
+  }, [ socket, isSend, isLogin, listInvitation, invitation])
 
   useEffect(()=>{
+    console.log('222222222222');
     if(isDelete && isLogin) {
       socket.on("getDeleteInvitation", (data) => {
         if(invitation && invitation.length >= 0) {
@@ -65,6 +67,7 @@ function MessengerList({item, currentId, socket, valueContentMenu, listInvitatio
       console.log(dataInvitation);
       const dataAfterDelete = invitation?.filter(item=>item._id !== dataInvitationDelete._id)
       setInvitation(dataAfterDelete)
+      console.log(dataAfterDelete);
       socket.emit("deleteInvitation", {
         id: dataInvitationDelete._id
       })

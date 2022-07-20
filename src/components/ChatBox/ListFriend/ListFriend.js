@@ -23,6 +23,7 @@ function ListFriend({item, currentId, setUserChat, valueContentMenu, online}) {
             setIsOnline(false)
         }
       }
+      
       let data
       if(valueContentMenu === 'admin' && dataUser.role !== "admin") {
         data = await axios.get(apiConfig.urlConnect + 'account/admin')

@@ -32,7 +32,7 @@ function ListFeatureChat({
   return (
     <ul className='messenger-friend__list'>
     {/* user */}
-      {invitation && valueContentMenu === 'user' && userConversation.length > 0 && userConversation?.map((item, id) => {
+      {valueContentMenu === 'user' && userConversation.length > 0 && userConversation?.map((item, id) => {
           if(item.members.includes(idAdmin) && dataUser.role === 'user') {
             return []
           }
@@ -44,7 +44,7 @@ function ListFeatureChat({
       })}
 
     {/* admin */}
-      {invitation && valueContentMenu === 'admin' && userConversation.length > 0 && userConversation?.map((item, id) => {
+      {valueContentMenu === 'admin' && userConversation.length > 0 && userConversation?.map((item, id) => {
         // console.log(item);
         // if(id !== 0) {
         //   return []
@@ -57,7 +57,7 @@ function ListFeatureChat({
       })}
 
       {/* group */}
-      {invitation && valueContentMenu === 'group' && userConversation.length > 0 && userConversation?.map((item, id) => {
+      {valueContentMenu === 'group' && userConversation.length > 0 && userConversation?.map((item, id) => {
         // console.log(item);
         
         return (
@@ -68,7 +68,7 @@ function ListFeatureChat({
       })}
 
       {/* message */}
-      {invitation && valueContentMenu === 'message' && listUser.length > 0 && listUser?.map((item) => (
+      {valueContentMenu === 'message' && listUser.length > 0 && listUser?.map((item) => (
         <div key={item._id}>
           <MessengerList socket={socket} 
           online={userOnline.some(user=>user.userId === item._id)} 
