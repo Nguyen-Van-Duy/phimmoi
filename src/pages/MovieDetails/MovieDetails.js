@@ -14,6 +14,7 @@ import { handleShowProfileCast } from '../../store/profileCastSlice';
 import Loading from '../../components/Loading';
 import VoteAverage from '../../components/VoteAverage/VoteAverage';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
+import { Image } from 'antd';
 import axios from 'axios';
 
 const MovieDetails = () => {
@@ -63,7 +64,7 @@ const MovieDetails = () => {
             console.log("favourite:", data.data);
             setFavourite(data.data[0])
         }
-        if(dataUser && dataUser._id) {
+        if(dataUser && dataUser._id && dataDetails.id) {
             getFavourite()
         }
     }, [dataUser, dataUser?._id, dataDetails.id])
@@ -109,7 +110,7 @@ const MovieDetails = () => {
         style={{ backgroundImage: `url(${dataDetails.backdrop_path || dataDetails.poster_path ? apiConfig.originalImage(dataDetails.backdrop_path || dataDetails.poster_path): apiConfig.background})` }}>
             <div className="detail-container__content">
                 <div className="detail__image">
-                    <LazyLoadImage src={dataDetails.poster_path || dataDetails.backdrop_path ? apiConfig.w500Image(dataDetails.poster_path || dataDetails.backdrop_path) : apiConfig.backupPhoto} 
+                    <Image src={dataDetails.poster_path || dataDetails.backdrop_path ? apiConfig.w500Image(dataDetails.poster_path || dataDetails.backdrop_path) : apiConfig.backupPhoto} 
                     effect='black-and-white'
                     alt={dataDetails.title || dataDetails.name} />
                 </div>

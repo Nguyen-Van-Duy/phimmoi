@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { DatePicker, Space, Input } from 'antd';
 import "./History.css"
 import axios from 'axios';
 import apiConfig from '../../../API/configApi';
 import { useSelector } from 'react-redux';
 import { movieDetails } from '../../../API/MoviesApi';
+import { Image } from 'antd';
 
 function History() {
-    const [listMovie, setListMovie] = useState([])
+    // const [listMovie, setListMovie] = useState([])
     const [movie, setMovie] = useState([])
     const [isCheckAll, setIsCheckAll] = useState(false)
     const [listChecked, setListchecked] = useState([])
@@ -16,6 +17,8 @@ function History() {
     const onChange = (date, dateString) => {
         console.log(date, dateString);
       };
+
+      console.log(dataUser);
 
     const handleDate = (time) => {
         const date = new Date(time)
@@ -26,30 +29,27 @@ function History() {
         return day + ' ' + h + ":" + m + ":" + s
     }
 
-      const getListFavourite = async (data) => {
+      const getListFavourite = useCallback(async (data) => {
         let listFavourite = []
         data.map(async (item)=> {
             if(Number(item.movie_id)) {
                 const result = await movieDetails(item.category, Number(item.movie_id))
-                console.log("result:", result);
                 await listFavourite.push({...result, history_id: item._id, createdAt: handleDate(item.createdAt), isCheck:false})
             } else {
                 // handle my movie
             }
-            setMovie([...listFavourite])
+            setMovie([...listFavourite].reverse())
         })
-        console.log("listFavourite:", listFavourite);
-    }
+    }, [])
 
       useEffect(()=> {
         const getDataHistory = async () => {
             const data = await axios.get(apiConfig.urlConnect + "movie/movie-history/" + dataUser._id)
-            setListMovie(data.data)
+            // setListMovie(data.data)
             getListFavourite(data.data)
         }
-
         getDataHistory()
-      }, [dataUser._id])
+      }, [dataUser._id, getListFavourite])
 
       useEffect(()=> {
         if(listChecked.length === movie.length) {
@@ -61,8 +61,7 @@ function History() {
 
       const handleCheckbox = (item)=> {
           item.isCheck=!item.isCheck;
-          const result = listChecked.findIndex(data=> data.id === item.id)
-          console.log("result: ", result);
+          const result = listChecked.findIndex(data=> data.id === item.id && data.createdAt === item.createdAt)
           if(result !== -1) {
             const unChecked = listChecked.filter(data=> data.id !== item.id)
             setListchecked(unChecked)
@@ -71,8 +70,16 @@ function History() {
           }
         }
         
-        const handleDeleteHistory = () => {
-
+        const handleDeleteHistory = async () => {
+            const listIdChecked = listChecked.map(item=>item.history_id)
+            const params = {list_id: listIdChecked, userId: dataUser._id}
+            const resultDelete = await axios.post(apiConfig.urlConnect + "movie/delete-history", params)
+            if(resultDelete.data.length > 0) {
+                getListFavourite(resultDelete.data)
+            } else {
+                setMovie([])
+            }
+            setListchecked([])
         }
 
         const handleCheckAll = () => {
@@ -87,11 +94,9 @@ function History() {
             }
         }
 
-        console.log(listChecked);
-
   return (
     <div className='profile'>
-        <h2 className='profile_title'>History Movie</h2>
+        <h2 className='profile_title'>History</h2>
         <Space direction="vertical">
             <div className='history__container'>
                 <div className='history__filter'>
@@ -114,7 +119,9 @@ function History() {
             <tbody>
                 {movie && movie.map((item, id)=>
                 <tr className='history__item' key={id}>
-                    <td className='history__center'><img src={item.backdrop_path || item.poster_path ? apiConfig.w200Image(item.backdrop_path || item.poster_path) : apiConfig.backupPhoto}  alt="" /></td>
+                    <td className='history__center'>
+                        <Image src={item.backdrop_path || item.poster_path ? apiConfig.originalImage(item.backdrop_path || item.poster_path) : apiConfig.backupPhoto}  alt="" />
+                    </td>
                     <td className='history__content-name'>{item.title || item.name}</td>
                     <td className='history__content-genres'>
                         {item.genres && item.genres.map((genres)=> <span key={genres.id}>{genres.name}, </span>)}

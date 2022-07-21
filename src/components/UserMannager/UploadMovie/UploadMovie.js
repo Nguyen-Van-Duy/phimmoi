@@ -126,7 +126,10 @@ function UploadMovie() {
         const att = document.createAttribute("id");
             att.value = "url-video";
             newItem.setAttributeNode(att);
-        if(typeUrl === "video" && e.target.value !== "" && e.target.value.includes("http")) {
+        if(typeUrl === "video" && e.target.value !== "" && e.target.value.includes("https://")) {
+            if(e.target.value.includes("<iframe")) {
+                return
+            }
             newItem.innerHTML = `<iframe
             src=${e.target.value}
             frameBorder="0" 
@@ -143,6 +146,19 @@ function UploadMovie() {
         listItem.parentNode.replaceChild(newItem, listItem);
     }
 
+    const handleClick = (e) => {
+        console.log(e.target.value, "2222222222");
+        if(e.target.value && e.target.value !== typeUrl) {
+            const urlIframe = document.querySelector('iframe')
+            if(urlIframe) {
+                urlIframe.remove()
+            }
+            setValueUrl("")
+            setTypeUrl(e.target.value)
+            // setValueUrl()
+        }
+    }
+
   return (
     <div className='profile'>
         <h2 className='profile_title'>Update Movie</h2>
@@ -155,6 +171,7 @@ function UploadMovie() {
                 // console.log(formik)
                 // console.log(formik.values.url_type);
                 if(formik.values.url_type && formik.values.url_type !== typeUrl) {
+                    
                     setValueUrl("")
                     setTypeUrl(formik.values.url_type)
                     // setValueUrl()
@@ -188,6 +205,7 @@ function UploadMovie() {
                     label='Url type *'
                     name='url_type'
                     options={urlType}
+                    onClick={handleClick}
                      />
                      {/* <FormikControl
                         control='input'

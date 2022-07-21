@@ -35,7 +35,7 @@ const WatchMovie = () => {
                 category: params.category,
                 genres: dataFilm.genres,
             }
-            const data = await axios.post(apiConfig.urlConnect + 'movie/add-movie-history/', dataRequest)
+            await axios.post(apiConfig.urlConnect + 'movie/add-movie-history/', dataRequest)
             console.log("favourite:", dataRequest);
         }
         if(dataFilm.id && dataFilm.genres && dataUser._id) {

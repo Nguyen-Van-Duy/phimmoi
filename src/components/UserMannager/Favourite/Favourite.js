@@ -10,7 +10,7 @@ function Favourite() {
     const [movie, setMovie] = useState([])
     const [listMovie, setListMovie] = useState([])
     const dataUser = useSelector((state) => state.loginSlice.dataUser);
-    console.log(dataUser);
+
     useEffect(() => {
         const fetchMovieFavourite = async () => {
             const data = await axios.get(apiConfig.urlConnect + "movie/my-favourite/" + dataUser._id)
@@ -26,19 +26,16 @@ function Favourite() {
     }, [dataUser._id])
 
     const getListFavourite = async (data) => {
-        console.log(data);
         let listFavourite = []
         data.map(async (item)=> {
             if(Number(item.movie_id)) {
                 const result = await movieDetails(item.category, Number(item.movie_id))
-                console.log("result:", result);
-                await listFavourite.push(result)
+                await listFavourite.push({...result, category: item.category, _id: item._id})
                 console.log(listFavourite);
             } else {
             }
             setMovie([...listFavourite])
         })
-        console.log("listFavourite:", listFavourite);
     }
 
     const handleRemoveFavourite = async (favouriteId) => {
@@ -46,8 +43,8 @@ function Favourite() {
             const result = await axios.delete(apiConfig.urlConnect + 'movie/delete-favourite/' + favouriteId)
             console.log(result);
             if(result.status === 200) {
-                const newListMovie = listMovie.filter(item=> item._id !== favouriteId)
-                getListFavourite(newListMovie)
+                const newListMovie = movie.filter(item=> item._id !== favouriteId)
+                setMovie(newListMovie)
             } else {
                 alert("404!")
             }
@@ -56,11 +53,11 @@ function Favourite() {
         }
     }
 
-    console.log(listMovie);
+    console.log(listMovie, movie);
     return (
         <div className="movie-favourite__container">
             {movie && movie.length > 0 && movie.map((item, index) => <div className="view-more__item movie-favourite__item" key={index} >
-                <MovieItem item={item} category={listMovie[index].category}  userId={dataUser._id} handleRemoveFavourite={()=>handleRemoveFavourite(listMovie[index]._id)} />
+                <MovieItem item={item} category={item.category}  userId={dataUser._id} handleRemoveFavourite={()=>handleRemoveFavourite(item._id)} />
             </div>)}
         </div>
     );
