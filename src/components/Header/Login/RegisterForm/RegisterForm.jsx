@@ -4,6 +4,7 @@ import FormikControl from '../../../Form/FormikControl'
 import * as Yup from 'yup'
 import axios from "axios"
 import { useSelector } from 'react-redux'
+import { error, success } from '../../../../API/configApi'
 
 function RegisterForm({setShowForgot, showForgot}) {
     const urlConnect = useSelector((state) => state.loginSlice.urlConnect)
@@ -27,18 +28,23 @@ function RegisterForm({setShowForgot, showForgot}) {
     
       const onSubmitLogin = async (values, {resetForm}) => {
         // console.log('Form data', values)
-        const result = await axios.post(urlConnect + 'account/create-account', {
-            user_name: values.user_name.trim(),
-            email: values.email.trim(),
-            password: values.password.trim()
-        })
-        console.log(result);
-        if(result.status === 200) {
-            alert("Đăng ký thành công!")
-        } else {
-            alert(result.data.message)
-        }
-        resetForm()
+            try {
+                const result = await axios.post(urlConnect + 'account/create-account', {
+                    user_name: values.user_name.trim(),
+                    email: values.email.trim(),
+                    password: values.password.trim()
+                })
+                console.log(result);
+                if(result.data.status === 409) {
+                    error(result.data.message)
+                } else {
+                    console.log(result);
+                    success("Sign Up Success!")
+                }
+                resetForm()
+            } catch(e) {
+                error(e.response.data.message);
+            } 
       }
   return (
     <Formik

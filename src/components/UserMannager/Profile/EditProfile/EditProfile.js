@@ -3,7 +3,7 @@ import { Form, Formik } from 'formik'
 import FormikControl from '../../../Form/FormikControl'
 import * as Yup from 'yup'
 import axios from "axios"
-import apiConfig from '../../../../API/configApi'
+import apiConfig, { success } from '../../../../API/configApi'
 import './EditProfile.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { setUserId } from '../../../../store/LoginSlice'
@@ -65,6 +65,7 @@ function EditProfile({handleShowEditProfile}) {
         const result = await axios.post(apiConfig.urlConnect + 'profile/upload', formData)
         dispatch(setUserId(result.data))
         handleShowEditProfile()
+        success("Update successful!")
     }
 
   return (

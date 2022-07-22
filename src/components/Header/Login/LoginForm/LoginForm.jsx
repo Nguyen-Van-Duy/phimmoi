@@ -6,6 +6,7 @@ import axios from "axios"
 import { useDispatch } from 'react-redux'
 import { useSelector } from 'react-redux'
 import { setUserId } from '../../../../store/LoginSlice'
+import { error, success } from '../../../../API/configApi'
 // import { useNavigate } from 'react-router-dom'
 
 function LoginForm({setShowForgot, showForgot, handleCloseModal}) {
@@ -35,11 +36,11 @@ function LoginForm({setShowForgot, showForgot, handleCloseModal}) {
             localStorage.setItem("token", result.data.token)
             dispatch(setUserId(result.data))
             handleCloseModal()
-            // navigate('/messenger')
+            success(`Logged in successfully, Hi ${result.data.user_name}!`)
         } else {
-            alert('Tài khoản mật khẩu không chính xác!')
+            error('Incorrect account or password!')
+            resetForm()
         }
-        resetForm()
       }
   return (
     <Formik

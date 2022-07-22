@@ -1,3 +1,17 @@
+import { message } from 'antd';
+
+export const success = (m) => {
+  message.success(m);
+};
+
+export const error = (m) => {
+  message.error(m);
+};
+
+export const warning = (m) => {
+  message.warning(m);
+};
+
 const apiConfig = {
     baseUrl: 'https://api.themoviedb.org/3',
     urlConnect: process.env.REACT_APP_CONNECT_SERVER,

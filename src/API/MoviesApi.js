@@ -6,6 +6,8 @@ export const category = {
   tv: 'tv',
 };
 
+// Vietnam, Korea, Japan, China, Thailand, Taiwan, Canada, India, Hong Kong, UK, France, USA, Australia, Other Country
+
 export const genderMovie = [
   {
     value: "28",

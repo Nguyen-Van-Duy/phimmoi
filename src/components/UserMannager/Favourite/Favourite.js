@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
-import apiConfig from '../../../API/configApi';
+import apiConfig, { success } from '../../../API/configApi';
 import { movieDetails } from '../../../API/MoviesApi';
 import MovieItem from '../../MovieList/MovieItem';
 import './Favourite.css'
@@ -45,6 +45,7 @@ function Favourite() {
             if(result.status === 200) {
                 const newListMovie = movie.filter(item=> item._id !== favouriteId)
                 setMovie(newListMovie)
+                success("Delete successfully!")
             } else {
                 alert("404!")
             }

@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { DatePicker, Space, Input } from 'antd';
 import "./History.css"
 import axios from 'axios';
-import apiConfig from '../../../API/configApi';
+import apiConfig, { success } from '../../../API/configApi';
 import { useSelector } from 'react-redux';
 import { movieDetails } from '../../../API/MoviesApi';
 import { Image } from 'antd';
@@ -76,6 +76,7 @@ function History() {
             const resultDelete = await axios.post(apiConfig.urlConnect + "movie/delete-history", params)
             if(resultDelete.data.length > 0) {
                 getListFavourite(resultDelete.data)
+                success("Delete successfully!")
             } else {
                 setMovie([])
             }
