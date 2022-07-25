@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Form, Formik } from 'formik'
+import { Field, FieldArray, Form, Formik } from 'formik'
 import FormikControl from '../../Form/FormikControl'
 import * as Yup from 'yup'
 import axios from "axios"
@@ -53,6 +53,10 @@ function UploadMovie() {
         number_of_episodes: "",
         number_of_seasons: "",
         seasons: [],
+        trailers: [{
+            title: '',
+            url: ''
+        }]
       }
 
     const handleChangeImageBackdrop = (event) => {
@@ -236,6 +240,63 @@ function UploadMovie() {
                         <label htmlFor="image_movie" className="label">Image poster *</label>
                         <input className='input' type="file" name="image_poster" onChange={handleChangeImagePoster} />
                         {checkPoster === false && <span className='error'>Required</span>}
+                    </div>
+
+                    <div className='group'>
+                        <label className='label' htmlFor='trailers'>Trailers</label>
+                    </div>
+                    <div className='group group__trailer'>
+                        <FieldArray name='trailers'>
+                            {fieldArrayProps => {
+                            const { push, remove, form } = fieldArrayProps
+                            const { values } = form
+                            const { trailers } = values
+                            console.log(trailers);
+                            // console.log('fieldArrayProps', fieldArrayProps)
+                            // console.log('Form errors', form.errors)
+                            return (
+                                <div>
+                                {trailers.map((phNumber, index) => (
+                                    <div key={index} className="group__trailer-container">
+                                    {/* <label className='label'>Name {index}</label>
+                                    <Field  className='input' name={`trailers[${index}].title`} /><br /> */}
+                                    {/* <label className='label'>Url {index}</label>
+                                    <Field  className='input' name={`trailers[${index}].url`} /> */}
+                                    <div className='group__trailer-list'>
+                                        <FormikControl
+                                            control='input'
+                                            type='text'
+                                            label={`Trailer title  ${index + 1}`}
+                                            placeholder={`Trailer title  ${index + 1}`}
+                                            name={`trailers[${index}].title`}
+                                        />
+                                        <FormikControl
+                                            control='input'
+                                            type='text'
+                                            label={`Trailer url  ${index + 1}`}
+                                            placeholder={`Trailer url  ${index + 1}`}
+                                            name={`trailers[${index}].url`}
+                                        />
+                                    </div>
+                                    {index > 0 && (
+                                        <div className="group__trailer-control">
+                                        <span className='group__trailer-button button-remove' onClick={() => remove(index)}>
+                                            <i className="fa-solid fa-folder-minus"></i>
+                                        </span>
+                                        </div>
+                                    )}
+                                    </div>
+                                ))}
+                                {/* <button type='button' onClick={() => push({title: '', url: ''})}>
+                                    +
+                                </button> */}
+                                <span className='group__trailer-button button-add' onClick={() => push({title: '', url: ''})}>
+                                <i className="fa-solid fa-folder-plus"></i>
+                                </span>
+                                </div>
+                            )
+                            }}
+                        </FieldArray>
                     </div>
                     
                     <FormikControl

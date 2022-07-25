@@ -25,6 +25,47 @@ li {
   color: #000 !important;
 }
 
+.group__trailer {
+  border: 1px solid #ccc;
+}
+
+.group__trailer-container {
+  display: flex;
+  margin: 0 2rem;
+}
+
+.group__trailer-control {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+}
+
+.group__trailer-button {
+  height: 3rem;
+  max-width: 5.2rem;
+  display: flex;
+  align-items: center;
+  padding: 1.8rem;
+  border-radius: 4px;
+  font-size: 1.6rem;
+  cursor: pointer;
+}
+
+.button-remove {
+  background-color: red;
+}
+
+.button-add {
+  margin-top: 0.5rem;
+  margin-left: 2rem;
+  background-color: green;
+}
+
+.group__trailer-list {
+  width: 85%;
+}
+
 .main {
   width: 100%;
   min-height: calc(100% - 28rem);
@@ -107,6 +148,11 @@ a {
   width: 100%;
   color: #ddd;
   /* animation-delay: 2s; */
+}
+
+.group__trailer-container {
+  border-bottom: 1px solid rgb(224, 224, 224);
+
 }
 
 .trailer-content {
