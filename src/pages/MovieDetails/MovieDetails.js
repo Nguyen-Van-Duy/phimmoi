@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import apiConfig from '../../API/configApi';
-import { cast, movieDetails } from '../../API/MoviesApi';
+import { cast, movieDetails, movieShareDetails } from '../../API/MoviesApi';
 import './MovieDetails.css';
 import Modal from '../../components/Modal/Modal';
 import Trailer from '../../components/Trailer/Trailer';
@@ -13,7 +13,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { handleShowProfileCast } from '../../store/profileCastSlice';
 import Loading from '../../components/Loading';
 import VoteAverage from '../../components/VoteAverage/VoteAverage';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { Image } from 'antd';
 import axios from 'axios';
 
@@ -41,18 +40,23 @@ const MovieDetails = () => {
         setShowModal(!showModal)
     }
 
-    
     useEffect(() => {
         const fetchDataFilm = async () => {
             // fetch dataFilm
-            const data = await movieDetails(params.category, params.id)
-            setDAtaDetails(data)
-            // fetch data cast and crew
-            const dataCast = await cast(params.category, params.id)
-            setListCast(dataCast.cast)
-            setListCrew(dataCast.crew)
+           if(Number(params.id)) {
+                const data = await movieDetails(params.category, params.id)
+                setDAtaDetails(data)
+                // fetch data cast and crew
+                const dataCast = await cast(params.category, params.id)
+                setListCast(dataCast.cast)
+                setListCrew(dataCast.crew)
+                document.title = `${data.title || data.name}`;
+           } else {
+                const data = await movieShareDetails(params.id)
+                console.log(data);
+                setDAtaDetails(data[0])
+           }
             setIsLoading(false)
-            document.title = `${data.title || data.name}`;
             window.scrollTo(0, 0)
         }
         fetchDataFilm()
@@ -73,7 +77,7 @@ const MovieDetails = () => {
         if(dataUser && dataUser._id) {
             const result = await axios.post(apiConfig.urlConnect + 'movie/add-favourite', {
                 user_id: dataUser._id,
-                movie_id: dataDetails.id,
+                movie_id: dataDetails._id || dataDetails.id,
                 category: params.category
             })
             console.log({
@@ -107,19 +111,24 @@ const MovieDetails = () => {
 
         {isLoading && <div className="loading"><Loading /></div>}
         {!isLoading && <> <section className="detail-container container" 
-        style={{ backgroundImage: `url(${dataDetails.backdrop_path || dataDetails.poster_path ? apiConfig.originalImage(dataDetails.backdrop_path || dataDetails.poster_path): apiConfig.background})` }}>
+        style={Number(params.id) ? 
+            { backgroundImage: `url(${(dataDetails.backdrop_path || dataDetails.poster_path ? apiConfig.originalImage(dataDetails.backdrop_path || dataDetails.poster_path): apiConfig.background)})` }
+        : { backgroundImage: `url(${apiConfig.urlConnectSocketIO + dataDetails.backdrop_path})` }}>
             <div className="detail-container__content">
-                <div className="detail__image">
-                    <Image src={dataDetails.poster_path || dataDetails.backdrop_path ? apiConfig.w500Image(dataDetails.poster_path || dataDetails.backdrop_path) : apiConfig.backupPhoto} 
+                <div className="detail__image"> 
+                    {Number(params.id) ? <Image src={(dataDetails.poster_path || dataDetails.backdrop_path ? apiConfig.w500Image(dataDetails.poster_path || dataDetails.backdrop_path) : apiConfig.backupPhoto)} 
                     effect='black-and-white'
-                    alt={dataDetails.title || dataDetails.name} />
+                    alt={dataDetails.title || dataDetails.name} />: 
+                    <Image src={(apiConfig.urlConnectSocketIO + dataDetails.poster_path)} 
+                    effect='black-and-white'
+                    alt={dataDetails.title || dataDetails.name} />}
                 </div>
                 <div className="detail-container__wrap">
                     <div className="detail-content">
                         <h2 className="detail-content__title">{dataDetails.title || dataDetails.name}</h2>
                         <p className="detail-content__desc">{dataDetails.overview}</p>
                         <p className="detail-content__desc">
-                            <span className="detail-content__time">Country: {dataDetails.production_countries[0]?.name || (dataDetails.origin_country && dataDetails.origin_country[0]) || 'Updateting'}</span>
+                            <span className="detail-content__time">Country: {dataDetails.country || dataDetails.production_countries[0]?.name || (dataDetails.origin_country && dataDetails.origin_country[0]) || 'Updateting'}</span>
                         </p>
                         {params.category === 'tv' && <p className="detail-content__desc">
                             <span className="detail-content__time">Total seasons: {dataDetails.number_of_seasons}</span>
@@ -131,12 +140,12 @@ const MovieDetails = () => {
                         </p>
                         {directors.length > 0 && <p className="detail-content__desc">Directors: {directors.map((item) => `${item.name} `)}</p>}
                         <div className="detail-content__genres">
-                            {dataDetails.genres.map((item, id) => <span key={id}>{item.name}</span>)}
+                            {dataDetails.genres.map((item, id) => <span key={id}>{item.key || item.name}</span>)}
                         </div>
                         <p className="detail-content__desc">
                             <VoteAverage dataDetails={dataDetails} />
                             {!favourite && <span className='favourite' onClick={handleAddFavourite}>Favourite:<i className="fa-solid fa-heart "></i></span>}
-                            {favourite && favourite.movie_id === dataDetails.id.toString() && 
+                            {favourite && favourite.movie_id === (dataDetails._id || dataDetails.id.toString()) && 
                             <span className='favourite favourite-add' onClick={handleRemoveFavourite}>Favourite:<i className="fa-solid fa-heart"></i></span>}
                         </p>
                         <div className="banner__button detail-content__button">

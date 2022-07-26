@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Field, FieldArray, Form, Formik } from 'formik'
+import { FieldArray, Form, Formik } from 'formik'
 import FormikControl from '../../Form/FormikControl'
 import * as Yup from 'yup'
 import axios from "axios"
@@ -7,7 +7,7 @@ import apiConfig from '../../../API/configApi'
 import '../Profile/EditProfile/EditProfile.css'
 import { useSelector } from 'react-redux'
 // import { setUserId } from '../../../store/LoginSlice'
-import { genderMovie } from '../../../API/MoviesApi'
+import { genderMovie, countries } from '../../../API/MoviesApi'
 
 function UploadMovie() {
 
@@ -76,10 +76,13 @@ function UploadMovie() {
         // url: Yup.string().required('Required'),
         overview: Yup.string().required('Required'),
         genres: Yup.array().required('Required'),
+        country: Yup.string().required('Required'),
+        release_date: Yup.string().required('Required'),
 
     })
 
     const onSubmitLogin = async (values, {resetForm}) => {
+        console.log(values);
         if(valueUrl === "") {
             return
         }
@@ -98,9 +101,18 @@ function UploadMovie() {
         if(valueUrl === "") {
             return
         }
+        let arrGenres = []
+        values.genres.forEach(item => {
+            for(let i = 0; i < genderMovie.length; i++) {
+                if(genderMovie[i].value === item) {
+                    arrGenres.push(genderMovie[i])
+                }
+            }
+        });
+        console.log(arrGenres);
         
-        const dataRequest = {...values, user_id: dataUser._id, url: valueUrl, user_name: dataUser.user_name, avatar: dataUser.avatar}
-        console.log(dataRequest);
+        console.log(values.genres);
+        const dataRequest = {...values, user_id: dataUser._id, url: valueUrl, user_name: dataUser.user_name, avatar: dataUser.avatar, genres: arrGenres}
         const formData = new FormData();
         formData.append('image_backdrop', backdrop);
         formData.append('image_poster', poster);
@@ -189,6 +201,19 @@ function UploadMovie() {
                         label='Movie name *'
                         placeholder="Movie name"
                         name='name'
+                    />
+                    <FormikControl
+                        control='date'
+                        type='date'
+                        label='Release date *'
+                        placeholder='Release date'
+                        name='release_date'
+                    />
+                    <FormikControl
+                        control='select'
+                        label='Country *'
+                        name='country'
+                        options={countries}
                     />
                     <FormikControl
                         control='textarea'
@@ -300,25 +325,11 @@ function UploadMovie() {
                     </div>
                     
                     <FormikControl
-                        control='date'
-                        type='date'
-                        label='Release date'
-                        placeholder='Release date'
-                        name='release_date'
-                    />
-                    <FormikControl
                         control='input'
                         type='number'
                         label='Run time'
                         placeholder='Run time'
                         name='runtime'
-                    />
-                    <FormikControl
-                        control='input'
-                        type='text'
-                        label='Country'
-                        placeholder='Country'
-                        name='country'
                     />
                     <FormikControl
                         control='input'

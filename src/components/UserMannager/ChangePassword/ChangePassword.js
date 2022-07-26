@@ -3,7 +3,7 @@ import React from 'react'
 import FormikControl from '../../Form/FormikControl'
 import * as Yup from 'yup'
 import axios from "axios"
-import apiConfig from '../../../API/configApi'
+import apiConfig, { error, success } from '../../../API/configApi'
 import { useSelector } from 'react-redux'
 
 function ChangePassword() {
@@ -25,12 +25,17 @@ function ChangePassword() {
     
       const onSubmitLogin = async (values, {resetForm}) => {
         // console.log('Form data', values)
-        const result = await axios.post(apiConfig.urlConnect + 'account/change-password', {
-            email: dataUser.email,
-            password: values.password,
-            newPassword: values.newPassword
-        })
-        console.log(result);
+        try {
+            const result = await axios.post(apiConfig.urlConnect + 'account/change-password', {
+                email: dataUser.email,
+                password: values.password,
+                newPassword: values.newPassword
+            })
+            console.log(result);
+            success("Change password successfully!")
+        } catch (e) {
+            error(e.response.data.message);
+        }
         resetForm()
       }
   return (

@@ -53,7 +53,7 @@ const Header = () => {
         setLoading(true)
         if(token && !isLogin) {
             try {
-                const result = await axios.get(urlConnect + 'account/refresh', { headers: {"Authorization" : `Bearer ${token}`} });
+                const result = await axios.get(urlConnect + 'account/refresh', apiConfig.headers);
                 dispatch(setUserId(result.data))
                 setLoading(false)
             } catch (error) {

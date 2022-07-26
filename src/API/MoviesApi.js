@@ -7,6 +7,67 @@ export const category = {
 };
 
 // Vietnam, Korea, Japan, China, Thailand, Taiwan, Canada, India, Hong Kong, UK, France, USA, Australia, Other Country
+export const countries = [
+  {
+    key: 'Select a country', value: ''
+  },
+  {
+    key: 'Vietnam',
+    value: 'Vietnam'
+  },
+  {
+    key: 'Korea',
+    value: 'Korea'
+  },
+  {
+    key: 'Japan',
+    value: 'Japan'
+  },
+  {
+    key: 'China',
+    value: 'China'
+  },
+  {
+    key: 'Thailand',
+    value: 'Thailand'
+  },
+  {
+    key: 'Taiwan',
+    value: 'Taiwan'
+  },
+  {
+    key: 'Canada',
+    value: 'Canada'
+  },
+  {
+    key: 'India',
+    value: 'India'
+  },
+  {
+    key: 'Hong Kong',
+    value: 'HongKong'
+  },
+  {
+    key: 'UK',
+    value: 'UK'
+  },
+  {
+    key: 'France',
+    value: 'France'
+  },
+  {
+    key: 'USA',
+    value: 'USA'
+  },
+  {
+    key: 'Australia',
+    value: 'Australia'
+  },
+  {
+    key: 'Others',
+    value: 'Others'
+  },
+]
 
 export const genderMovie = [
   {
@@ -146,6 +207,12 @@ export const trending = async (type, time, page = 1) => {
 
 export const movieDetails = async (category, id) => {
   const url = `${apiConfig.baseUrl}/${category}/${id}?api_key=${apiConfig.apiKey}`;
+  const response = await axios.get(url);
+  return response.data;
+};
+
+export const movieShareDetails = async (movieId) => {
+  const url = `${apiConfig.urlConnect}movie/movie-detail/${movieId}`;
   const response = await axios.get(url);
   return response.data;
 };

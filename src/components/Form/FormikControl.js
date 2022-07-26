@@ -5,7 +5,6 @@ import Select from './Select'
 import RadioButtons from './RadioButtons'
 import CheckboxGroup from './CheckboxGroup'
 import DatePicker from './DatePicker'
-import ArrayList from './ArrayList'
 
 function FormikControl (props) {
   const { control, ...rest } = props
@@ -22,8 +21,6 @@ function FormikControl (props) {
       return <CheckboxGroup {...rest} />
     case 'date':
       return <DatePicker {...rest} />
-    case 'array':
-      return <ArrayList {...rest} />
     default:
       return null
   }

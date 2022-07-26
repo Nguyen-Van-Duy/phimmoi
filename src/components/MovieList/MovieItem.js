@@ -5,7 +5,7 @@ import apiConfig from '../../API/configApi';
 import { Link } from 'react-router-dom';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 
-const MovieItem = ({item, category, userId, handleRemoveFavourite}) => {
+const MovieItem = ({item, category, userId, handleRemove, myMovie}) => {
 
     const handleNotification = () =>{
         if(category === 'person') {
@@ -41,8 +41,8 @@ const MovieItem = ({item, category, userId, handleRemoveFavourite}) => {
                 </Link>
                 {userId && <div className="update-movie">
                     <div className='update-movie__button'>
-                        {!handleRemoveFavourite && <span  className="blue" > Update</span>}
-                        {handleRemoveFavourite && <span className="red" onClick={handleRemoveFavourite}>Delete</span>}
+                        {(!handleRemove || myMovie) && <span  className="blue" > Update</span>}
+                        {handleRemove && <span className="red" onClick={handleRemove}>Delete</span>}
                     </div>
                 </div>}
             </div>

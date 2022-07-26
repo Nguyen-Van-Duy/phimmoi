@@ -1,8 +1,8 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
-import apiConfig, { success } from '../../../API/configApi';
-import { movieDetails } from '../../../API/MoviesApi';
+import apiConfig, { error, success } from '../../../API/configApi';
+import { movieDetails, movieShareDetails } from '../../../API/MoviesApi';
 import MovieItem from '../../MovieList/MovieItem';
 import './Favourite.css'
 
@@ -33,12 +33,15 @@ function Favourite() {
                 await listFavourite.push({...result, category: item.category, _id: item._id})
                 console.log(listFavourite);
             } else {
+                const result = await movieShareDetails(item.movie_id)
+                console.log(result);
+                await listFavourite.push(result[0])
             }
             setMovie([...listFavourite])
         })
     }
 
-    const handleRemoveFavourite = async (favouriteId) => {
+    const handleRemove = async (favouriteId) => {
         if(dataUser && dataUser._id) {
             const result = await axios.delete(apiConfig.urlConnect + 'movie/delete-favourite/' + favouriteId)
             console.log(result);
@@ -47,10 +50,10 @@ function Favourite() {
                 setMovie(newListMovie)
                 success("Delete successfully!")
             } else {
-                alert("404!")
+                error("404!")
             }
         } else {
-            alert("You need to be logged in to perform this function!")
+            error("You need to be logged in to perform this function!")
         }
     }
 
@@ -58,7 +61,7 @@ function Favourite() {
     return (
         <div className="movie-favourite__container">
             {movie && movie.length > 0 && movie.map((item, index) => <div className="view-more__item movie-favourite__item" key={index} >
-                <MovieItem item={item} category={item.category}  userId={dataUser._id} handleRemoveFavourite={()=>handleRemoveFavourite(item._id)} />
+                <MovieItem item={item} category={item.category}  userId={dataUser._id} handleRemove={()=>handleRemove(item._id)} />
             </div>)}
         </div>
     );
