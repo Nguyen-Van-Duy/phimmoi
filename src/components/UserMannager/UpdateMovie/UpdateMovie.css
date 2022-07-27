@@ -1,0 +1,17 @@
+.update-movie__container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.update-movie__container .trailer-content {
+    max-width: none;
+}
+
+.update-movie__container .trailer-main {
+    font-size: unset;
+    padding: 1rem;
+
+}

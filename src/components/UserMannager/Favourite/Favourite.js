@@ -22,7 +22,9 @@ function Favourite() {
                 setMovie(data.data)
             }
         }
-        fetchMovieFavourite()
+        if(dataUser._id) {
+            fetchMovieFavourite()
+        }
     }, [dataUser._id])
 
     const getListFavourite = async (data) => {

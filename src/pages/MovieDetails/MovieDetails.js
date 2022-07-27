@@ -55,23 +55,34 @@ const MovieDetails = () => {
                 const data = await movieShareDetails(params.id)
                 console.log(data);
                 setDAtaDetails(data[0])
+                document.title = `${data[0].title || data[0].name}`;
            }
             setIsLoading(false)
             window.scrollTo(0, 0)
         }
         fetchDataFilm()
     }, [params.category, params.id])
+
+    console.log(dataDetails);
     
     useEffect(()=> {
         const getFavourite = async () => {
-            const data = await axios.get(apiConfig.urlConnect + 'movie/favourite/' + dataUser._id + '/' + dataDetails.id)
+            const data = await axios.get(apiConfig.urlConnect + 'movie/favourite/' + dataUser._id + '/' + (dataDetails.id))
             console.log("favourite:", data.data);
             setFavourite(data.data[0])
         }
-        if(dataUser && dataUser._id && dataDetails.id) {
+        const getFavouriteMyMovie = async () => {
+            const data = await axios.get(apiConfig.urlConnect + 'movie/favourite/' + dataUser._id + '/' + (dataDetails._id))
+            console.log("favourite:", data.data);
+            setFavourite(data.data[0])
+        }
+        if(dataUser && dataUser._id) {
+            getFavouriteMyMovie()
+        }
+        if(dataUser && dataUser.id) {
             getFavourite()
         }
-    }, [dataUser, dataUser?._id, dataDetails.id])
+    }, [dataUser, dataUser?._id, dataDetails.id, dataDetails._id])
     
     const handleAddFavourite = async () => {
         if(dataUser && dataUser._id) {
@@ -100,6 +111,8 @@ const MovieDetails = () => {
             alert("You need to be logged in to perform this function!")
         }
     }
+
+    console.log(dataDetails);
 
     return (<>
         {/* modal show trailer */}
@@ -138,7 +151,8 @@ const MovieDetails = () => {
                             <span className="detail-content__time">Time: {dataDetails.runtime || dataDetails.episode_run_time} minute</span>
                             Date: {dataDetails.release_date || dataDetails.first_air_date}
                         </p>
-                        {directors.length > 0 && <p className="detail-content__desc">Directors: {directors.map((item) => `${item.name} `)}</p>}
+                        {directors.length > 0  && <p className="detail-content__desc">Directors: {directors.map((item) => `${item.name} `)}</p>}
+                        { dataDetails.director !== "" && <p className="detail-content__desc">Directors: {dataDetails.director}</p>}
                         <div className="detail-content__genres">
                             {dataDetails.genres.map((item, id) => <span key={id}>{item.key || item.name}</span>)}
                         </div>

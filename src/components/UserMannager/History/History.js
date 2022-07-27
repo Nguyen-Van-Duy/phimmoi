@@ -4,7 +4,7 @@ import "./History.css"
 import axios from 'axios';
 import apiConfig, { success } from '../../../API/configApi';
 import { useSelector } from 'react-redux';
-import { movieDetails } from '../../../API/MoviesApi';
+import { movieDetails, movieShareDetails } from '../../../API/MoviesApi';
 import { Image } from 'antd';
 
 function History() {
@@ -36,11 +36,14 @@ function History() {
                 const result = await movieDetails(item.category, Number(item.movie_id))
                 await listFavourite.push({...result, history_id: item._id, createdAt: handleDate(item.createdAt), isCheck:false})
             } else {
-                // handle my movie
+                const result = await movieShareDetails(item.movie_id)
+                await listFavourite.push({...result[0], history_id: item._id, createdAt: handleDate(item.createdAt), isCheck:false})
             }
             setMovie([...listFavourite].reverse())
         })
     }, [])
+
+    console.log(movie);
 
       useEffect(()=> {
         const getDataHistory = async () => {
@@ -121,11 +124,12 @@ function History() {
                 {movie && movie.map((item, id)=>
                 <tr className='history__item' key={id}>
                     <td className='history__center'>
-                        <Image src={item.backdrop_path || item.poster_path ? apiConfig.originalImage(item.backdrop_path || item.poster_path) : apiConfig.backupPhoto}  alt="" />
+                        {item.id ? <Image src={(item.backdrop_path || item.poster_path ? apiConfig.originalImage(item.backdrop_path || item.poster_path) : apiConfig.backupPhoto)}  alt="" /> :
+                        <Image src={(apiConfig.urlConnectSocketIO + item.backdrop_path)}  alt="" />}
                     </td>
                     <td className='history__content-name'>{item.title || item.name}</td>
                     <td className='history__content-genres'>
-                        {item.genres && item.genres.map((genres)=> <span key={genres.id}>{genres.name}, </span>)}
+                        {item.genres && item.genres.map((genres, genresId)=> <span key={genresId}>{genres.name || genres.key}, </span>)}
                     </td>
                     <td className='history__time'>{item.createdAt}</td>
                     <td>

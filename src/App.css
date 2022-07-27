@@ -208,12 +208,11 @@ a {
   width: 80%;
   /* height: 95vh; */
   max-width: 80rem;
-  background-color: #141414;
+  background-color: #313131;
   z-index: 1002;
   border-radius: 1rem;
   padding: 0 1.5rem;
   animation: moveup 0.4s ease-in-out;
-
 }
 
 .trailer-head {
@@ -221,6 +220,7 @@ a {
   font-size: 1.4rem;
   justify-content: space-between;
   height: 6rem;
+  align-items: center;
 }
 
 .trailer-head__close {

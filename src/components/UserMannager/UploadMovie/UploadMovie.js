@@ -28,8 +28,8 @@ function UploadMovie() {
         { key: 'Tv', value: 'tv' }
       ]
     const urlType = [
-        { key: 'Iframe', value: 'iframe' },
-        { key: 'Video', value: 'video' }
+        { key: 'Video', value: 'video' },
+        { key: 'Iframe', value: 'iframe' }
     ]
 
     const initialValues = {
@@ -82,10 +82,6 @@ function UploadMovie() {
     })
 
     const onSubmitLogin = async (values, {resetForm}) => {
-        console.log(values);
-        if(valueUrl === "") {
-            return
-        }
         console.log('Form data', values)
         if(checkPoster === true && checkBackdrop !== true) {
             setCheckBackdrop(false)
@@ -109,10 +105,16 @@ function UploadMovie() {
                 }
             }
         });
-        console.log(arrGenres);
         
-        console.log(values.genres);
-        const dataRequest = {...values, user_id: dataUser._id, url: valueUrl, user_name: dataUser.user_name, avatar: dataUser.avatar, genres: arrGenres}
+        let urlRequest
+        if(values.url_type === 'iframe') {
+            const dataUrl = valueUrl.split(`"` || `'`)
+            urlRequest = dataUrl.filter(item=>item.includes("https://"))[0]
+        } else {
+            urlRequest = valueUrl
+        }
+        
+        const dataRequest = {...values, user_id: dataUser._id, url: urlRequest, user_name: dataUser.user_name, avatar: dataUser.avatar, genres: arrGenres}
         const formData = new FormData();
         formData.append('image_backdrop', backdrop);
         formData.append('image_poster', poster);
@@ -184,7 +186,7 @@ function UploadMovie() {
             onSubmit={onSubmitLogin}
             >
             {formik => {
-                // console.log(formik)
+                console.log(formik.values)
                 // console.log(formik.values.url_type);
                 if(formik.values.url_type && formik.values.url_type !== typeUrl) {
                     

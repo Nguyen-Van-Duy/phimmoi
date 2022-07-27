@@ -4,6 +4,7 @@ import TextError from './TextError'
 
 function CheckboxGroup (props) {
   const { label, name, options, ...rest } = props
+  console.log(props);
   return (
     <div className='group'>
       <label className='label'>{label}</label>
