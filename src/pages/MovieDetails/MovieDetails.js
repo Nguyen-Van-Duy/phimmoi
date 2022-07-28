@@ -123,7 +123,7 @@ const MovieDetails = () => {
         {showProfileCast && <ProfileCast category={params.category} id={params.id}/>}
 
         {isLoading && <div className="loading"><Loading /></div>}
-        {!isLoading && <> <section className="detail-container container__container" 
+        {!isLoading && <> <section className="detail-container app__container" 
         style={Number(params.id) ? 
             { backgroundImage: `url(${(dataDetails.backdrop_path || dataDetails.poster_path ? apiConfig.originalImage(dataDetails.backdrop_path || dataDetails.poster_path): apiConfig.background)})` }
         : { backgroundImage: `url(${apiConfig.urlConnectSocketIO + dataDetails.backdrop_path})` }}>
@@ -175,7 +175,7 @@ const MovieDetails = () => {
                 </div>
             </div>
         </section>
-        <span className="home-page container__container">Homepage: <a href={dataDetails.homepage} target="_blank" rel="noopener noreferrer"> {dataDetails.homepage}</a></span>
+        <span className="home-page app__container">Homepage: <a href={dataDetails.homepage} target="_blank" rel="noopener noreferrer"> {dataDetails.homepage}</a></span>
         <div className="content-list">
             {listCast.length > 3 && <Paticipants paticipants={listCast}/>}
             <Similar />

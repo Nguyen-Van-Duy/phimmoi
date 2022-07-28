@@ -5,7 +5,7 @@ const Footer = () => {
   const navigate = useNavigate()
   return (
     <footer className="footer">
-      <div className="container__container footer__container">
+      <div className="app__container footer__container">
       <div className="footer__list" onClick={() => navigate('/')}>
         <h2 className="logo-movie">DUY FILM</h2>
       </div>
@@ -28,7 +28,7 @@ const Footer = () => {
           <li>Contact</li>
       </div>
       </div>
-      <div className="container footer__desc">
+      <div className="container__conainer footer__desc">
           <span>copy right @ by Nguyen Van Duy</span>
           <a href="https://app-film-10550.web.app/">DUY FILM version 1.0</a>
       </div>
