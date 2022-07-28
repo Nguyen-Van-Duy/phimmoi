@@ -7,6 +7,10 @@
   align-items: center;
 }
 
+.ant-image-preview-wrap {
+  background-color: rgb(74, 74, 74);
+}
+
 a {
   color: white !important;
 }
@@ -186,7 +190,7 @@ a {
   color: #fff;
 }
 
-.trailer-container {
+.trailer-container.app__container {
   position: absolute;
   display: flex;
   justify-content: center;

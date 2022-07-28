@@ -13,7 +13,7 @@ function Login({closeModal}) {
     }
     
     return (
-        <div className="trailer-container container">
+        <div className="trailer-container app__container">
             <div className="trailer-content box-login__content">
                 <div className="login-wrap">
                     <div className="trailer-head__close close-box-login" onClick={handleCloseModal}>
