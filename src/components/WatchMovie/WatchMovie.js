@@ -54,7 +54,6 @@ const WatchMovie = () => {
     useEffect(()=> {
         const getFavourite = async () => {
             const data = await axios.get(apiConfig.urlConnect + 'movie/favourite/' + dataUser._id + '/' + dataFilm.id)
-            console.log("favourite:", data.data);
             setFavourite(data.data[0])
         }
         const getFavouriteMyMovie = async () => {
