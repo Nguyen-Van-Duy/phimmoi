@@ -46,10 +46,10 @@ const WatchMovie = () => {
             await axios.post(apiConfig.urlConnect + 'movie/add-movie-history/', dataRequest)
             console.log("favourite:", dataRequest);
         }
-        if((dataFilm.id || dataFilm._id) && dataFilm.genres && dataUser._id) {
+        if((dataFilm.id || dataFilm?._id) && dataFilm.genres && dataUser?._id) {
             addMovieHistory()
         }
-    }, [dataFilm, params.category, dataUser._id, params.id])
+    }, [dataFilm, params.category, dataUser?._id, params.id])
 
     useEffect(()=> {
         const getFavourite = async () => {
