@@ -120,7 +120,7 @@ const Header = () => {
     <>
     <header className="header" ref={headerRef}>
       <div onClick={toggleMenu}><Modal showModal={menuMobile} /></div>
-      <div className="container">
+      <div className="container__conainer">
         <nav className="header__menu">
           <div className="header__menu-bar" onClick={toggleMenu}><i className="fas fa-bars"></i></div>
           <h2 className="header__logo logo-movie" onClick={() => navigate('/')}>DUY FILM</h2>

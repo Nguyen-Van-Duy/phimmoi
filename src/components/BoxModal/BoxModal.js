@@ -2,7 +2,7 @@ import React from 'react';
 
 const BoxModal = ({children, closeModal, title}) => {
     return (
-        <div className="trailer-container container">
+        <div className="trailer-container container__conainer">
             <div className="trailer-content">
                 <div className="trailer-head">
                     <h2 className="trailer-head__title">{title}</h2>

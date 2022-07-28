@@ -5,7 +5,7 @@ const Footer = () => {
   const navigate = useNavigate()
   return (
     <footer className="footer">
-      <div className="container footer__container">
+      <div className="container__conainer footer__container">
       <div className="footer__list" onClick={() => navigate('/')}>
         <h2 className="logo-movie">DUY FILM</h2>
       </div>
