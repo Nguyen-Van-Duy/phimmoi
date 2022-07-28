@@ -199,7 +199,6 @@ a {
 
 .group__trailer-container {
   border-bottom: 1px solid rgb(224, 224, 224);
-
 }
 
 .trailer-content {
@@ -213,6 +212,10 @@ a {
   border-radius: 1rem;
   padding: 0 1.5rem;
   animation: moveup 0.4s ease-in-out;
+}
+
+.trailer-head__title {
+  margin: 0 !important;
 }
 
 .trailer-head {

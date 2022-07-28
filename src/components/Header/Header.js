@@ -28,6 +28,10 @@ const menu = [
     path: `/${category.tv}`,
   },
   {
+    name: "New Movie",
+    path: "/new-movie",
+  },
+  {
     name: "Movie Genre",
     path: "/new-popular",
   },

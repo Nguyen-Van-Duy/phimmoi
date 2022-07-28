@@ -6,6 +6,7 @@
     color: rgb(214, 213, 213);
     background-size: cover;
     text-shadow: 0 5px 5px rgba(0, 0, 0, 0.5);
+    max-height: 25rem;
 }
 
 .footer__container {
@@ -59,6 +60,9 @@
 }
 
 @media(max-width: 768px) {
+    .footer {
+        max-height: none;
+    }
     .footer__desc,
     .footer__container {
         flex-wrap: wrap;

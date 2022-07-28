@@ -1,12 +1,13 @@
 .manager__container {
-    min-height: calc(100vh - 29.6rem);
+    min-height: calc(100vh - 25rem);
     display: flex;
-    padding: 68px 5rem 8px;
+    padding: 7rem 5rem 0;
+    /* margin-top: 6rem; */
 }
 
 .manager-menu {
     width: 27%;
-    min-height: calc(100vh - 29.6rem);
+    /* min-height: calc(100vh - 31.6rem); */
     margin-right: 3rem;
     border: 1px solid rgb(67, 67, 67);
     border-radius: 12px;
@@ -20,6 +21,12 @@
     align-items: center;
     
     color: #fff;
+}
+
+.trailer-video {
+    max-width: 560px !important;
+    width: 100%;
+    height:315px !important;
 }
 
 .manager-menu__header img {
@@ -84,7 +91,7 @@
 .manager-content {
     width: calc(73% - 3rem);
     background-color: rgb(61, 61, 61);
-    min-height: calc(100vh - 28rem);
+    /* min-height: calc(100vh - 28rem); */
     border-radius: 12px;
     padding: 2rem 3rem;
 }

@@ -18,6 +18,7 @@ import RTC from "./pages/RTC/RTC";
 // import ViewGenre from "./pages/ViewGenre/ViewMore";
 // import ResultSearch from "./pages/ResultSearch/ResultSearch";
 // import Watch from "./pages/Watch/Watch";
+const NewMovie = React.lazy(()=>import("./pages/NewMovie/NewMovie"));
 const Movie = React.lazy(()=>import("./pages/Movies/Movie"));
 const MovieDetails = React.lazy(()=>import("./pages/MovieDetails/MovieDetails"));
 const ViewMore = React.lazy(()=>import("./pages/ViewMore/ViewMore"));
@@ -96,6 +97,10 @@ function App() {
           <Route
             path="/manager/*"
             element={<UserMannager />}
+          />
+          <Route
+            path="/new-movie/*"
+            element={<React.Suspense fallback={<div className="loading"><Loading /></div>}><NewMovie /></React.Suspense>}
           />
           <Route
             path="/:category"

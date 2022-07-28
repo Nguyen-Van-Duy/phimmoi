@@ -9,6 +9,7 @@ import "./MyMovie.css"
 
 const MyMovie = () => {
     const [movie, setMovie] = useState(null)
+    const [movieDetail, setMovieDetail] = useState(null)
     const [showModal, setShowModal] = useState(false)
     const dataUser = useSelector((state) => state.loginSlice.dataUser);
     console.log(dataUser);
@@ -38,14 +39,24 @@ const MyMovie = () => {
             error("You need to be logged in to perform this function!")
         }
     }
+
+    const handleShowMovieUpdate = (movieDefault) => {
+        setMovieDetail(movieDefault)
+        setShowModal(!showModal)
+    }
     console.log(movie);
     return (
     <>
         <div onClick={()=>setShowModal(!showModal)}><Modal showModal={showModal} /></div>
-        {showModal && <UpdateMovie setShowModal={()=>setShowModal(!showModal)} />}
+        {showModal && movieDetail && <UpdateMovie setShowModal={()=>setShowModal(!showModal)} movieDetail={movieDetail} />}
         <div className="my-movie__container">
             {movie && movie.length >=0 && movie.map((item, index) => <div className="view-more__item" key={index} >
-                <MovieItem item={item} category={item.media_type} userId={dataUser._id} handleRemove={()=> handleRemove(item._id)} myMovie={item.user_id === dataUser._id} setShowModal={()=>setShowModal(!showModal)} />
+                <MovieItem item={item} 
+                category={item.media_type} 
+                userId={dataUser._id} 
+                handleRemove={()=> handleRemove(item._id)} 
+                myMovie={item.user_id === dataUser._id} 
+                setShowModal={()=>handleShowMovieUpdate(item)} />
             </div>)}
             
         </div>

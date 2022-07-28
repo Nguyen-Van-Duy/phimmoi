@@ -6,6 +6,7 @@ body {
   background-color: rgb(0, 0, 0) !important;
   top:0!important;
   min-height: 0 !important;
+  height: auto !important;
 }
 
 code {

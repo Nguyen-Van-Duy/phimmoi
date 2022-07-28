@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FieldArray, Form, Formik } from 'formik'
 import FormikControl from '../../Form/FormikControl'
 import * as Yup from 'yup'
@@ -9,7 +9,7 @@ import { useSelector } from 'react-redux'
 // import { setUserId } from '../../../store/LoginSlice'
 import { genderMovie, countries } from '../../../API/MoviesApi'
 
-function UploadMovie() {
+function UploadMovie({movieDetail}) {
 
     const dataUser = useSelector((state) => state.loginSlice.dataUser);
     const [backdrop, setBackdrop] = useState();
@@ -20,44 +20,75 @@ function UploadMovie() {
     // const urlRef = useRef()
 
     // const [checkboxGender, setCheckboxGender] = useState([])
-    const [typeUrl, setTypeUrl] = useState(null)
+    // const [typeUrl, setTypeUrl] = useState(null)
     // const dispatch = useDispatch()
 
     const mediaType = [
         { key: 'Movie', value: 'movie' },
         { key: 'Tv', value: 'tv' }
       ]
-    const urlType = [
-        { key: 'Video', value: 'video' },
-        { key: 'Iframe', value: 'iframe' }
-    ]
+    // const urlType = [
+    //     { key: 'Video', value: 'video' },
+    //     { key: 'Iframe', value: 'iframe' }
+    // ]
+    console.log(movieDetail);
 
-    const initialValues = {
-        // user_id: "",
-        // user_name: "",
-        // status: "",
-        overview: "",
-        release_date: "", 
-        // backdrop_path: "",
-        // poster_path: "",
-        name: "",
-        // vote_average: "",
-        runtime: "", 
-        // vote_count: "", 
-        country: "", 
-        director: "", 
-        media_type: "", 
-        url_type: "",
-        // url: "",  
-        genres: [], 
-        number_of_episodes: "",
-        number_of_seasons: "",
-        seasons: [],
-        trailers: [{
-            title: '',
-            url: ''
-        }]
-      }
+    let initialValues
+    if(movieDetail) {
+        const listGenres = []
+        movieDetail.genres.forEach(item=>listGenres.push(item.value))
+        console.log(listGenres);
+        initialValues = {
+            overview: movieDetail.overview,
+            release_date: movieDetail.release_date, 
+            name: movieDetail.name,
+            runtime: movieDetail.runtime, 
+            country: movieDetail.country, 
+            director: movieDetail.director, 
+            media_type: movieDetail.media_type, 
+            // url_type: movieDetail.url_type,
+            genres: listGenres, 
+            number_of_episodes: movieDetail.number_of_episodes,
+            number_of_seasons: movieDetail.number_of_seasons,
+            seasons: movieDetail.seasons,
+            trailers: movieDetail.trailers
+          }
+    } else {
+        initialValues = {
+            // user_id: "",
+            // user_name: "",
+            // status: "",
+            overview: "",
+            release_date: "", 
+            // backdrop_path: "",
+            // poster_path: "",
+            name: "",
+            // vote_average: "",
+            runtime: "", 
+            // vote_count: "", 
+            country: "", 
+            director: "", 
+            media_type: "", 
+            // url_type: "",
+            // url: "",  
+            genres: [], 
+            number_of_episodes: "",
+            number_of_seasons: "",
+            seasons: [],
+            trailers: [{
+                title: '',
+                url: ''
+            }]
+          }
+    }
+
+    useEffect(()=> {
+        if(movieDetail) {
+            // setTypeUrl(movieDetail.url_type)
+            setValueUrl(movieDetail.url)
+        }
+    }, [movieDetail])
+    
 
     const handleChangeImageBackdrop = (event) => {
         setBackdrop(event.target.files[0]);
@@ -72,7 +103,7 @@ function UploadMovie() {
     const validationSchema = Yup.object({
         name: Yup.string().required('Required').min(2),
         media_type: Yup.string().required('Required'),
-        url_type: Yup.string().required('Required'),
+        // url_type: Yup.string().required('Required'),
         // url: Yup.string().required('Required'),
         overview: Yup.string().required('Required'),
         genres: Yup.array().required('Required'),
@@ -107,7 +138,7 @@ function UploadMovie() {
         });
         
         let urlRequest
-        if(values.url_type === 'iframe') {
+        if(valueUrl.includes('iframe')) {
             const dataUrl = valueUrl.split(`"` || `'`)
             urlRequest = dataUrl.filter(item=>item.includes("https://"))[0]
         } else {
@@ -137,45 +168,45 @@ function UploadMovie() {
         // dispatch(setUserId(result.data))
     }
 
-    const handleCheckUrl = (e) => {
-        setValueUrl(e.target.value)
-        const listItem = document.getElementById('url-video'); 
-        const newItem = document.createElement('div');
-        const att = document.createAttribute("id");
-            att.value = "url-video";
-            newItem.setAttributeNode(att);
-        if(typeUrl === "video" && e.target.value !== "" && e.target.value.includes("https://")) {
-            if(e.target.value.includes("<iframe")) {
-                return
-            }
-            newItem.innerHTML = `<iframe
-            src=${e.target.value}
-            frameBorder="0" 
-            style="max-width: 560px !important;width: 100%;
-            height:315px !important;"
-            allowFullScreen="allowfullscreen" 
-            title="YouTube video player" ></iframe>`
-        } else
-        if(typeUrl === "iframe" && e.target.value !== "" && e.target.value.includes("<iframe") && e.target.value.includes("</iframe>")) {
-            newItem.innerHTML = e.target.value;
-        }  else if(e.target.value !== "") {
-            newItem.innerHTML = "<span class='error'>Required</span>";
-        }
-        listItem.parentNode.replaceChild(newItem, listItem);
-    }
+    // const handleCheckUrl = (e) => {
+    //     setValueUrl(e)
+    //     const listItem = document.getElementById('url-video'); 
+    //     const newItem = document.createElement('div');
+    //     const att = document.createAttribute("id");
+    //         att.value = "url-video";
+    //         newItem.setAttributeNode(att);
+    //     if(typeUrl === "video" && e !== "" && e.includes("https://")) {
+    //         if(e.includes("<iframe")) {
+    //             return
+    //         }
+    //         newItem.innerHTML = `<iframe
+    //         src=${e}
+    //         frameBorder="0" 
+    //         style="max-width: 560px !important;width: 100%;
+    //         height:315px !important;"
+    //         allowFullScreen="allowfullscreen" 
+    //         title="YouTube video player" ></iframe>`
+    //     } else
+    //     if(typeUrl === "iframe" && e !== "" && e.includes("<iframe") && e.includes("</iframe>")) {
+    //         newItem.innerHTML = e;
+    //     }  else if(e !== "") {
+    //         newItem.innerHTML = "<span class='error'>Required</span>";
+    //     }
+    //     listItem.parentNode.replaceChild(newItem, listItem);
+    // }
 
-    const handleClick = (e) => {
-        console.log(e.target.value, "2222222222");
-        if(e.target.value && e.target.value !== typeUrl) {
-            const urlIframe = document.querySelector('iframe')
-            if(urlIframe) {
-                urlIframe.remove()
-            }
-            setValueUrl("")
-            setTypeUrl(e.target.value)
-            // setValueUrl()
-        }
-    }
+    // const handleClick = (e) => {
+    //     console.log(e.target.value, "2222222222");
+    //     if(e.target.value && e.target.value !== typeUrl) {
+    //         const urlIframe = document.querySelector('iframe')
+    //         if(urlIframe) {
+    //             urlIframe.remove()
+    //         }
+    //         setValueUrl("")
+    //         setTypeUrl(e.target.value)
+    //         // setValueUrl()
+    //     }
+    // }
 
   return (
     <div className='profile'>
@@ -187,13 +218,10 @@ function UploadMovie() {
             >
             {formik => {
                 console.log(formik.values)
-                // console.log(formik.values.url_type);
-                if(formik.values.url_type && formik.values.url_type !== typeUrl) {
-                    
-                    setValueUrl("")
-                    setTypeUrl(formik.values.url_type)
-                    // setValueUrl()
-                }
+                // if(formik.values.url_type && formik.values.url_type !== typeUrl) {
+                //     setValueUrl("")
+                //     setTypeUrl(formik.values.url_type)
+                // }
                 
                 return (
                 <Form  className="update-profile__form">
@@ -231,13 +259,13 @@ function UploadMovie() {
                     // onChange={handleChangeMediaType}
                     options={mediaType}
                      />
-                     <FormikControl
+                     {/* <FormikControl
                     control='radio'
                     label='Url type *'
                     name='url_type'
                     options={urlType}
                     onClick={handleClick}
-                     />
+                     /> */}
                      {/* <FormikControl
                         control='input'
                         type='text'
@@ -245,12 +273,19 @@ function UploadMovie() {
                         placeholder='Url movie'
                         name='url'
                     /> */}
-                    {typeUrl && <div className='group'>
+                    <div className='group'>
                         <label htmlFor="image_movie" className="label">Url movie *</label>
-                        <textarea className='input' type="text" name="url" value={valueUrl}  placeholder='Url movie' onChange={handleCheckUrl} />
-                        {typeUrl && valueUrl === "" && <span className='error'>Required</span>}
-                    </div>}
-                    <div id="url-video"></div> 
+                        <textarea className='input' type="text" name="url" value={valueUrl}  placeholder='Url movie' onChange={(e)=>setValueUrl(e.target.value)} />
+                        {valueUrl === "" && <span className='error'>Required</span>}
+                    </div>
+                    {valueUrl && valueUrl !== "" && valueUrl.includes("https://")  && <div><iframe
+                        src={valueUrl}
+                        frameBorder="0" 
+                        className='trailer-video'
+                        allowFullScreen="allowfullscreen" 
+                        title="YouTube video player" >
+                    </iframe></div>}
+                    {/* <div id="url-video"></div>  */}
                     <FormikControl
                         control='checkbox'
                         label='Checkbox genres *'
@@ -304,6 +339,13 @@ function UploadMovie() {
                                             placeholder={`Trailer url  ${index + 1}`}
                                             name={`trailers[${index}].url`}
                                         />
+                                        {trailers[index].url !== "" && <div><iframe
+                                            src={trailers[index].url}
+                                            frameBorder="0" 
+                                            className='trailer-video'
+                                            allowFullScreen="allowfullscreen" 
+                                            title="YouTube video player" >
+                                        </iframe></div>}
                                     </div>
                                     {index > 0 && (
                                         <div className="group__trailer-control">

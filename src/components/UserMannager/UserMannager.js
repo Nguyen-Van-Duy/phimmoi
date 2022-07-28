@@ -11,6 +11,7 @@ import MyMovie from './MyMovie/MyMovie'
 import ChangePassword from './ChangePassword/ChangePassword'
 import Favourite from './Favourite/Favourite'
 import History from './History/History'
+import ApprovalMovie from './ApprovalMovie/ApprovalMovie'
 
 
 function UserMannager() {
@@ -38,7 +39,8 @@ const navigate = useNavigate()
         <div className='manager-menu__body'>
             <ul className='manager-menu__list'>
             <Link to="/manager"><li className='manager-menu__item'>Profile</li></Link>
-            <Link to="/manager/upload-movie"><li className='manager-menu__item'>Upload Movie</li></Link>
+            <Link to="/manager/upload-movie"><li className='manager-menu__item'>Share Movie</li></Link>
+            <Link to="/manager/approval-movie"><li className='manager-menu__item'>Approval Movie</li></Link>
             {dataUser.role !== "admin" && 
             <Link to="/manager/movie-waiting"><li className='manager-menu__item'>Movie waiting</li></Link>}
             <Link to="/manager/my-favourite"><li className='manager-menu__item'>favourite</li></Link>
@@ -52,6 +54,7 @@ const navigate = useNavigate()
         <Routes>
             <Route path="" element={<Profile />} />
             <Route path="upload-movie" element={<UploadMovie />} />
+            <Route path="approval-movie" element={<ApprovalMovie />} />
             <Route path="movie-waiting" element={<MovieWaiting />} />
             <Route path="my-movie" element={<MyMovie />} />
             <Route path="my-favourite" element={<Favourite />} />

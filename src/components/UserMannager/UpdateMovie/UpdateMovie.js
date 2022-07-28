@@ -3,12 +3,13 @@ import BoxModal from '../../BoxModal/BoxModal'
 import './UpdateMovie.css';
 import UploadMovie from '../UploadMovie/UploadMovie'
 
-function UpdateMovie({setShowModal}) {
+function UpdateMovie({setShowModal, movieDetail}) {
+  console.log(movieDetail);
   return (
     <div className='update-movie__container'>
-        <BoxModal title="Update Movie" closeModal={setShowModal}>
+        <BoxModal title={`Movie: ${movieDetail.name}`} closeModal={setShowModal}>
             <div className="trailer-main">
-                <UploadMovie />
+                <UploadMovie movieDetail={movieDetail}/>
             </div>
     </BoxModal>
     </div>
