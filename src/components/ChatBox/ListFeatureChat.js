@@ -45,7 +45,6 @@ function ListFeatureChat({
 
     {/* admin */}
       {valueContentMenu === 'admin' && userConversation.length > 0 && userConversation?.map((item, id) => {
-        // console.log(item);
         // if(id !== 0) {
         //   return []
         // }
