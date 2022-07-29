@@ -30,13 +30,6 @@
     min-width: 35rem;
 }
 
-.history__checkbox {
-    
-}
-
-.history__list td {
-}
-
 tr, th {
     border-bottom: 1px solid rgb(91, 91, 91);
 }
@@ -45,9 +38,20 @@ tr, th {
     display: flex;
     justify-content: center;
 }
+.history__item td {
+    padding: 0 0.5rem;
+}
 
 .history__item img {
     width: 12rem;
+    max-height: 7.2rem;
+    object-fit: cover;
+}
+
+.history__content-name img {
+    border-radius: 50%;
+    width: 6rem;
+    height: 6rem;
 }
 
 .history__list th {

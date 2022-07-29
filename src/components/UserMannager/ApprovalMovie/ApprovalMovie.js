@@ -1,14 +1,19 @@
 import React, { useEffect, useState } from 'react'
-import { Space } from 'antd';
+import { Result, Space } from 'antd';
 import "../History/History.css"
 import axios from 'axios';
 import apiConfig, { success } from '../../../API/configApi';
 import { useSelector } from 'react-redux';
 import { Image } from 'antd';
+import Approval from '../Approval/Approval';
+import Modal from '../../Modal/Modal';
+import { SmileOutlined } from '@ant-design/icons';
 
 function ApprovalMovie() {
     const [movie, setMovie] = useState([])
     const dataUser = useSelector(state=>state.loginSlice.dataUser)
+    const [showModal, setShowModal] = useState(false)
+    const [movieApproval, setMovieApproval] = useState({})
 
     const handleDate = (time) => {
         const date = new Date(time)
@@ -29,7 +34,21 @@ function ApprovalMovie() {
         getDataHistory()
       }, [dataUser._id])
 
+      const handleShowApprovalMovie = data => {
+        setMovieApproval(data)
+        setShowModal(!showModal)
+      }
+
+      const handleApproval = (movieId) => {
+        const newMovie = movie.filter(item=>item._id !== movieId)
+        setMovie(newMovie)
+        success("Approved success!")
+      }
+
   return (
+    <>
+    <div onClick={()=>setShowModal(!showModal)}><Modal showModal={showModal} /></div>
+    {showModal && <Approval setShowModal={()=>setShowModal(!showModal)} movieApproval={movieApproval} approval={handleApproval} />}
     <div className='profile'>
         <h2 className='profile_title'>Approval Movie</h2>
         <Space direction="vertical">
@@ -38,31 +57,43 @@ function ApprovalMovie() {
                 <span className='button'>Delete</span> */}
             </div>
         </Space>
-        <table className='history__list'>
+        {movie && movie.length > 0 ? <table className='history__list'>
             <thead>
                 <tr>
                     <th>Image</th>
                     <th>Name</th>
-                    <th>Genres</th>
+                    <th>User</th>
                     <th>Time</th>
+                    <th>Approval</th>
                 </tr>
             </thead>
             <tbody>
-                {movie && movie.map((item, id)=>
+                {movie.map((item, id)=>
                 <tr className='history__item' key={id}>
                     <td className='history__center'>
                         <Image src={(apiConfig.urlConnectSocketIO + item.backdrop_path)}  alt="" />
                     </td>
-                    <td className='history__content-name'>{item.title || item.name}</td>
-                    <td className='history__content-genres'>
-                        {item.genres && item.genres.map((genres, genresId)=> <span key={genresId}>{genres.name || genres.key}, </span>)}
+                    <td className='history__content-name' onClick={()=>handleShowApprovalMovie(item)}>
+                        {item.title || item.name}
                     </td>
-                    <td className='history__time'>{item.createdAt}</td>
+                    <td className='history__content-genres'>
+                        {item.user_name}
+                    </td>
+                    <td className='history__time'>{handleDate(item.createdAt)}</td>
+                    <td>
+                        <span className='button green history__button'>Yes</span>
+                        <span className='button red history__button'>No</span>
+                    </td>
                 </tr>)}
 
             </tbody>
-        </table>
+        </table>: <Result
+                icon={<SmileOutlined />}
+                title="No Data!"
+            />}
     </div>
+    </>
+
   )
 }
 

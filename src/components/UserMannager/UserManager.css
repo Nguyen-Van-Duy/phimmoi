@@ -61,7 +61,6 @@
 
 .manager-menu__header-email {
     font-size: 1.6rem;
-    margin-top: 0.5rem;
 }
 
 /* .manager-menu__body {
@@ -180,5 +179,10 @@
 .label-checkbox {
     margin: 1rem !important;
   }
+
+  
+.ant-result-title {
+    color: #fff
+}
 
 

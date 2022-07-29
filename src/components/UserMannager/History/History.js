@@ -48,8 +48,11 @@ function History() {
       useEffect(()=> {
         const getDataHistory = async () => {
             const data = await axios.get(apiConfig.urlConnect + "movie/movie-history/" + dataUser._id)
+            console.log(data);
             // setListMovie(data.data)
-            getListFavourite(data.data)
+            if(data.data.length > 0) {
+                getListFavourite(data.data)
+            }
         }
         getDataHistory()
       }, [dataUser._id, getListFavourite])

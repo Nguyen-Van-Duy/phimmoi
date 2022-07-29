@@ -28,7 +28,7 @@ const Footer = () => {
           <li>Contact</li>
       </div>
       </div>
-      <div className="container__conainer footer__desc">
+      <div className="app__container footer__desc">
           <span>copy right @ by Nguyen Van Duy</span>
           <a href="https://app-film-10550.web.app/">DUY FILM version 1.0</a>
       </div>

@@ -32,9 +32,13 @@
 }
 
 .trailer-item__title {
-    display: block;
+    display: -webkit-box;
+    min-height: 4.5rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
     font-size: 1.6rem;
-    margin-bottom: 0.5rem;
 }
 
 .trailer-item iframe {

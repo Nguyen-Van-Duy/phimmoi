@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import apiConfig from '../../API/configApi';
+import apiConfig, { error } from '../../API/configApi';
 import { movieDetails, movieShareDetails } from '../../API/MoviesApi';
 import PlayMovieMore from '../PlayMovieMore/PlayMovieMore';
 import VoteAverage from '../VoteAverage/VoteAverage';
@@ -32,24 +32,25 @@ const WatchMovie = () => {
         }
         fetchData()
     }, [params.category, params.id])
+    console.log(dataFilm);
 
     useEffect(()=> {
         const addMovieHistory = async () => {
             const dataRequest = {
                 user_id: dataUser._id,
-                movie_id: Number(params.id) ? dataFilm.id : dataFilm._id,
+                movie_id: Number(dataFilm.id) ? dataFilm.id : dataFilm._id,
                 category: params.category,
                 genres: dataFilm.genres,
             }
 
-            console.log(dataRequest);
             await axios.post(apiConfig.urlConnect + 'movie/add-movie-history/', dataRequest)
             console.log("favourite:", dataRequest);
         }
-        if((dataFilm.id || dataFilm?._id) && dataFilm.genres && dataUser?._id) {
+        if((dataFilm.id || dataFilm._id) && dataFilm.genres && params.category && dataUser._id) {
             addMovieHistory()
+            console.log("2222222222222222");
         }
-    }, [dataFilm, params.category, dataUser?._id, params.id])
+    }, [dataFilm.id, dataFilm._id, dataFilm.genres, params.category, dataUser._id])
 
     useEffect(()=> {
         const getFavourite = async () => {
@@ -58,7 +59,6 @@ const WatchMovie = () => {
         }
         const getFavouriteMyMovie = async () => {
             const data = await axios.get(apiConfig.urlConnect + 'movie/favourite/' + dataUser._id + '/' + (dataFilm._id))
-            console.log("favourite:", data.data);
             setFavourite(data.data[0])
         }
         if(dataUser && dataFilm._id) {
@@ -78,7 +78,7 @@ const WatchMovie = () => {
             })
             setFavourite(result.data)
         } else {
-            alert("You need to be logged in to perform this function!")
+            error("You need to be logged in to perform this function!")
         }
     }
 
@@ -88,7 +88,7 @@ const WatchMovie = () => {
             console.log(result);
             setFavourite(null)
         } else {
-            alert("You need to be logged in to perform this function!")
+            error("You need to be logged in to perform this function!")
         }
     }
 
@@ -100,7 +100,7 @@ const WatchMovie = () => {
             <div className="watch-movie__containers">
                 <div className="watch-movie__content">
                     <div className="watch-movie__video">
-                        {dataFilm.url_type === 'iframe' ? dataFilm.url : <iframe
+                        {/* {dataFilm.url_type === 'iframe' ? dataFilm.url : <iframe
                             src={Number(params.id) ? ((params.category === 'movie' && apiConfig.embedMovie(params.id)) || 
                             (params.category === 'tv' && apiConfig.embedEpisode(params.id, params.season, params.esp))) : 
                             dataFilm.url}
@@ -108,7 +108,7 @@ const WatchMovie = () => {
                             title="Movie player"
                             frameBorder="0"
                             allowFullScreen
-                        />}
+                        />} */}
                         <h2 className="watch-content__title">{dataFilm.title || dataFilm.name}</h2>
                         {params.season && <p className="watch-content__desc">Season {params.season} episode {params.esp}</p>}
                         <p className="watch-content__desc">{(dataFilm.seasons && dataFilm.seasons[params.season]?.overview) || dataFilm.overview}</p>

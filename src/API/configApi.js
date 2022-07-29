@@ -12,6 +12,15 @@ export const warning = (m) => {
   message.warning(m);
 };
 
+export const handleDate = (time) => {
+  const date = new Date(time)
+  const day = time.slice(0, 10)
+  const h = date.getHours()
+  const m = date.getMinutes()
+  const s = date.getSeconds()
+  return day + ' ' + h + ":" + m + ":" + s
+}
+
 const apiConfig = {
     baseUrl: 'https://api.themoviedb.org/3',
     urlConnect: process.env.REACT_APP_CONNECT_SERVER,

@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 import apiConfig, { error, success } from '../../../API/configApi';
-import { movieDetails, movieShareDetails } from '../../../API/MoviesApi';
+import { movieDetails, movieFavouriteDetails, movieShareDetails } from '../../../API/MoviesApi';
 import MovieItem from '../../MovieList/MovieItem';
 import './Favourite.css'
 
@@ -35,7 +35,7 @@ function Favourite() {
                 await listFavourite.push({...result, category: item.category, _id: item._id})
                 console.log(listFavourite);
             } else {
-                const result = await movieShareDetails(item.movie_id)
+                const result = await movieFavouriteDetails(item.movie_id)
                 console.log(result);
                 await listFavourite.push(result[0])
             }

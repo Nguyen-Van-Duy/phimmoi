@@ -217,6 +217,12 @@ export const movieShareDetails = async (movieId) => {
   return response.data;
 };
 
+export const movieFavouriteDetails = async (movieId) => {
+  const url = `${apiConfig.urlConnect}movie/movie-detail-favourite/${movieId}`;
+  const response = await axios.get(url);
+  return response.data;
+};
+
 export const cast = async (category, id) => {
   const url = `${apiConfig.baseUrl}/${category}/${id}/credits?api_key=${apiConfig.apiKey}`;
   const response = await axios.get(url);

@@ -6,7 +6,6 @@ import { Link } from 'react-router-dom';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 const MovieItem = ({item, category, userId, handleRemove, myMovie, setShowModal}) => {
-
     const handleNotification = () =>{
         if(category === 'person') {
             alert('this is not a movie!')
