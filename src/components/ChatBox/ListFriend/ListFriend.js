@@ -11,7 +11,7 @@ function ListFriend({item, currentId, setUserChat, valueContentMenu, online}) {
 //   const [invitation, setInvitation] = useState(valueContentMenu === 'message' && listInvitation)
   const dataUser = useSelector((state) => state.loginSlice.dataUser);
 
-  console.log(item);
+  // console.log(item);
   useEffect(()=> {
     const getUser = async () => {
       const friendId = item.members.find(f=> f !== currentId)

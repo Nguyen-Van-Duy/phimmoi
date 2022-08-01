@@ -20,7 +20,7 @@ const dataUser = useSelector((state) => state.loginSlice.dataUser);
 const isLogin = useSelector((state) => state.loginSlice.isLogin);
 const navigate = useNavigate()
     useEffect(()=> {
-        if(isLogin === false) {
+        if(apiConfig.token && !isLogin) {
             navigate('/')
         }
     }, [isLogin, navigate])

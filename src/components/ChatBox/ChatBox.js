@@ -85,9 +85,9 @@ const ChatBox = ({ showBoxChat, handleShowBoxChat }) => {
 
   // add user in chat room
   useEffect(() => {
-    // if (userId !== null && shareScreenId && userId) {
+    if (userId !== null && userId) {
       socket.current.emit("addUser", { userId });
-    // }
+    }
     if (isAddFriend === false) {
       socket.current.on("getUsers", (users) => {
         setUserOnline(users);

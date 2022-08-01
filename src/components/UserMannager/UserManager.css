@@ -185,4 +185,8 @@
     color: #fff
 }
 
+.manager-loading.loading {
+    height: 50rem;
+}
+
 

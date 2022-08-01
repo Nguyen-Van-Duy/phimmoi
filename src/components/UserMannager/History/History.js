@@ -6,6 +6,7 @@ import apiConfig, { success } from '../../../API/configApi';
 import { useSelector } from 'react-redux';
 import { movieDetails, movieShareDetails } from '../../../API/MoviesApi';
 import { Image } from 'antd';
+import Loading from '../../Loading';
 
 function History() {
     // const [listMovie, setListMovie] = useState([])
@@ -13,6 +14,7 @@ function History() {
     const [isCheckAll, setIsCheckAll] = useState(false)
     const [listChecked, setListchecked] = useState([])
     const dataUser = useSelector(state=>state.loginSlice.dataUser)
+    const [isLoading, setIsLoading] = useState(true)
 
     const onChange = (date, dateString) => {
         console.log(date, dateString);
@@ -40,6 +42,7 @@ function History() {
                 await listFavourite.push({...result[0], history_id: item._id, createdAt: handleDate(item.createdAt), isCheck:false})
             }
             setMovie([...listFavourite].reverse())
+            setIsLoading(false)
         })
     }, [])
 
@@ -113,7 +116,8 @@ function History() {
                 {listChecked.length > 0 && <span className='button red history__button' onClick={handleDeleteHistory}>Delete</span>}
             </div>
         </Space>
-        <table className='history__list'>
+        {isLoading && <div className="manager-loading loading"><Loading /></div>}
+        {!isLoading && <table className='history__list'>
             <thead>
                 <tr>
                     <th>Image</th>
@@ -141,7 +145,7 @@ function History() {
                 </tr>)}
 
             </tbody>
-        </table>
+        </table>}
     </div>
   )
 }

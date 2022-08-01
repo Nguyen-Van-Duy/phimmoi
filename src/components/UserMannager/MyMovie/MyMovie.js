@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import apiConfig, { error, success } from '../../../API/configApi';
+import Loading from '../../Loading';
 import Modal from '../../Modal/Modal';
 import MovieItem from '../../MovieList/MovieItem';
 import UpdateMovie from '../UpdateMovie/UpdateMovie';
@@ -11,6 +12,7 @@ const MyMovie = () => {
     const [movie, setMovie] = useState(null)
     const [movieDetail, setMovieDetail] = useState(null)
     const [showModal, setShowModal] = useState(false)
+    const [isLoading, setIsloading] = useState(true)
     const dataUser = useSelector((state) => state.loginSlice.dataUser);
     console.log(dataUser);
     useEffect(() => {
@@ -18,6 +20,7 @@ const MyMovie = () => {
             const data = await axios.get(apiConfig.urlConnect + "movie/my-movie/" + dataUser._id)
             console.log(data);
             setMovie(data.data)
+            setIsloading(false)
         }
         if(dataUser._id) {
             fetchMovieUpload()
@@ -50,7 +53,8 @@ const MyMovie = () => {
         <div onClick={()=>setShowModal(!showModal)}><Modal showModal={showModal} /></div>
         {showModal && movieDetail && <UpdateMovie setShowModal={()=>setShowModal(!showModal)} movieDetail={movieDetail} />}
         <div className="my-movie__container">
-            {movie && movie.length >=0 && movie.map((item, index) => <div className="view-more__item" key={index} >
+        {isLoading && <div className="manager-loading loading"><Loading /></div>}
+            {!isLoading && movie && movie.length >=0 && movie.map((item, index) => <div className="view-more__item" key={index} >
                 <MovieItem item={item} 
                 category={item.media_type} 
                 userId={dataUser._id} 

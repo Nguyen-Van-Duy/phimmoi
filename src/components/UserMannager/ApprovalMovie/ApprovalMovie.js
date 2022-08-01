@@ -8,12 +8,14 @@ import { Image } from 'antd';
 import Approval from '../Approval/Approval';
 import Modal from '../../Modal/Modal';
 import { SmileOutlined } from '@ant-design/icons';
+import Loading from '../../Loading';
 
 function ApprovalMovie() {
     const [movie, setMovie] = useState([])
     const dataUser = useSelector(state=>state.loginSlice.dataUser)
     const [showModal, setShowModal] = useState(false)
     const [movieApproval, setMovieApproval] = useState({})
+    const [isLoading, setIsLoading] = useState(true)
 
     const handleDate = (time) => {
         const date = new Date(time)
@@ -30,6 +32,7 @@ function ApprovalMovie() {
         const getDataHistory = async () => {
             const data = await axios.get(apiConfig.urlConnect + "movie/movie-waiting")
             setMovie(data.data.reverse())
+            setIsLoading(false)
         }
         getDataHistory()
       }, [dataUser._id])
@@ -57,7 +60,8 @@ function ApprovalMovie() {
                 <span className='button'>Delete</span> */}
             </div>
         </Space>
-        {movie && movie.length > 0 ? <table className='history__list'>
+        {isLoading && <div className="manager-loading loading"><Loading /></div>}
+        {!isLoading && movie && movie.length > 0 ? <table className='history__list'>
             <thead>
                 <tr>
                     <th>Image</th>
@@ -87,10 +91,10 @@ function ApprovalMovie() {
                 </tr>)}
 
             </tbody>
-        </table>: <Result
+        </table>: <>{!isLoading && <Result
                 icon={<SmileOutlined />}
                 title="No Data!"
-            />}
+            />}</>}
     </div>
     </>
 
