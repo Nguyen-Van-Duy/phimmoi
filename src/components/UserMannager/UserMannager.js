@@ -40,7 +40,8 @@ const navigate = useNavigate()
             <ul className='manager-menu__list'>
             <Link to="/manager"><li className='manager-menu__item'>Profile</li></Link>
             <Link to="/manager/upload-movie"><li className='manager-menu__item'>Share Movie</li></Link>
-            <Link to="/manager/approval-movie"><li className='manager-menu__item'>Approval Movie</li></Link>
+            {dataUser.role === "admin" && 
+            <Link to="/manager/approval-movie"><li className='manager-menu__item'>Approval Movie</li></Link>}
             {dataUser.role !== "admin" && 
             <Link to="/manager/movie-waiting"><li className='manager-menu__item'>Movie waiting</li></Link>}
             <Link to="/manager/my-favourite"><li className='manager-menu__item'>favourite</li></Link>

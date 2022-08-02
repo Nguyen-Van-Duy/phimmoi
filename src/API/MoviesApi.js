@@ -193,6 +193,12 @@ export const tvType = [
   },
 ]
 
+export const handleSearch = async (name, value) => {
+  const result = (name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D').includes((value).toLowerCase().trim().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D')))
+  console.log(result);
+  return result;
+};
+
 export const dataMovie = async (type, category, page = 1) => {
   const url = `${apiConfig.baseUrl}/${type}/${category}?api_key=${apiConfig.apiKey}&page=${page}`;
   const response = await axios.get(url);

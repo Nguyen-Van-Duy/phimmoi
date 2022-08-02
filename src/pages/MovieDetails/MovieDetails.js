@@ -76,12 +76,13 @@ const MovieDetails = () => {
             console.log("favourite:", data.data);
             setFavourite(data.data[0])
         }
-        if(dataUser && dataUser._id) {
+        if(dataUser && dataDetails._id) {
             getFavouriteMyMovie()
         }
-        if(dataUser && dataUser.id) {
+        if(dataUser && dataDetails.id) {
             getFavourite()
         }
+        console.log(dataUser);
     }, [dataUser, dataUser?._id, dataDetails.id, dataDetails._id])
     
     const handleAddFavourite = async () => {

@@ -4,8 +4,10 @@ import "./MovieList.css";
 import apiConfig from '../../API/configApi';
 import { Link } from 'react-router-dom';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
+import { useSelector } from 'react-redux';
 
 const MovieItem = ({item, category, userId, handleRemove, myMovie, setShowModal}) => {
+    const dataUser = useSelector(state=>state.loginSlice.dataUser)
     const handleNotification = () =>{
         if(category === 'person') {
             alert('this is not a movie!')

@@ -1,3 +1,4 @@
+import { Result } from 'antd';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
@@ -6,6 +7,7 @@ import { movieDetails, movieFavouriteDetails } from '../../../API/MoviesApi';
 import Loading from '../../Loading';
 import MovieItem from '../../MovieList/MovieItem';
 import './Favourite.css'
+import { SmileOutlined } from '@ant-design/icons';
 
 function Favourite() {
     const [movie, setMovie] = useState([])
@@ -64,12 +66,19 @@ function Favourite() {
 
     console.log(listMovie, movie);
     return (
+        <>
+        <h2 className='profile_title'>Favourite</h2>
         <div className="movie-favourite__container">
             {isLoading && <div className="manager-loading loading"><Loading /></div>}
             {!isLoading && movie && movie.length > 0 && movie.map((item, index) => <div className="view-more__item movie-favourite__item" key={index} >
                 <MovieItem item={item} category={item.category || item.media_type}  userId={dataUser._id} handleRemove={()=>handleRemove(item._id)} />
             </div>)}
         </div>
+        {!isLoading && movie && movie.length <= 0 && <Result
+            icon={<SmileOutlined />}
+            title="No Data!"
+        />}
+        </>
     );
 };
 

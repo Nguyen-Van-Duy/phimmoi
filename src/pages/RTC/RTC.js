@@ -100,7 +100,7 @@ function RTC() {
             //     call.on("stream", remoteStream => playStream("localStream", remoteStream))
             // })
         })
-    }, [])
+    }, [idPeer])
 
     // useEffect(()=> {
     //     if(userOnline && userOnline.length > 1) {

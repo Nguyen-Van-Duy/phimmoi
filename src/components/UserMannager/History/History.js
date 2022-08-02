@@ -1,26 +1,24 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { DatePicker, Space, Input } from 'antd';
+import { DatePicker, Space, Input, Result } from 'antd';
 import "./History.css"
 import axios from 'axios';
 import apiConfig, { success } from '../../../API/configApi';
 import { useSelector } from 'react-redux';
-import { movieDetails, movieShareDetails } from '../../../API/MoviesApi';
+import {movieDetails, movieShareDetails } from '../../../API/MoviesApi';
 import { Image } from 'antd';
 import Loading from '../../Loading';
+import { SmileOutlined } from '@ant-design/icons';
 
 function History() {
     // const [listMovie, setListMovie] = useState([])
     const [movie, setMovie] = useState([])
+    const [movieDefault, setMovieDefault] = useState([])
     const [isCheckAll, setIsCheckAll] = useState(false)
     const [listChecked, setListchecked] = useState([])
     const dataUser = useSelector(state=>state.loginSlice.dataUser)
     const [isLoading, setIsLoading] = useState(true)
-
-    const onChange = (date, dateString) => {
-        console.log(date, dateString);
-      };
-
-      console.log(dataUser);
+    const [valueSearchName, setValueSearchName] = useState("")
+    const [valueDate, setValueDate] = useState("")
 
     const handleDate = (time) => {
         const date = new Date(time)
@@ -42,20 +40,22 @@ function History() {
                 await listFavourite.push({...result[0], history_id: item._id, createdAt: handleDate(item.createdAt), isCheck:false})
             }
             setMovie([...listFavourite].reverse())
+            setMovieDefault([...listFavourite].reverse())
             setIsLoading(false)
         })
     }, [])
 
-    console.log(movie);
+    console.log(movie, listChecked);
 
       useEffect(()=> {
         const getDataHistory = async () => {
             const data = await axios.get(apiConfig.urlConnect + "movie/movie-history/" + dataUser._id)
-            console.log(data);
             // setListMovie(data.data)
             if(data.data.length > 0) {
                 getListFavourite(data.data)
+                // setIsLoading(false)
             }
+            setIsLoading(false)
         }
         getDataHistory()
       }, [dataUser._id, getListFavourite])
@@ -70,9 +70,11 @@ function History() {
 
       const handleCheckbox = (item)=> {
           item.isCheck=!item.isCheck;
-          const result = listChecked.findIndex(data=> data.id === item.id && data.createdAt === item.createdAt)
+          const result = listChecked.findIndex(data=> (data.id === item.id && data.createdAt === item.createdAt))
           if(result !== -1) {
-            const unChecked = listChecked.filter(data=> data.id !== item.id)
+            const unChecked = listChecked.filter(data=> 
+                !(data.id === item.id && data.createdAt === item.createdAt)
+            )
             setListchecked(unChecked)
           } else {
             setListchecked(d=> [...d, item])
@@ -88,6 +90,7 @@ function History() {
                 success("Delete successfully!")
             } else {
                 setMovie([])
+                setMovieDefault([])
             }
             setListchecked([])
         }
@@ -97,6 +100,7 @@ function History() {
             const newMovie = []
              movie.forEach(item => newMovie.push({...item, isCheck: !isCheckAll}))
             setMovie(newMovie);
+            // setMovieDefault(newMovie);
             if(!isCheckAll) {
                 setListchecked(newMovie);
             } else {
@@ -104,19 +108,68 @@ function History() {
             }
         }
 
+        const handlerSearchName = (value) => {
+            console.log(typeof value, typeof valueDate);
+            console.log( value,  valueDate);
+            setValueSearchName(value || "");
+            if(value === "" && valueDate === "") {
+                setMovie(movieDefault)
+            }
+            else if(value === "" && valueDate !== "") {
+                const newData = movieDefault.filter(item=>item.createdAt.slice(0, 7) === valueDate)
+                setMovie(newData)
+            } else if (value !== "" && valueDate !== "") {
+                const results = movie.filter(item=>
+                    ((item.name || item.title).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D').includes((value).toLowerCase().trim().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D'))))
+                setMovie(results);
+            } else if(value !== "" && valueDate === "") {
+                const results = movieDefault.filter(item=>
+                    ((item.name || item.title).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D').includes((value).toLowerCase().trim().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D'))))
+                setMovie(results);
+            }
+        }
+
+        const handleFilterDate = (date, dateString) => {
+            console.log(dateString);
+            setValueDate(dateString || "")
+            if(dateString === "" && valueSearchName === "") {
+                setMovie(movieDefault)
+            }
+            else if(dateString === "" && valueSearchName !== "") {
+                const results = movieDefault.filter(item=>
+                    ((item.name || item.title).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D').includes((valueSearchName).toLowerCase().trim().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D'))))
+                setMovie(results);
+            }
+            // console.log("2022-08-22".slice(0, 7));
+            else if(dateString !== "" && valueSearchName !== "") {
+                const newData = movie.filter(item=>item.createdAt.slice(0, 7) === dateString)
+                setMovie(newData)
+            } else {
+                const newData = movieDefault.filter(item=>item.createdAt.slice(0, 7) === dateString)
+                setMovie(newData)
+            }
+          };
+
+          console.log(valueSearchName, valueDate);
+        
+
   return (
     <div className='profile'>
         <h2 className='profile_title'>History</h2>
-        <Space direction="vertical">
+        {!isLoading && movie.length <= 0 && <Result
+                    icon={<SmileOutlined />}
+                    title="No Data!"
+                />}
+        {isLoading && <div className="manager-loading loading"><Loading /></div>}
+        {!isLoading && movie.length > 0 && <> <Space direction="vertical">
             <div className='history__container'>
                 <div className='history__filter'>
-                    <DatePicker onChange={onChange} picker="month" className='history__time' />
-                    <Input className='history__search' placeholder="Enter movie name" allowClear onChange={onChange} />
+                    <DatePicker onChange={handleFilterDate} picker="month" className='history__time' />
+                    <Input className='history__search' placeholder="Enter movie name" allowClear onChange={(e=>handlerSearchName(e.target.value))} />
                 </div>
                 {listChecked.length > 0 && <span className='button red history__button' onClick={handleDeleteHistory}>Delete</span>}
             </div>
         </Space>
-        {isLoading && <div className="manager-loading loading"><Loading /></div>}
         {!isLoading && <table className='history__list'>
             <thead>
                 <tr>
@@ -128,7 +181,7 @@ function History() {
                 </tr>
             </thead>
             <tbody>
-                {movie && movie.map((item, id)=>
+                {movie && movie.length > 0 && movie.map((item, id)=>
                 <tr className='history__item' key={id}>
                     <td className='history__center'>
                         {item.id ? <Image src={(item.backdrop_path || item.poster_path ? apiConfig.originalImage(item.backdrop_path || item.poster_path) : apiConfig.backupPhoto)}  alt="" /> :
@@ -146,6 +199,7 @@ function History() {
 
             </tbody>
         </table>}
+        </>}
     </div>
   )
 }

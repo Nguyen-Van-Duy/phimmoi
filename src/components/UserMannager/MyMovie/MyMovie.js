@@ -1,3 +1,4 @@
+import { Result } from 'antd';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
@@ -7,6 +8,7 @@ import Modal from '../../Modal/Modal';
 import MovieItem from '../../MovieList/MovieItem';
 import UpdateMovie from '../UpdateMovie/UpdateMovie';
 import "./MyMovie.css"
+import { SmileOutlined } from '@ant-design/icons';
 
 const MyMovie = () => {
     const [movie, setMovie] = useState(null)
@@ -50,11 +52,12 @@ const MyMovie = () => {
     console.log(movie);
     return (
     <>
+        <h2 className='profile_title'>My Movies</h2>
         <div onClick={()=>setShowModal(!showModal)}><Modal showModal={showModal} /></div>
         {showModal && movieDetail && <UpdateMovie setShowModal={()=>setShowModal(!showModal)} movieDetail={movieDetail} />}
         <div className="my-movie__container">
         {isLoading && <div className="manager-loading loading"><Loading /></div>}
-            {!isLoading && movie && movie.length >=0 && movie.map((item, index) => <div className="view-more__item" key={index} >
+            {!isLoading && movie && movie.length > 0 && movie.map((item, index) => <div className="view-more__item" key={index} >
                 <MovieItem item={item} 
                 category={item.media_type} 
                 userId={dataUser._id} 
@@ -64,6 +67,10 @@ const MyMovie = () => {
             </div>)}
             
         </div>
+        {!isLoading && movie.length <= 0 && <Result
+                    icon={<SmileOutlined />}
+                    title="No Data!"
+                />}
     </>
     );
 };
