@@ -5,6 +5,7 @@ import * as Yup from 'yup'
 import axios from "axios"
 import apiConfig from '../../../API/configApi'
 import '../Profile/EditProfile/EditProfile.css'
+import './UploadMovie.scss'
 import { useSelector } from 'react-redux'
 // import { setUserId } from '../../../store/LoginSlice'
 import { genderMovie, countries } from '../../../API/MoviesApi'
@@ -88,16 +89,19 @@ function UploadMovie({movieDetail}) {
             setValueUrl(movieDetail.url)
         }
     }, [movieDetail])
-    
 
     const handleChangeImageBackdrop = (event) => {
-        setBackdrop(event.target.files[0]);
-        setCheckBackdrop(true)
+        if(event.target.files[0]) {
+            setBackdrop(event.target.files[0]);
+            setCheckBackdrop(true)
+        }
       };
 
       const handleChangeImagePoster = (event) => {
-        setPoster(event.target.files[0]);
-        setCheckPoster(true)
+        if(event.target.files[0]) {
+            setPoster(event.target.files[0]);
+            setCheckPoster(true)
+        }
       };
    
     const validationSchema = Yup.object({
@@ -114,20 +118,25 @@ function UploadMovie({movieDetail}) {
 
     const onSubmitLogin = async (values, {resetForm}) => {
         console.log('Form data', values)
-        if(checkPoster === true && checkBackdrop !== true) {
-            setCheckBackdrop(false)
-            return
-        } else if(checkBackdrop === true && checkPoster !== true) {
-            setCheckPoster(false)
-            return
-        } else if(checkPoster !== true && checkBackdrop !== true) {
-            setCheckPoster(false)
-            setCheckBackdrop(false)
-            return
+
+        if(!movieDetail) {
+            if(checkPoster === true && checkBackdrop !== true) {
+                setCheckBackdrop(false)
+                return
+            } else if(checkBackdrop === true && checkPoster !== true) {
+                setCheckPoster(false)
+                return
+            } else if(checkPoster !== true && checkBackdrop !== true) {
+                setCheckPoster(false)
+                setCheckBackdrop(false)
+                return
+            }
         } 
+
         if(valueUrl === "") {
             return
         }
+
         let arrGenres = []
         values.genres.forEach(item => {
             for(let i = 0; i < genderMovie.length; i++) {
@@ -146,12 +155,27 @@ function UploadMovie({movieDetail}) {
         }
         
         const dataRequest = {...values, user_id: dataUser._id, url: urlRequest, user_name: dataUser.user_name, avatar: dataUser.avatar, genres: arrGenres}
+        if(movieDetail) {
+            dataRequest.movie_id = movieDetail._id
+            dataRequest.vote_count = movieDetail.vote_count
+            if(!checkBackdrop) {
+                dataRequest.backdrop_path = movieDetail.backdrop_path 
+            }
+            if(!checkPoster) {
+                dataRequest.poster_path = movieDetail.poster_path
+            }
+        }
         const formData = new FormData();
         formData.append('image_backdrop', backdrop);
         formData.append('image_poster', poster);
         formData.append('data', JSON.stringify(dataRequest));
 
-        const result = await axios.post(apiConfig.urlConnect + 'upload/upload-movie', formData)
+        let result
+        if(movieDetail) {
+            result = await axios.post(apiConfig.urlConnect + 'upload/update-movie', formData)
+        } else {
+            result = await axios.post(apiConfig.urlConnect + 'upload/upload-movie', formData)
+        }
         if(result.status === 200) {
             const listItem = document.getElementById('url-video'); 
             const newItem = document.createElement('div');

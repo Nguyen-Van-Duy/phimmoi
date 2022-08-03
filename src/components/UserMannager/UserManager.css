@@ -70,6 +70,7 @@
     display: flex;
     flex-direction: column;
     padding: 0 3rem;
+    justify-content: center;
 }
 
 .manager-menu__item {
@@ -81,6 +82,11 @@
     background-color: #fff;
     margin-bottom: 2rem;
     cursor: pointer;
+}
+
+.manager-menu__item i {
+    margin-right: 1rem;
+    font-size: 2rem;
 }
 
 .manager-menu__item:hover {

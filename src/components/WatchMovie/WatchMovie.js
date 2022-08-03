@@ -100,15 +100,15 @@ const WatchMovie = () => {
             <div className="watch-movie__containers">
                 <div className="watch-movie__content">
                     <div className="watch-movie__video">
-                        {/* {dataFilm.url_type === 'iframe' ? dataFilm.url : <iframe
+                        <iframe
                             src={Number(params.id) ? ((params.category === 'movie' && apiConfig.embedMovie(params.id)) || 
                             (params.category === 'tv' && apiConfig.embedEpisode(params.id, params.season, params.esp))) : 
                             dataFilm.url}
                             width="100%"
                             title="Movie player"
                             frameBorder="0"
-                            allowFullScreen
-                        />} */}
+                            allowFullScreen="allowFullScreen"
+                        />
                         <h2 className="watch-content__title">{dataFilm.title || dataFilm.name}</h2>
                         {params.season && <p className="watch-content__desc">Season {params.season} episode {params.esp}</p>}
                         <p className="watch-content__desc">{(dataFilm.seasons && dataFilm.seasons[params.season]?.overview) || dataFilm.overview}</p>

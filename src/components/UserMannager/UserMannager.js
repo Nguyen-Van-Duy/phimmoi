@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Link, Route, Routes } from 'react-router-dom'
+import { Link, Route, Routes, useLocation } from 'react-router-dom'
 import "./UserManager.css"
 import Profile from './Profile/Profile'
 import { useSelector } from 'react-redux'
@@ -19,6 +19,9 @@ function UserMannager() {
 const dataUser = useSelector((state) => state.loginSlice.dataUser);
 const isLogin = useSelector((state) => state.loginSlice.isLogin);
 const navigate = useNavigate()
+const location = useLocation()
+
+console.log(location.pathname);
     useEffect(()=> {
         if(apiConfig.token && !isLogin) {
             navigate('/')
@@ -38,16 +41,16 @@ const navigate = useNavigate()
         </div>
         <div className='manager-menu__body'>
             <ul className='manager-menu__list'>
-            <Link to="/manager"><li className='manager-menu__item'>Profile</li></Link>
-            <Link to="/manager/upload-movie"><li className='manager-menu__item'>Share Movie</li></Link>
-            {dataUser.role === "admin" && 
-            <Link to="/manager/approval-movie"><li className='manager-menu__item'>Approval Movie</li></Link>}
-            {dataUser.role !== "admin" && 
-            <Link to="/manager/movie-waiting"><li className='manager-menu__item'>Movie waiting</li></Link>}
-            <Link to="/manager/my-favourite"><li className='manager-menu__item'>favourite</li></Link>
-            <Link to="/manager/history"><li className='manager-menu__item'>History</li></Link>
-            <Link to="/manager/my-movie"><li className='manager-menu__item'>My Movies</li></Link>
-            <Link to="/manager/change-password"><li className='manager-menu__item'>Change Password</li></Link>
+                <Link to="/manager"><li className='manager-menu__item'><i className="fa-solid fa-address-card"></i>Profile</li></Link>
+                <Link to="/manager/upload-movie"><li className='manager-menu__item'><i className="fa-solid fa-file-arrow-up"></i>Share Movie</li></Link>
+                {dataUser.role === "admin" && 
+                <Link to="/manager/approval-movie"><li className='manager-menu__item'><i className="fa-solid fa-file-circle-question"></i>Approval Movie</li></Link>}
+                {dataUser.role !== "admin" && 
+                <Link to="/manager/movie-waiting"><li className='manager-menu__item'><i className="fa-solid fa-circle-question"></i>Movie waiting</li></Link>}
+                <Link to="/manager/my-favourite"><li className='manager-menu__item'><i className="fa-solid fa-heart"></i>favourite</li></Link>
+                <Link to="/manager/history"><li className='manager-menu__item'><i className="fa-solid fa-clock-rotate-left"></i>History</li></Link>
+                <Link to="/manager/my-movie"><li className='manager-menu__item'><i className="fa-solid fa-film"></i>My Movies</li></Link>
+                <Link to="/manager/change-password"><li className='manager-menu__item'><i className="fa-solid fa-lock"></i>Change Password</li></Link>
             </ul>
         </div>
     </div>
