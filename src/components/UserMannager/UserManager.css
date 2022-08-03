@@ -73,6 +73,10 @@
     justify-content: center;
 }
 
+.manager-active {
+    background-color: rgb(1, 226, 185) !important;
+}
+
 .manager-menu__item {
     font-weight: 500;
     color: #000;
