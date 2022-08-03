@@ -44,7 +44,7 @@ console.log(location.pathname);
                 <Link to="/manager"><li className={`manager-menu__item ${location.pathname === "/manager" && "manager-active"}`}><i className="fa-solid fa-address-card"></i>Profile</li></Link>
                 <Link to="/manager/upload-movie"><li className={`manager-menu__item ${location.pathname === "/manager/upload-movie" && "manager-active"}`}><i className="fa-solid fa-file-arrow-up"></i>Share Movie</li></Link>
                 {dataUser.role === "admin" && 
-                <Link to="/manager/approval-movie"><li className={`manager-menu__item ${location.pathname === "/manager/approval-movie" && "manager-active"}`}><i className="fa-solid fa-file-circle-question"></i>Approval Movie</li></Link>}
+                <Link to="/manager/approval-movie"><li className={`manager-menu__item ${location.pathname === "/manager/approval-movie" && "manager-active"}`}><i className="fa-solid fa-circle-question"></i>Approval Movie</li></Link>}
                 {dataUser.role !== "admin" && 
                 <Link to="/manager/movie-waiting"><li className={`manager-menu__item ${location.pathname === "/manager/movie-waiting" && "manager-active"}`}><i className="fa-solid fa-circle-question"></i>Movie waiting</li></Link>}
                 <Link to="/manager/my-favourite"><li className={`manager-menu__item ${location.pathname === "/manager/my-favourite" && "manager-active"}`}><i className="fa-solid fa-heart"></i>favourite</li></Link>
