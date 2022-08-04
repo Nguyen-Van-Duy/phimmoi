@@ -1,0 +1,42 @@
+.new-movie__filter {
+    margin-bottom: 1rem;
+}
+
+
+.new-movie__filter .ant-select .ant-select-selector {
+    display: flex;
+    text-align: center;
+    align-items: center;
+}
+
+.new-movie__filter .ant-select .ant-select-selector {
+    margin-right: 3rem !important;
+}
+
+.new-movie__filter .ant-select .ant-select-selector,
+.new-movie__filter .ant-picker {
+    height: 4rem;
+    padding-top: 0;
+    padding-bottom: 0;
+    border-radius: 3rem;
+    background-color: rgb(255, 255, 255) !important;
+    /* padding: 1rem 1.5rem; */
+    margin-right: 3rem !important;
+    border: none !important;
+    outline: none !important;
+    min-width: 15rem;
+    font-size: 1.4rem;
+    /* color: #fff; */
+}
+
+.new-movie__filter .ant-select input,
+.new-movie__filter .ant-picker-input input,
+.new-movie__filter .ant-picker-input span {
+    font-size: 1.4rem;
+    text-align: center !important;
+    height: 100%;
+}
+
+.filter-item {
+    margin-right: 3rem;
+}

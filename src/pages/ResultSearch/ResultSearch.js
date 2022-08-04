@@ -4,6 +4,8 @@ import { dataSearch } from '../../API/MoviesApi';
 import MovieItem from '../../components/MovieList/MovieItem';
 import '../../components/MovieList/MovieList.css';
 import '../ViewMore/ViewMore.css';
+import { Pagination } from 'antd';
+import 'antd/dist/antd.css';
 
 const ResultSearch = () => {
 
@@ -11,7 +13,8 @@ const ResultSearch = () => {
     const [dataFilm, setDataFilm] = useState([])
     const [page, setPage] = useState(1)
     const [totalResults, setTotalResults] = useState(0)
-    const [totalPage, setTotalPage] = useState(0)
+    // const [totalPage, setTotalPage] = useState(0)
+    // const [current, setCurrent] = useState(20);
 
     const handlePage = () => {
         setPage(page + 1)
@@ -26,13 +29,27 @@ const ResultSearch = () => {
         const fetchDataSearch = async () => {
             const data = await dataSearch(params.keyword)
             setTotalResults(data.total_results)
-            setTotalPage(data.total_pages)
+            // setTotalPage(data.total_pages)
             setDataFilm(data.results)
             document.title = 'Result for ' + params.keyword
+            window.scrollTo(0, 0)
         }
         fetchDataSearch()
 
     }, [params.keyword])
+
+    const onShowSizeChange = (current, pageSize) => {
+        console.log(current, pageSize);
+      };
+
+    const handleChangePage = async (pages) => {
+        setPage(pages);
+        const data = await dataSearch(params.keyword, pages)
+            // setTotalResults(data.total_results)
+            // setTotalPage(data.total_pages)
+            setDataFilm(data.results)
+            window.scrollTo(0, 0)
+    };
 
     return (<>
         {dataFilm.length > 0 && <div className="content-list">
@@ -47,9 +64,16 @@ const ResultSearch = () => {
                         </div>
                     })}
                 </div>
-                {totalPage > page && <div className="load-more">
-                    <span className="button green" onClick={handlePage}>Load More</span>
-                </div>}
+                <div className="load-more">
+                <Pagination
+                    onChange={handleChangePage}
+                    onShowSizeChange={onShowSizeChange}
+                    defaultCurrent={1}
+                    total={totalResults}
+                    defaultPageSize={20}
+                    showSizeChanger={false}
+                    />
+                </div>
             </div>
         </div>}
         </>

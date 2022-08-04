@@ -15,6 +15,7 @@
 
 .history__filter .ant-picker {
     margin-right: 2rem;
+    border-radius: 3rem;
 }
 
 .history__title {
@@ -28,6 +29,7 @@
 
 .history__search {
     min-width: 35rem;
+    border-radius: 3rem;
 }
 
 tr, th {

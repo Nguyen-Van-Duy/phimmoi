@@ -20,6 +20,40 @@ ul {
   padding: 0;
 }
 
+.ant-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ant-pagination-item-link,
+.ant-pagination li {
+  width: 4.5rem;
+  height: 4.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50% !important;
+}
+
+.ant-pagination li a {
+  color: rgb(0, 0, 0) !important;
+
+}
+
+.ant-pagination-item-active a {
+}
+
+.ant-pagination-item-active {
+  color: #fff !important;
+  background: rgb(55, 255, 0) !important;
+    border-color: #ffffff !important;
+}
+
+.ant-pagination-item-ellipsis {
+  color: rgb(255, 255, 255) !important;
+}
+
 li {
   list-style: none;
 }
