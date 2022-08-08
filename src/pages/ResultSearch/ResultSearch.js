@@ -11,19 +11,19 @@ const ResultSearch = () => {
 
     const params = useParams()
     const [dataFilm, setDataFilm] = useState([])
-    const [page, setPage] = useState(1)
+    // const [page, setPage] = useState(1)
     const [totalResults, setTotalResults] = useState(0)
     // const [totalPage, setTotalPage] = useState(0)
     // const [current, setCurrent] = useState(20);
 
-    const handlePage = () => {
-        setPage(page + 1)
-        const fetchDataSearch = async () => {
-            const data = await dataSearch(params.keyword, page + 1)
-            setDataFilm(d => [...d,...data.results])
-        }
-        fetchDataSearch()
-    }
+    // const handlePage = () => {
+    //     setPage(page + 1)
+    //     const fetchDataSearch = async () => {
+    //         const data = await dataSearch(params.keyword, page + 1)
+    //         setDataFilm(d => [...d,...data.results])
+    //     }
+    //     fetchDataSearch()
+    // }
 
     useEffect(() => {
         const fetchDataSearch = async () => {
@@ -43,7 +43,7 @@ const ResultSearch = () => {
       };
 
     const handleChangePage = async (pages) => {
-        setPage(pages);
+        // setPage(pages);
         const data = await dataSearch(params.keyword, pages)
             // setTotalResults(data.total_results)
             // setTotalPage(data.total_pages)

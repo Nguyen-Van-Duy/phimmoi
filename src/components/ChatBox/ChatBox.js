@@ -178,7 +178,6 @@ const ChatBox = ({ showBoxChat, handleShowBoxChat }) => {
     }
   };
 
-  //   handle scroll message
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [message]);
@@ -205,6 +204,8 @@ const ChatBox = ({ showBoxChat, handleShowBoxChat }) => {
     );
     setListUser(dataListUserAfterAdd);
   };
+
+  console.log(userChat);
 
   return (
     <>
@@ -254,14 +255,14 @@ const ChatBox = ({ showBoxChat, handleShowBoxChat }) => {
           <div className="chat-box__containner">
             <div className="chat-box__header">
               <div className="message-header__left">
-                <img src={avatar} alt="" />
+                <img src={(userChat && apiConfig.urlConnectSocketIO + userChat.avatar) || avatar} alt="" />
                 <div className="message-header__title">
                   <span className="message-header__name">
                     {userChat.room_name || userChat.user_name || "Box Chat"}
                     {userChat.user_name && (
                       <i className="fa-solid fa-caret-down"></i>
                     )}
-                    {userChat.user_name && (
+                    {userChat !== "" && userChat.user_name && (
                       <ListFetureFriend
                         userChat={userChat}
                         idAdmin={idAdmin}

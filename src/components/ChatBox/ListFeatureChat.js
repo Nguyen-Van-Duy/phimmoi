@@ -29,16 +29,33 @@ function ListFeatureChat({
     }
   }, [userId, valueContentMenu])
 
+  const handleClickFriend = async (item, index, notifications, notificationIndex) => {
+    setCurrentChat(item)
+    const newArray = [...userConversation]
+    const newNotification = [...item.list_user]
+    newNotification[notificationIndex] = {...notifications, notification: "0"}
+    newArray[index].list_user = newNotification
+    console.log(newArray, item);
+    await axios.post(apiConfig.urlConnect + 'conversation/change-notification', {id: item._id, new_notification: item.list_user} )
+  }
+
+  useEffect(()=> {
+    console.log(userConversation);
+    userConversation && socket && socket.emit("Group-Notification", {userConversation})
+    
+  }, [userConversation, socket])
   return (
     <ul className='messenger-friend__list'>
     {/* user */}
-      {valueContentMenu === 'user' && userConversation.length > 0 && userConversation?.map((item, id) => {
+      {valueContentMenu === 'user' && userConversation.length > 0 && userConversation.map((item, id) => {
           if(item.members.includes(idAdmin) && dataUser.role === 'user') {
             return []
           }
+          const notification = item.list_user.find(user=> user.user_id === dataUser._id)          
+          const notificationIndex = item.list_user.findIndex(user=> user.user_id === dataUser._id)
         return (
-          <div key={item._id} onClick={() => setCurrentChat(item)}>
-            <ListFriend online={userOnline} setUserChat={setUserChat} currentId={userId} item={item} valueContentMenu={valueContentMenu}/>
+          <div key={item._id} onClick={() => handleClickFriend(item, id, notification, notificationIndex)}>
+            {item && <ListFriend online={userOnline} setUserChat={setUserChat} currentId={userId} item={item} valueContentMenu={valueContentMenu} notification={notification}/>}
         </div>
         )
       })}
@@ -48,20 +65,24 @@ function ListFeatureChat({
         // if(id !== 0) {
         //   return []
         // }
+        const notification = item.list_user.find(user=> user.user_id === dataUser._id)        
+        const notificationIndex = item.list_user.findIndex(user=> user.user_id === dataUser._id)
+        console.log(notification);
         return (
-          <div key={item._id} onClick={() => setCurrentChat(item)}>
-            <ListFriend online={userOnline} setUserChat={setUserChat} currentId={userId} item={item} valueContentMenu={valueContentMenu}/>
+          <div key={item._id} onClick={() => handleClickFriend(item, id, notification, notificationIndex)}>
+            {item && <ListFriend online={userOnline} setUserChat={setUserChat} currentId={userId} item={item} valueContentMenu={valueContentMenu}  notification={notification}/>}
         </div>
         )
       })}
 
       {/* group */}
-      {valueContentMenu === 'group' && userConversation.length > 0 && userConversation?.map((item, id) => {
+      {valueContentMenu === 'group' && userConversation.length > 0 && userConversation.map((item, id) => {
         // console.log(item);
-        
+        const notification = item.list_user.find(user=> user.user_id === dataUser._id)        
+        const notificationIndex = item.list_user.findIndex(user=> user.user_id === dataUser._id)
         return (
-          <div key={item._id} onClick={() => setCurrentChat(item)}>
-            <ListFriend online={userOnline} setUserChat={setUserChat} currentId={userId} item={item} valueContentMenu={valueContentMenu}/>
+          <div key={item._id} onClick={() => handleClickFriend(item, id, notification, notificationIndex)}>
+            {item && <ListFriend online={userOnline} setUserChat={setUserChat} currentId={userId} item={item} valueContentMenu={valueContentMenu}  notification={notification}/>}
         </div>
         )
       })}
