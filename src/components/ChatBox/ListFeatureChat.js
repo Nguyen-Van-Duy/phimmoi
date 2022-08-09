@@ -12,6 +12,7 @@ function ListFeatureChat({
   idAdmin, 
   dataUser, 
   setCurrentChat, 
+  currentChat,
   userOnline, 
   setUserChat, 
   userId, 
@@ -30,19 +31,31 @@ function ListFeatureChat({
   }, [userId, valueContentMenu])
 
   const handleClickFriend = async (item, index, notifications, notificationIndex) => {
+    console.log(currentChat);
     setCurrentChat(item)
     const newArray = [...userConversation]
     const newNotification = [...item.list_user]
-    newNotification[notificationIndex] = {...notifications, notification: "0"}
+    newNotification[notificationIndex] = {...notifications, notification: 0, in_room: true}
     newArray[index].list_user = newNotification
-    console.log(newArray, item);
-    await axios.post(apiConfig.urlConnect + 'conversation/change-notification', {id: item._id, new_notification: item.list_user} )
+    const newListUser = []
+    item.list_user.map(data=> newListUser.push({...data, in_room: false})) 
+    console.log(newListUser);
+    await axios.post(apiConfig.urlConnect + 'conversation/change-notification', {id: item._id, new_notification: newListUser} )
+    socket.emit("InRoom", {newNotification: newNotification[notificationIndex], id: item._id, currentChat: currentChat})
   }
-
+  
+  useEffect(()=> {
+    socket.on("GetRoom", (data) => {
+      console.log(data);
+    })
+    // socket.on("GetGroupNotification", (data) => {
+    //   console.log(data);
+    // })
+  }, [socket])
+  
   useEffect(()=> {
     console.log(userConversation);
-    userConversation && socket && socket.emit("Group-Notification", {userConversation})
-    
+    userConversation && socket && socket.emit("GroupNotification", {userConversation})
   }, [userConversation, socket])
   return (
     <ul className='messenger-friend__list'>
@@ -55,7 +68,7 @@ function ListFeatureChat({
           const notificationIndex = item.list_user.findIndex(user=> user.user_id === dataUser._id)
         return (
           <div key={item._id} onClick={() => handleClickFriend(item, id, notification, notificationIndex)}>
-            {item && <ListFriend online={userOnline} setUserChat={setUserChat} currentId={userId} item={item} valueContentMenu={valueContentMenu} notification={notification}/>}
+            {item && <ListFriend socket={socket} online={userOnline} setUserChat={setUserChat} currentId={userId} item={item} valueContentMenu={valueContentMenu} notification={notification}/>}
         </div>
         )
       })}
@@ -67,10 +80,9 @@ function ListFeatureChat({
         // }
         const notification = item.list_user.find(user=> user.user_id === dataUser._id)        
         const notificationIndex = item.list_user.findIndex(user=> user.user_id === dataUser._id)
-        console.log(notification);
         return (
           <div key={item._id} onClick={() => handleClickFriend(item, id, notification, notificationIndex)}>
-            {item && <ListFriend online={userOnline} setUserChat={setUserChat} currentId={userId} item={item} valueContentMenu={valueContentMenu}  notification={notification}/>}
+            {item && <ListFriend socket={socket} online={userOnline} setUserChat={setUserChat} currentId={userId} item={item} valueContentMenu={valueContentMenu}  notification={notification}/>}
         </div>
         )
       })}
@@ -82,7 +94,7 @@ function ListFeatureChat({
         const notificationIndex = item.list_user.findIndex(user=> user.user_id === dataUser._id)
         return (
           <div key={item._id} onClick={() => handleClickFriend(item, id, notification, notificationIndex)}>
-            {item && <ListFriend online={userOnline} setUserChat={setUserChat} currentId={userId} item={item} valueContentMenu={valueContentMenu}  notification={notification}/>}
+            {item && <ListFriend socket={socket} online={userOnline} setUserChat={setUserChat} currentId={userId} item={item} valueContentMenu={valueContentMenu}  notification={notification}/>}
         </div>
         )
       })}

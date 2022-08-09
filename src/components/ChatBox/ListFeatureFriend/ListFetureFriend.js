@@ -31,7 +31,7 @@ function ListFetureFriend({idAdmin, userChat, setUserConversation, userConversat
             const newConversation = userConversation.filter(item=> item._id !== conversationId)
             setUserConversation(newConversation)
             console.log(dataInvitation);
-            setMessage(null)
+            setMessage([])
             setCurrentChat(null)
             setUserChat(null)
         } catch(err) {

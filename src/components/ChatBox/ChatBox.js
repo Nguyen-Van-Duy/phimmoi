@@ -24,7 +24,7 @@ const ChatBox = ({ showBoxChat, handleShowBoxChat }) => {
   const [showListFriend, setShowListFriend] = useState(false);
   const [isReceive, setIsReceive] = useState(false);
   const [arrivalMessage, setArrivalMessage] = useState(null);
-  const [message, setMessage] = useState(null);
+  const [message, setMessage] = useState([]);
   const [currentChat, setCurrentChat] = useState(null);
   const [userConversation, setUserConversation] = useState([]);
   const [isAddFriend, setIsAddFriend] = useState(false);
@@ -164,6 +164,16 @@ const ChatBox = ({ showBoxChat, handleShowBoxChat }) => {
         sender: userId,
         text: inputStr,
       });
+      socket.current.emit("AddNotification", { conversationId: currentChat._id, senderId: userId})
+      console.log(currentChat.list_user);
+
+      const newListUser = currentChat.list_user.forEach(d=> {
+        if(d.user_id !== userId) {
+          d.notification = d.notification + 1
+        }
+      }) 
+      console.log(currentChat.list_user, newListUser);
+      await axios.post(apiConfig.urlConnect + 'conversation/change-notification', {id: currentChat._id, new_notification: currentChat.list_user} )
       setMessage((d) => [
         ...d,
         {
@@ -184,7 +194,7 @@ const ChatBox = ({ showBoxChat, handleShowBoxChat }) => {
 
   useEffect(() => {
     if (!isLogin) {
-      setMessage(null);
+      setMessage([]);
       setValueContentMenu("menu");
       setShowListFriend();
     }
@@ -204,8 +214,6 @@ const ChatBox = ({ showBoxChat, handleShowBoxChat }) => {
     );
     setListUser(dataListUserAfterAdd);
   };
-
-  console.log(userChat);
 
   return (
     <>
@@ -243,6 +251,7 @@ const ChatBox = ({ showBoxChat, handleShowBoxChat }) => {
                   idAdmin={idAdmin}
                   dataUser={dataUser}
                   setCurrentChat={setCurrentChat}
+                  currentChat={currentChat}
                   userOnline={userOnline}
                   setUserChat={setUserChat}
                   userId={userId}

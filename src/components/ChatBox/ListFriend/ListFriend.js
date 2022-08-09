@@ -4,14 +4,13 @@ import apiConfig from '../../../API/configApi';
 import axios from 'axios';
 // import { useSelector } from 'react-redux';
 
-function ListFriend({item, currentId, setUserChat, valueContentMenu, online, notification}) {
+function ListFriend({item, currentId, setUserChat, valueContentMenu, online, notification, socket}) {
   const [user, setUser] = useState(null)
   // const [friendId, setFriendId] = useState(null)
   const [isOnline, setIsOnline] = useState(false)
   const [notificationNumber, setNotificationNumber] = useState(null)
 //   const [invitation, setInvitation] = useState(valueContentMenu === 'message' && listInvitation)
   // const dataUser = useSelector((state) => state.loginSlice.dataUser);
-  console.log(item);
 
   // useEffect(()=> {
   //     if(friendId && online.length > 0) {
@@ -28,6 +27,26 @@ function ListFriend({item, currentId, setUserChat, valueContentMenu, online, not
   //   const friend = item.members.find(f=> f !== currentId)
   //   setFriendId(friend)
   // }, [currentId, item.members])
+  console.log(item);
+
+  // useEffect(()=> {
+  //   socket.on("GetNotification", data=> {})
+  //   // await axios.post(apiConfig.urlConnect + 'conversation/change-notification', {id: item._id, new_notification: newListUser} )
+  //   console.log("8888888888888888888888888888888888888888888888888888");
+  // }, [socket, notificationNumber])
+
+  useEffect(()=> {
+    if(notificationNumber && user) {
+      socket.on("GetNotification", data=> {
+        const dataNotification = data.find(d=>d._id === item._id)
+        if(dataNotification) {
+          console.log(dataNotification, user, item);
+        const newDataNotification = dataNotification.list_user.find(d=>d.user_id === notificationNumber.user_id)
+        setNotificationNumber(newDataNotification)
+        }
+      })
+    }
+  }, [socket, item, notificationNumber, user])
 
   useEffect(()=> {
     const getUser = async () => {
@@ -64,7 +83,7 @@ function ListFriend({item, currentId, setUserChat, valueContentMenu, online, not
     }
   }, [notification])
 
-  console.log(user);
+  console.log(notificationNumber);
 
   return (<>
     {valueContentMenu !== 'message' && <li className='messenger-friend__container' onClick={()=>setUserChat({...user, conversationId: item._id, room_name: item?.room_name})}>
@@ -72,7 +91,7 @@ function ListFriend({item, currentId, setUserChat, valueContentMenu, online, not
         <div className='messenger-friend__avatar user-offline'>
           <img src={user && (apiConfig.urlConnectSocketIO + user.avatar) } alt='' />
           <div className={`user-status ${isOnline ? "user-online" : "user-offline"}`}></div>
-          {notificationNumber && notificationNumber.notification !== "0" && <div className="user-notification">{notificationNumber.notification}</div>}
+          {notificationNumber && notificationNumber.notification !== 0 && <div className="user-notification">{notificationNumber.notification}</div>}
         </div>
         <div className='messenger-friend__content'>
             <span className='messenger-friend__name'>{item.room_name || user?.user_name}</span>
