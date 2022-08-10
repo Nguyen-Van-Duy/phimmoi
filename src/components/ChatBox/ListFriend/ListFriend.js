@@ -9,9 +9,10 @@ function ListFriend({item, currentId, setUserChat, valueContentMenu, online, not
   // const [friendId, setFriendId] = useState(null)
   const [isOnline, setIsOnline] = useState(false)
   const [notificationNumber, setNotificationNumber] = useState(null)
+  const [isReceive, setIsReceive] = useState(false);
+
 //   const [invitation, setInvitation] = useState(valueContentMenu === 'message' && listInvitation)
   // const dataUser = useSelector((state) => state.loginSlice.dataUser);
-
   // useEffect(()=> {
   //     if(friendId && online.length > 0) {
   //       const isUserOnline = online.filter(user=>user.userId === friendId)
@@ -27,26 +28,31 @@ function ListFriend({item, currentId, setUserChat, valueContentMenu, online, not
   //   const friend = item.members.find(f=> f !== currentId)
   //   setFriendId(friend)
   // }, [currentId, item.members])
-  console.log(item);
 
   // useEffect(()=> {
   //   socket.on("GetNotification", data=> {})
   //   // await axios.post(apiConfig.urlConnect + 'conversation/change-notification', {id: item._id, new_notification: newListUser} )
-  //   console.log("8888888888888888888888888888888888888888888888888888");
   // }, [socket, notificationNumber])
 
+  console.log("2222222222222222222222222222222222222222222222222222");
+
   useEffect(()=> {
-    if(notificationNumber && user) {
+    if(notificationNumber) {
       socket.on("GetNotification", data=> {
         const dataNotification = data.find(d=>d._id === item._id)
         if(dataNotification) {
-          console.log(dataNotification, user, item);
-        const newDataNotification = dataNotification.list_user.find(d=>d.user_id === notificationNumber.user_id)
-        setNotificationNumber(newDataNotification)
+          const newDataNotification = dataNotification.list_user.find(d=>d.user_id === notificationNumber.user_id)
+          if(notificationNumber.notification !== newDataNotification.notification) {
+            setNotificationNumber(newDataNotification)
+            console.log("2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa22");
+          }
         }
       })
     }
-  }, [socket, item, notificationNumber, user])
+    // return () => {
+    //   setIsReceive(true);
+    // };
+  }, [socket, item, notificationNumber])
 
   useEffect(()=> {
     const getUser = async () => {
@@ -83,10 +89,10 @@ function ListFriend({item, currentId, setUserChat, valueContentMenu, online, not
     }
   }, [notification])
 
-  console.log(notificationNumber);
+  console.log(item);
 
   return (<>
-    {valueContentMenu !== 'message' && <li className='messenger-friend__container' onClick={()=>setUserChat({...user, conversationId: item._id, room_name: item?.room_name})}>
+    {item && valueContentMenu !== 'message' && <li className='messenger-friend__container' onClick={()=>setUserChat({...user, conversationId: item._id, room_name: item?.room_name})}>
       <div className='messenger-friend__item'>
         <div className='messenger-friend__avatar user-offline'>
           <img src={user && (apiConfig.urlConnectSocketIO + user.avatar) } alt='' />

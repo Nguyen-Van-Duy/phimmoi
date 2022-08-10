@@ -25,7 +25,7 @@ function ListFeatureChat({
       const result = await axios.get(apiConfig.urlConnect + 'message/invitation/' + userId )
       setInvitation(result.data)
     }
-    if(valueContentMenu !== "menu") {
+    if(valueContentMenu === "message") {
       getInvitation()
     }
   }, [userId, valueContentMenu])
@@ -44,25 +44,27 @@ function ListFeatureChat({
     socket.emit("InRoom", {newNotification: newNotification[notificationIndex], id: item._id, currentChat: currentChat})
   }
   
-  useEffect(()=> {
-    socket.on("GetRoom", (data) => {
-      console.log(data);
-    })
-    // socket.on("GetGroupNotification", (data) => {
-    //   console.log(data);
-    // })
-  }, [socket])
+  // useEffect(()=> {
+  //   socket.on("GetRoom", (data) => {
+  //     console.log(data);
+  //   })
+  //   // socket.on("GetGroupNotification", (data) => {
+  //   //   console.log(data);
+  //   // })
+  // }, [socket])
+
+  console.log(userConversation);
   
   useEffect(()=> {
     console.log(userConversation);
-    userConversation && socket && socket.emit("GroupNotification", {userConversation})
+    userConversation.length > 0 && socket && socket.emit("GroupNotification", {userConversation})
   }, [userConversation, socket])
   return (
     <ul className='messenger-friend__list'>
     {/* user */}
       {valueContentMenu === 'user' && userConversation.length > 0 && userConversation.map((item, id) => {
           if(item.members.includes(idAdmin) && dataUser.role === 'user') {
-            return []
+            return null
           }
           const notification = item.list_user.find(user=> user.user_id === dataUser._id)          
           const notificationIndex = item.list_user.findIndex(user=> user.user_id === dataUser._id)
@@ -89,7 +91,7 @@ function ListFeatureChat({
 
       {/* group */}
       {valueContentMenu === 'group' && userConversation.length > 0 && userConversation.map((item, id) => {
-        // console.log(item);
+        console.log(item);
         const notification = item.list_user.find(user=> user.user_id === dataUser._id)        
         const notificationIndex = item.list_user.findIndex(user=> user.user_id === dataUser._id)
         return (

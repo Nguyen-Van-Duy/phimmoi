@@ -9,9 +9,9 @@
     width: 27%;
     /* min-height: calc(100vh - 31.6rem); */
     margin-right: 3rem;
-    border: 1px solid rgb(67, 67, 67);
-    border-radius: 12px;
-    background-color: rgb(67, 67, 67);
+    /* border: 1px solid rgb(67, 67, 67); */
+    border-radius: 4px;
+    background-color: rgba(255, 255, 255, 0.2);
 }
 
 .manager-menu__header {
@@ -99,9 +99,9 @@
 
 .manager-content {
     width: calc(73% - 3rem);
-    background-color: rgb(61, 61, 61);
+    background-color: rgba(255, 255, 255, 0.2);
     /* min-height: calc(100vh - 28rem); */
-    border-radius: 12px;
+    border-radius: 4px;
     padding: 2rem 3rem;
 }
 

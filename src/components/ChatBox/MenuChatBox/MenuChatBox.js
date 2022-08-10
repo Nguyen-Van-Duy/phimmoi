@@ -33,7 +33,11 @@ function MenuChatBox({setShowListFriend, showListFriend, setValueContentMenu }) 
         menu = [...listMenuChat]
     }
     const handleShowContentMenu = (value)=>{
-        if(value === "menu") {
+        if(value === "menu" && dataUser.role === "admin") {
+            setShowListFriend(!showListFriend)
+            setValueContentMenu("user")
+            return
+        } else if(value === "menu" && dataUser.role === "user") {
             setShowListFriend(!showListFriend)
             setValueContentMenu("admin")
             return

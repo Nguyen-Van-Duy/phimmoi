@@ -165,15 +165,23 @@ const ChatBox = ({ showBoxChat, handleShowBoxChat }) => {
         text: inputStr,
       });
       socket.current.emit("AddNotification", { conversationId: currentChat._id, senderId: userId})
-      console.log(currentChat.list_user);
+      console.log("3444444444444444444444444444444444444444");
+      // currentChat.list_user.forEach(d=> {
+      //   if(d.user_id !== userId) {
+      //     d.notification = d.notification + 1
+      //     d.in_room = false
+      //   }
+      // }) 
 
-      const newListUser = currentChat.list_user.forEach(d=> {
+      const newArray = currentChat.list_user.map(d=> {
         if(d.user_id !== userId) {
-          d.notification = d.notification + 1
+          return {...d, notification: d.notification + 1, in_room: false}
+        } else {
+          return {...d, in_room: false}
         }
       }) 
-      console.log(currentChat.list_user, newListUser);
-      await axios.post(apiConfig.urlConnect + 'conversation/change-notification', {id: currentChat._id, new_notification: currentChat.list_user} )
+
+      await axios.post(apiConfig.urlConnect + 'conversation/change-notification', {id: currentChat._id, new_notification: newArray} )
       setMessage((d) => [
         ...d,
         {
