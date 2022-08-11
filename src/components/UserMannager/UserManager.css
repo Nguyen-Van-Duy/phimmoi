@@ -200,4 +200,16 @@
     height: 50rem;
 }
 
+.change-password {
+    position: relative;
+}
+
+.change-password>i {
+    position: absolute;
+    top: 48px;
+    color: #000;
+    right: 15px;
+    cursor: pointer;
+}
+
 

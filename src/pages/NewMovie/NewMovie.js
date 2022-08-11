@@ -18,6 +18,9 @@ const NewMovie = () => {
     const [page, setPage] = useState(1)
     // const [totalResults, setTotalResults] = useState(0)
     const [totalPage, setTotalPage] = useState(0)
+    const [selectYear, setSelectYear] = useState(null)
+    const [selectCountry, setSelectCountry] = useState(null)
+    const [selectGenre, setSelectGenre] = useState(null)
 
     const handlePage = () => {
         setPage(page + 1)
@@ -42,7 +45,24 @@ const NewMovie = () => {
     }, [params.keyword])
 
     const handleFilterDate = (date, dateString) => {
-        console.log(dateString);
+        setSelectYear(dateString);
+    }
+
+    const handleFilterCountry = (value) => {
+        setSelectCountry(value);
+    }
+
+    const handleFilterGenre = (value) => {
+        setSelectGenre(value);
+    }
+
+    const handleFilterMovie = async () => {
+        const params = {};
+        (selectYear && selectYear !== "") && (params.year = selectYear);
+        (selectCountry && selectCountry !== "") && (params.country = selectCountry);
+        (selectGenre && selectGenre !== "") && (params.genres = selectGenre);
+        const result = await axios.post(apiConfig.urlConnect + "/movie/filter", params)
+        setDataFilm(result.data);
     }
 
     const disabledYear = (current) => {
@@ -51,7 +71,7 @@ const NewMovie = () => {
       };
 
     return (<>
-        {dataFilm.length > 0 && <div className="content-list">
+        {<div className="content-list">
             <div className="movie-list view-more__container">
                 <div className="movie-list__header">
                     <span className="movie-list__title">New Movie</span>
@@ -59,7 +79,7 @@ const NewMovie = () => {
                 <div className='new-movie__filter'>
                     <DatePicker onChange={handleFilterDate}  disabledDate={disabledYear} picker="year" className='history__time' />
                    <span className='filter-item'>
-                    <Select
+                    <Select onChange={handleFilterCountry}
                             placeholder={countries[0].key}
                             allowClear
                             >
@@ -67,12 +87,15 @@ const NewMovie = () => {
                         </Select>
                    </span>
                    <span className='filter-item'>
-                    <Select
+                    <Select  onChange={handleFilterGenre}
                         placeholder="Select genre"
                         allowClear
                         >
                         {genderMovie.map((item, id)=><Option value={item.value} key={id}>{item.key}</Option>)}
                     </Select>
+                    </span>
+                    <span className='filter-item'>
+                        <span className='button blue' onClick={handleFilterMovie}>Filter</span>
                     </span>
                 </div>
                 <div className="movie-list__view-more">

@@ -38,7 +38,7 @@ const MovieItem = ({item, category, userId, handleRemove, myMovie, setShowModal}
                         {/* <p className="movie-item__date">Note that the</p> */}
                     </div>
                     <div className="movie-item__quanlity">HD</div>
-                    <div className="movie-item__cent">{item.vote_average || 10}</div>
+                    <div className="movie-item__cent">{item.vote_average?.toFixed(1) || 10}</div>
                 </Link>
                 {userId && <div className="update-movie">
                     <div className='update-movie__button'>

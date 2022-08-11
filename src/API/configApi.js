@@ -21,6 +21,49 @@ export const handleDate = (time) => {
   return day + ' ' + h + ":" + m + ":" + s
 }
 
+export const menuList = [
+  {
+    path: "/manager",
+    title: "Profile",
+    icon: "fa-solid fa-address-card"
+  },
+  {
+    path: "/manager/upload-movie",
+    title: "Share Movie",
+    icon: "fa-solid fa-file-arrow-up"
+  },
+  {
+    path: "/manager/approval-movie",
+    title: "Approval Movie",
+    icon: "fa-solid fa-circle-question"
+  },
+  {
+    path: "/manager/movie-waiting",
+    title: "Movie waiting",
+    icon: "fa-solid fa-circle-question"
+  },
+  {
+    path: "/manager/my-favourite",
+    title: "Favourite",
+    icon: "fa-solid fa-heart"
+  },
+  {
+    path: "/manager/history",
+    title: "History",
+    icon: "fa-solid fa-clock-rotate-left"
+  },
+  {
+    path: "/manager/my-movie",
+    title: "My Movies",
+    icon: "fa-solid fa-film"
+  },
+  {
+    path: "/manager/change-password",
+    title: "Change Password",
+    icon: "fa-solid fa-lock"
+  },
+]
+
 const apiConfig = {
     baseUrl: 'https://api.themoviedb.org/3',
     urlConnect: process.env.REACT_APP_CONNECT_SERVER,

@@ -1,5 +1,5 @@
 import { Form, Formik } from 'formik'
-import React from 'react'
+import React, { useState } from 'react'
 import FormikControl from '../../Form/FormikControl'
 import * as Yup from 'yup'
 import axios from "axios"
@@ -8,6 +8,9 @@ import { useSelector } from 'react-redux'
 
 function ChangePassword() {
     const dataUser = useSelector((state) => state.loginSlice.dataUser);
+    const [showPass, setShowPass] = useState(false)
+    const [showNewPass, setShowNewPass] = useState(false)
+    const [showReenterPass, setShowReenterPass] = useState(false)
     console.log(dataUser);
     const initialValues = {
         password: '',
@@ -50,25 +53,33 @@ function ChangePassword() {
             <div className='profile'>
         <h2 className='profile_title'>Change Password</h2>
         <Form className="update-profile__form change-password" >
-            <FormikControl
-                control='input'
-                type='password'
-                label='Password'
-                name='password'
-            />
-            <FormikControl
-                control='input'
-                type='password'
-                label='New password'
-                name='newPassword'
-            />
-            <FormikControl
-                control='input'
-                type='password'
-                label='Reenter password'
-                name='reenterPassword'
-            />
-        
+            <div className='change-password'>
+                <FormikControl
+                    control='input'
+                    type={showPass?"text": "password"}
+                    label='Password'
+                    name='password'
+                />
+                {formik.values.password !== "" && <i className={showPass ? "fa-solid fa-eye-slash" : "fa-solid fa-eye"} onClick={()=>setShowPass(!showPass)}></i>}
+            </div>
+            <div className='change-password'>
+                <FormikControl
+                    control='input'
+                    type={showNewPass ? "text": "password"}
+                    label='New password'
+                    name='newPassword'
+                />
+                {formik.values.newPassword !== "" && <i className={showNewPass ? "fa-solid fa-eye-slash" : "fa-solid fa-eye"} onClick={()=>setShowNewPass(!showNewPass)}></i>}
+            </div>
+            <div className='change-password'>
+                <FormikControl
+                    control='input'
+                    type={showReenterPass ? "text": "password"}
+                    label='Reenter password'
+                    name='reenterPassword'
+                />
+                {formik.values.reenterPassword !== "" && <i className={showReenterPass ? "fa-solid fa-eye-slash" : "fa-solid fa-eye"} onClick={()=>setShowReenterPass(!showReenterPass)}></i>}
+            </div>
         <div className='profile-edit'>
             <button type="submit" className={`button blue ${!formik.isValid ? "disable-submit" : ""}`} disabled={!formik.isValid}>
             <i className="fa-solid fa-cloud-arrow-up"></i>Update

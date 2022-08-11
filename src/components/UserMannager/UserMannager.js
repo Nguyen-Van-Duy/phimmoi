@@ -3,7 +3,7 @@ import { Link, Route, Routes, useLocation } from 'react-router-dom'
 import "./UserManager.css"
 import Profile from './Profile/Profile'
 import { useSelector } from 'react-redux'
-import apiConfig from '../../API/configApi'
+import apiConfig, { menuList } from '../../API/configApi'
 import { useNavigate } from "react-router-dom";
 import UploadMovie from './UploadMovie/UploadMovie'
 import MovieWaiting from './MovieWaiting/MovieWaiting'
@@ -20,6 +20,16 @@ const dataUser = useSelector((state) => state.loginSlice.dataUser);
 const isLogin = useSelector((state) => state.loginSlice.isLogin);
 const navigate = useNavigate()
 const location = useLocation()
+
+let menu
+if(dataUser.role === "admin") {
+    menu = menuList.filter(item=>item.path !== "/manager/movie-waiting")
+    console.log(menu);
+} else if(dataUser.role === "user") {
+    menu = menuList.filter(item=>item.path !== "/manager/approval-movie")
+}
+
+console.log(menuList, menu);
 
 console.log(location.pathname);
     useEffect(()=> {
@@ -41,22 +51,11 @@ console.log(location.pathname);
         </div>
         <div className='manager-menu__body'>
             <ul className='manager-menu__list'>
-                <Link to="/manager"><li className={`manager-menu__item ${location.pathname === "/manager" && "manager-active"}`}><i className="fa-solid fa-address-card"></i>Profile</li></Link>
-                <Link to="/manager/upload-movie"><li className={`manager-menu__item ${location.pathname === "/manager/upload-movie" && "manager-active"}`}><i className="fa-solid fa-file-arrow-up"></i>Share Movie</li></Link>
-                {dataUser.role === "admin" && 
-                <Link to="/manager/approval-movie"><li className={`manager-menu__item ${location.pathname === "/manager/approval-movie" && "manager-active"}`}><i className="fa-solid fa-circle-question"></i>Approval Movie</li></Link>}
-                {dataUser.role !== "admin" && 
-                <Link to="/manager/movie-waiting"><li className={`manager-menu__item ${location.pathname === "/manager/movie-waiting" && "manager-active"}`}><i className="fa-solid fa-circle-question"></i>Movie waiting</li></Link>}
-                <Link to="/manager/my-favourite"><li className={`manager-menu__item ${location.pathname === "/manager/my-favourite" && "manager-active"}`}><i className="fa-solid fa-heart"></i>favourite</li></Link>
-                <Link to="/manager/history"><li className={`manager-menu__item ${location.pathname === "/manager/history" && "manager-active"}`}><i className="fa-solid fa-clock-rotate-left"></i>History</li></Link>
-                <Link to="/manager/my-movie">
-                    <li className={`manager-menu__item ${location.pathname === "/manager/my-movie" && "manager-active"}`}>
-                    <i className="fa-solid fa-film"></i>My Movies</li>
-                </Link>
-                <Link to="/manager/change-password">
-                    <li className={`manager-menu__item ${location.pathname === "/manager/change-password" && "manager-active"}`}>
-                    <i className="fa-solid fa-lock"></i>Change Password</li>
-                </Link>
+                {menu.map((item, index)=> <Link to={item.path} key={index}>
+                    <li className={`manager-menu__item ${location.pathname === item.path && "manager-active"}`}>
+                        <i className={item.icon}></i>{item.title}
+                    </li>
+                </Link>)}
             </ul>
         </div>
     </div>
