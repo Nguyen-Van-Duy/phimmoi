@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, Route, Routes, useLocation } from 'react-router-dom'
 import "./UserManager.css"
 import Profile from './Profile/Profile'
@@ -12,31 +12,32 @@ import ChangePassword from './ChangePassword/ChangePassword'
 import Favourite from './Favourite/Favourite'
 import History from './History/History'
 import ApprovalMovie from './ApprovalMovie/ApprovalMovie'
+// import Loading from '../Loading'
 
 
 function UserMannager() {
 // const history = createBrowserHistory();
+const [menu, setMenu] = useState()
 const dataUser = useSelector((state) => state.loginSlice.dataUser);
 const isLogin = useSelector((state) => state.loginSlice.isLogin);
 const navigate = useNavigate()
 const location = useLocation()
 
-let menu
-if(dataUser.role === "admin") {
-    menu = menuList.filter(item=>item.path !== "/manager/movie-waiting")
-    console.log(menu);
-} else if(dataUser.role === "user") {
-    menu = menuList.filter(item=>item.path !== "/manager/approval-movie")
-}
+useEffect(()=> {
+    let menuRole
+    if(dataUser?.role === "admin") {
+        menuRole = menuList.filter(item=>item.path !== "/manager/movie-waiting")
+    } else if(dataUser?.role === "user") {
+        menuRole = menuList.filter(item=>item.path !== "/manager/approval-movie")
+    }
+    setMenu(menuRole)
+}, [dataUser?.role])
 
-console.log(menuList, menu);
-
-console.log(location.pathname);
     useEffect(()=> {
-        if(apiConfig.token && !isLogin) {
+        if(dataUser && apiConfig.token && !isLogin) {
             navigate('/')
         }
-    }, [isLogin, navigate])
+    }, [isLogin, navigate, dataUser])
 
   return (
     <>
@@ -51,7 +52,7 @@ console.log(location.pathname);
         </div>
         <div className='manager-menu__body'>
             <ul className='manager-menu__list'>
-                {menu.map((item, index)=> <Link to={item.path} key={index}>
+                {menu?.map((item, index)=> <Link to={item.path} key={index}>
                     <li className={`manager-menu__item ${location.pathname === item.path && "manager-active"}`}>
                         <i className={item.icon}></i>{item.title}
                     </li>
@@ -60,6 +61,7 @@ console.log(location.pathname);
         </div>
     </div>
     <div className='manager-content'>
+        {/* {!dataUser && <div className="manager-loading loading"><Loading /></div>} */}
         <Routes>
             <Route path="" element={<Profile />} />
             <Route path="upload-movie" element={<UploadMovie />} />

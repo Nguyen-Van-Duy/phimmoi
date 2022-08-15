@@ -8,6 +8,7 @@ import {movieDetails, movieShareDetails } from '../../../API/MoviesApi';
 import { Image } from 'antd';
 import Loading from '../../Loading';
 import { SmileOutlined } from '@ant-design/icons';
+import { Link } from 'react-router-dom';
 
 function History() {
     // const [listMovie, setListMovie] = useState([])
@@ -34,10 +35,10 @@ function History() {
         data.map(async (item)=> {
             if(Number(item.movie_id)) {
                 const result = await movieDetails(item.category, Number(item.movie_id))
-                await listFavourite.push({...result, history_id: item._id, createdAt: handleDate(item.createdAt), isCheck:false})
+                await listFavourite.push({...result, history_id: item._id, createdAt: handleDate(item.createdAt), isCheck:false, category: item.category})
             } else {
                 const result = await movieShareDetails(item.movie_id)
-                await listFavourite.push({...result[0], history_id: item._id, createdAt: handleDate(item.createdAt), isCheck:false})
+                await listFavourite.push({...result[0], history_id: item._id, createdAt: handleDate(item.createdAt), isCheck:false, category: item.category})
             }
             setMovie([...listFavourite].reverse())
             setMovieDefault([...listFavourite].reverse())
@@ -150,18 +151,14 @@ function History() {
             }
           };
 
-          console.log(valueSearchName, valueDate);
+          console.log(movie);
         
 
   return (
     <div className='profile'>
         <h2 className='profile_title'>History</h2>
-        {!isLoading && movie.length <= 0 && <Result
-                    icon={<SmileOutlined />}
-                    title="No Data!"
-                />}
         {isLoading && <div className="manager-loading loading"><Loading /></div>}
-        {!isLoading && movie.length > 0 && <> <Space direction="vertical">
+        {!isLoading && <> <Space direction="vertical">
             <div className='history__container'>
                 <div className='history__filter'>
                     <DatePicker onChange={handleFilterDate} picker="month" className='history__time' />
@@ -187,7 +184,11 @@ function History() {
                         {item.id ? <Image src={(item.backdrop_path || item.poster_path ? apiConfig.originalImage(item.backdrop_path || item.poster_path) : apiConfig.backupPhoto)}  alt="" /> :
                         <Image src={(apiConfig.urlConnectSocketIO + item.backdrop_path)}  alt="" />}
                     </td>
-                    <td className='history__content-name'>{item.title || item.name}</td>
+                    <td className='history__content-name'>
+                        <Link to={`/${item.category}/${item.id || item._id}`}>
+                            {item.title || item.name}
+                        </Link>
+                    </td>
                     <td className='history__content-genres'>
                         {item.genres && item.genres.map((genres, genresId)=> <span key={genresId}>{genres.name || genres.key}, </span>)}
                     </td>
@@ -199,6 +200,10 @@ function History() {
 
             </tbody>
         </table>}
+        {!isLoading && movie.length <= 0 && <Result
+                    icon={<SmileOutlined />}
+                    title="No Data!"
+                />}
         </>}
     </div>
   )

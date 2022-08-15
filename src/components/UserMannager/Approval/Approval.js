@@ -6,23 +6,9 @@ import BoxModal from '../../BoxModal/BoxModal';
 import '../UpdateMovie/UpdateMovie.css';
 import './Approval.css';
 
-function Approval({setShowModal, movieApproval, approval}) {
+function Approval({setShowModal, movieApproval, handleApproval}) {
     console.log(movieApproval);
-    const handleApproval = async (approvalValue) => {
-        try {
-            const data = await axios.post(apiConfig.urlConnect + "movie/approval", {
-                movie_id: movieApproval._id,
-                approval: approvalValue
-            }, apiConfig.headers)
-            if(data.status === 200) {
-                setShowModal()
-                approval(movieApproval._id)
-            }
-        } catch(e) {
-            console.log(e);
-            error("Failed, please try again!")
-        }
-    }
+    
   return (
     <div className='update-movie__container'>
         <BoxModal title={`Approval user: ${movieApproval.user_name} (update: ${handleDate(movieApproval.createdAt)})`} closeModal={setShowModal}>

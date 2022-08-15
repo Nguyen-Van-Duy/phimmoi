@@ -9,7 +9,7 @@ function UpdateMovie({setShowModal, movieDetail}) {
     <div className='update-movie__container'>
         <BoxModal title={`Movie: ${movieDetail.name}`} closeModal={setShowModal}>
             <div className="trailer-main">
-                <UploadMovie movieDetail={movieDetail}/>
+                <UploadMovie movieDetail={movieDetail} closeModal={setShowModal}/>
             </div>
     </BoxModal>
     </div>

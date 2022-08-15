@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Result, Space } from 'antd';
 import "../History/History.css"
 import axios from 'axios';
-import apiConfig, { success } from '../../../API/configApi';
+import apiConfig, { error, success } from '../../../API/configApi';
 import { useSelector } from 'react-redux';
 import { Image } from 'antd';
 import Approval from '../Approval/Approval';
@@ -42,16 +42,35 @@ function ApprovalMovie() {
         setShowModal(!showModal)
       }
 
-      const handleApproval = (movieId) => {
-        const newMovie = movie.filter(item=>item._id !== movieId)
-        setMovie(newMovie)
-        success("Approved success!")
-      }
+    //   const handleApproval = (movieId) => {
+    //     const newMovie = movie.filter(item=>item._id !== movieId)
+    //     setMovie(newMovie)
+    //     success("Approved success!")
+    //   }
+
+      const handleApproval = async (approvalValue) => {
+        try {
+            const data = await axios.post(apiConfig.urlConnect + "movie/approval", {
+                movie_id: movieApproval._id,
+                approval: approvalValue
+            }, apiConfig.headers)
+            if(data.status === 200) {
+                setShowModal()
+                // approval(movieApproval._id)
+                const newMovie = movie.filter(item=>item._id !== movieApproval._id)
+                setMovie(newMovie)
+                success("Approved success!")
+            }
+        } catch(e) {
+            console.log(e);
+            error("Failed, please try again!")
+        }
+    }
 
   return (
     <>
     <div onClick={()=>setShowModal(!showModal)}><Modal showModal={showModal} /></div>
-    {showModal && <Approval setShowModal={()=>setShowModal(!showModal)} movieApproval={movieApproval} approval={handleApproval} />}
+    {showModal && <Approval setShowModal={()=>setShowModal(!showModal)} movieApproval={movieApproval} handleApproval={handleApproval} />}
     <div className='profile'>
         <h2 className='profile_title'>Approval Movie</h2>
         <Space direction="vertical">
@@ -85,8 +104,8 @@ function ApprovalMovie() {
                     </td>
                     <td className='history__time'>{handleDate(item.createdAt)}</td>
                     <td>
-                        <span className='button green history__button'>Yes</span>
-                        <span className='button red history__button'>No</span>
+                        <span className='button green history__button' onClick={()=>handleApproval("1")}>Approval</span>
+                        <span className='button red history__button' onClick={()=>handleApproval("2")}>Refuse</span>
                     </td>
                 </tr>)}
 

@@ -21,6 +21,7 @@ function Favourite() {
             console.log(data.data);
             if(data.data.length > 0) {
                 setListMovie(data.data)
+                console.log(data.data);
                 getListFavourite(data.data)
             } else {
                 setMovie(data.data)
@@ -37,12 +38,12 @@ function Favourite() {
         data.map(async (item)=> {
             if(Number(item.movie_id)) {
                 const result = await movieDetails(item.category, Number(item.movie_id))
-                await listFavourite.push({...result, category: item.category, _id: item._id})
+                await listFavourite.push({...result, category: item.category, favourite_id: item._id})
                 console.log(listFavourite);
             } else {
                 const result = await movieFavouriteDetails(item.movie_id)
                 console.log(result);
-                await listFavourite.push(result[0])
+                await listFavourite.push({...result[0], favourite_id: item._id})
             }
             setMovie([...listFavourite])
         })
@@ -51,9 +52,9 @@ function Favourite() {
     const handleRemove = async (favouriteId) => {
         if(dataUser && dataUser._id) {
             const result = await axios.delete(apiConfig.urlConnect + 'movie/delete-favourite/' + favouriteId)
-            console.log(result);
+            console.log(favouriteId);
             if(result.status === 200) {
-                const newListMovie = movie.filter(item=> item._id !== favouriteId)
+                const newListMovie = movie.filter(item=> item.favourite_id !== favouriteId)
                 setMovie(newListMovie)
                 success("Delete successfully!")
             } else {
@@ -71,7 +72,7 @@ function Favourite() {
         <div className="movie-favourite__container">
             {isLoading && <div className="manager-loading loading"><Loading /></div>}
             {!isLoading && movie && movie.length > 0 && movie.map((item, index) => <div className="view-more__item movie-favourite__item" key={index} >
-                <MovieItem item={item} category={item.category || item.media_type}  userId={dataUser._id} handleRemove={()=>handleRemove(item._id)} />
+                <MovieItem item={item} category={item.category || item.media_type}  userId={dataUser._id} handleRemove={()=>handleRemove(item.favourite_id)} />
             </div>)}
         </div>
         {!isLoading && movie && movie.length <= 0 && <Result

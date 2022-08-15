@@ -65,4 +65,5 @@ tr, th {
 }
 
 .history__content-name {
+    cursor: pointer;
 }

@@ -10,7 +10,7 @@ import { useSelector } from 'react-redux'
 // import { setUserId } from '../../../store/LoginSlice'
 import { genderMovie, countries } from '../../../API/MoviesApi'
 
-function UploadMovie({movieDetail}) {
+function UploadMovie({movieDetail, closeModal}) {
 
     const dataUser = useSelector((state) => state.loginSlice.dataUser);
     const [backdrop, setBackdrop] = useState();
@@ -170,24 +170,27 @@ function UploadMovie({movieDetail}) {
         formData.append('image_poster', poster);
         formData.append('data', JSON.stringify(dataRequest));
 
-        let result
         if(movieDetail) {
-            result = await axios.post(apiConfig.urlConnect + 'upload/update-movie', formData)
+            const result = await axios.post(apiConfig.urlConnect + 'upload/update-movie', formData)
+            if(result.status === 200) {
+                closeModal()
+                console.log(result);
+            }
         } else {
-            result = await axios.post(apiConfig.urlConnect + 'upload/upload-movie', formData)
-        }
-        if(result.status === 200) {
-            const listItem = document.getElementById('url-video'); 
-            const newItem = document.createElement('div');
-            const att = document.createAttribute("id");
-            att.value = "url-video";
-            newItem.setAttributeNode(att);
-            newItem.innerHTML = ""
-            listItem.parentNode.replaceChild(newItem, listItem);
-            setBackdrop(null)
-            setPoster(null)
-            setValueUrl("")
-            resetForm()
+            const result = await axios.post(apiConfig.urlConnect + 'upload/upload-movie', formData)
+            if(result.status === 200) {
+                const listItem = document.getElementById('url-video'); 
+                const newItem = document.createElement('div');
+                const att = document.createAttribute("id");
+                att.value = "url-video";
+                newItem.setAttributeNode(att);
+                newItem.innerHTML = ""
+                listItem.parentNode.replaceChild(newItem, listItem);
+                setBackdrop(null)
+                setPoster(null)
+                setValueUrl("")
+                resetForm()
+            }
         }
         // dispatch(setUserId(result.data))
     }
@@ -410,7 +413,7 @@ function UploadMovie({movieDetail}) {
                         <button type="submit" className={`button blue ${!formik.isValid ? "disable-submit" : ""}`} disabled={!formik.isValid}>
                             <i className="fa-solid fa-check"></i>Update
                         </button>
-                        <button className="button red" type='reset'>
+                        <button className="button red" type='reset' onClick={()=>closeModal()}>
                         <i className="fa-solid fa-xmark"></i>Cancel
                         </button>
                     </div>
