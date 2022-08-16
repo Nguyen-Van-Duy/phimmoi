@@ -9,7 +9,7 @@ function ListFriend({item, currentId, setUserChat, valueContentMenu, online, not
   // const [friendId, setFriendId] = useState(null)
   const [isOnline, setIsOnline] = useState(false)
   const [notificationNumber, setNotificationNumber] = useState(null)
-  const [isReceive, setIsReceive] = useState(false);
+  // const [isReceive, setIsReceive] = useState(false);
 
 //   const [invitation, setInvitation] = useState(valueContentMenu === 'message' && listInvitation)
   // const dataUser = useSelector((state) => state.loginSlice.dataUser);

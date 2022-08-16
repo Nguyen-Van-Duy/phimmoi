@@ -1,21 +1,22 @@
 import React, { useEffect, useState } from 'react'
-import { Result, Space } from 'antd';
+import { Result } from 'antd';
 import "../History/History.css"
 import axios from 'axios';
 import apiConfig, { error, success } from '../../../API/configApi';
-import { useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
 import { Image } from 'antd';
 import Approval from '../Approval/Approval';
 import Modal from '../../Modal/Modal';
 import { SmileOutlined } from '@ant-design/icons';
 import Loading from '../../Loading';
-
+import "./ApprovalMovie.css"
 function ApprovalMovie() {
     const [movie, setMovie] = useState([])
-    const dataUser = useSelector(state=>state.loginSlice.dataUser)
+    // const dataUser = useSelector(state=>state.loginSlice.dataUser)
     const [showModal, setShowModal] = useState(false)
     const [movieApproval, setMovieApproval] = useState({})
     const [isLoading, setIsLoading] = useState(true)
+    const [approvalActive, setApprovalActive] = useState(false)
 
     const handleDate = (time) => {
         const date = new Date(time)
@@ -26,16 +27,15 @@ function ApprovalMovie() {
         return day + ' ' + h + ":" + m + ":" + s
     }
 
-    console.log(movie, dataUser);
+    const getDataApprovalMovie = async (path) => {
+        const data = await axios.get(apiConfig.urlConnect + path)
+        setMovie(data.data.reverse())
+        setIsLoading(false)
+    }
 
       useEffect(()=> {
-        const getDataHistory = async () => {
-            const data = await axios.get(apiConfig.urlConnect + "movie/movie-waiting")
-            setMovie(data.data.reverse())
-            setIsLoading(false)
-        }
-        getDataHistory()
-      }, [dataUser._id])
+        getDataApprovalMovie("movie/movie-waiting")
+      }, [])
 
       const handleShowApprovalMovie = data => {
         setMovieApproval(data)
@@ -67,18 +67,27 @@ function ApprovalMovie() {
         }
     }
 
+    const handleShareApproval = async (path) => {
+        setApprovalActive(!approvalActive)
+        getDataApprovalMovie(path)
+    }
+
   return (
     <>
     <div onClick={()=>setShowModal(!showModal)}><Modal showModal={showModal} /></div>
     {showModal && <Approval setShowModal={()=>setShowModal(!showModal)} movieApproval={movieApproval} handleApproval={handleApproval} />}
     <div className='profile'>
         <h2 className='profile_title'>Approval Movie</h2>
-        <Space direction="vertical">
+        {/* <Space direction="vertical">
             <div className='history__container'>
-                {/* <span className='button'>Update</span>
-                <span className='button'>Delete</span> */}
+                <span className='button'>Update</span>
+                <span className='button'>Delete</span>
             </div>
-        </Space>
+        </Space> */}
+        <div className='approval_page'>
+            <span className={`${!approvalActive && "approval-active"}`} onClick={()=> handleShareApproval("movie/movie-waiting")}>Approval Movie</span>
+            <span className={`${approvalActive && "approval-active"}`} onClick={()=> handleShareApproval("movie/movie-update")}>Share Movie</span>
+        </div>
         {isLoading && <div className="manager-loading loading"><Loading /></div>}
         {!isLoading && movie && movie.length > 0 ? <table className='history__list'>
             <thead>

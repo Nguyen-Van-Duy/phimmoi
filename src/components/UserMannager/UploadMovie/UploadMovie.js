@@ -179,13 +179,13 @@ function UploadMovie({movieDetail, closeModal}) {
         } else {
             const result = await axios.post(apiConfig.urlConnect + 'upload/upload-movie', formData)
             if(result.status === 200) {
-                const listItem = document.getElementById('url-video'); 
-                const newItem = document.createElement('div');
-                const att = document.createAttribute("id");
-                att.value = "url-video";
-                newItem.setAttributeNode(att);
-                newItem.innerHTML = ""
-                listItem.parentNode.replaceChild(newItem, listItem);
+                // const listItem = document.getElementById('url-video'); 
+                // const newItem = document.createElement('div');
+                // const att = document.createAttribute("id");
+                // att.value = "url-video";
+                // newItem.setAttributeNode(att);
+                // newItem.innerHTML = ""
+                // listItem.parentNode.replaceChild(newItem, listItem);
                 setBackdrop(null)
                 setPoster(null)
                 setValueUrl("")

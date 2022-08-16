@@ -1,7 +1,7 @@
 import { Image } from 'antd';
-import axios from 'axios';
+// import axios from 'axios';
 import React from 'react'
-import apiConfig, { error, handleDate } from '../../../API/configApi';
+import apiConfig, { handleDate } from '../../../API/configApi';
 import BoxModal from '../../BoxModal/BoxModal';
 import '../UpdateMovie/UpdateMovie.css';
 import './Approval.css';
