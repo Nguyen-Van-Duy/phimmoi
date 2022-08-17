@@ -156,6 +156,9 @@
 }
 
 @media (max-width: 768px) {
+    .app__container {
+        padding: 0 2rem;
+      }
     .header-list__feature {
         padding: 0;
     }

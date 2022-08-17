@@ -85,6 +85,10 @@ function App() {
     setShowBoxChat(!showBoxChat)
   }
 
+//   document.onkeydown = function(event) {
+//     console.log(event.key);
+// }
+
   return (
     <div className="App">
       <Header />

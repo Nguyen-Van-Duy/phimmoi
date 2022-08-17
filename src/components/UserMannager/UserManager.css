@@ -98,6 +98,7 @@
 }
 
 .manager-content {
+    flex: 1;
     width: calc(73% - 3rem);
     background-color: rgba(255, 255, 255, 0.2);
     /* min-height: calc(100vh - 28rem); */
@@ -133,6 +134,7 @@
 
 .change-password {
     display: flex;
+    width: 100%;
     flex-direction: column;
     align-items: center;
 }
@@ -143,29 +145,41 @@
 
 .update-movie {
     width: 100%;
-    position: absolute;
-    top: 70%;
-    left: 50%;
-    transform: translate(-50%);
+    height: 100%;
 }
 
 .update-movie__button {
-    display: flex;
     justify-content: center;
     align-items: center;
     display: none;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
 }
 
 .movie-item__content:hover .update-movie__button  {
     display: flex;
+    width: 100%;
+    height: 100%;
 }
 
 .update-movie__button span {
     color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     padding: 0.5rem;
-    margin-bottom: 0.5rem;
+    /* margin-bottom: 0.5rem; */
     margin-right: 1rem;
     border-radius: 4px;
+}
+
+.update-movie__button span i {
+    margin-right: 0.5rem;
 }
 
 .update-movie__button span:last-child {
@@ -202,6 +216,7 @@
 
 .change-password {
     position: relative;
+    width: 100%;
 }
 
 .change-password>i {
@@ -210,6 +225,39 @@
     color: #000;
     right: 15px;
     cursor: pointer;
+}
+
+.manager__menu-bar {
+    display: none;
+    color: #fff;
+    font-size: 2rem;
+    margin-right: 1rem;
+}
+
+@media (max-width: 1200px) {
+    .manager-menu {
+        display: none;
+    }
+    .manager__menu-bar {
+        display: block;
+    }
+}
+
+@media (max-width: 786px) {
+    .manager__container {
+        padding-left: 2rem;
+        padding-right: 2rem;
+        min-height: 0;
+    }
+    .manager-content {
+        padding: 0 0.5rem;
+    }
+    .change-password .group {
+        width: 100%;
+    }
+    .change-password .input {
+        min-width: 0;
+    }
 }
 
 

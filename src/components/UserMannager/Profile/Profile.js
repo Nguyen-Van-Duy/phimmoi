@@ -17,7 +17,7 @@ function Profile() {
         setShowEditProfile(!showEditProfile)
     }
   return (<>
-    {!showEditProfile && <div className='profile'>
+    {!showEditProfile && <div className='profile profile_container'>
         {/* <h2 className='profile_title'>Profile</h2> */}
         <div className='profile_head'>
             <div className='profile_header-image'>

@@ -57,6 +57,7 @@
 
 .approval-trailer__title {
     padding: 0.5rem;
+    min-height: 6rem;
 }
 
 .approval-trailer__item {

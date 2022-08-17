@@ -21,7 +21,7 @@ const MyMovie = () => {
         const fetchMovieUpload = async () => {
             const data = await axios.get(apiConfig.urlConnect + "movie/my-movie/" + dataUser._id)
             console.log(data);
-            setMovie(data.data)
+            setMovie([...data.data,...data.data])
             setIsloading(false)
         }
         if(dataUser._id) {

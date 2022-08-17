@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import apiConfig, { error } from '../../API/configApi';
+import apiConfig, { error, success, warning } from '../../API/configApi';
 import { movieDetails, movieShareDetails } from '../../API/MoviesApi';
 import PlayMovieMore from '../PlayMovieMore/PlayMovieMore';
 import VoteAverage from '../VoteAverage/VoteAverage';
@@ -77,8 +77,9 @@ const WatchMovie = () => {
                 category: params.category
             })
             setFavourite(result.data)
+            success("Added to wishlist!")
         } else {
-            error("You need to be logged in to perform this function!")
+            warning("You need to be logged in to perform this function!")
         }
     }
 
@@ -87,8 +88,9 @@ const WatchMovie = () => {
             const result = await axios.delete(apiConfig.urlConnect + 'movie/delete-favourite/' + favourite._id)
             console.log(result);
             setFavourite(null)
+            success("Removed from favorites!")
         } else {
-            error("You need to be logged in to perform this function!")
+            warning("You need to be logged in to perform this function!")
         }
     }
 

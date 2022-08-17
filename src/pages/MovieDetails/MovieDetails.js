@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import apiConfig from '../../API/configApi';
+import apiConfig, { success, warning } from '../../API/configApi';
 import { cast, movieDetails, movieShareDetails } from '../../API/MoviesApi';
 import './MovieDetails.css';
 import Modal from '../../components/Modal/Modal';
@@ -98,8 +98,9 @@ const MovieDetails = () => {
                 category: params.category
             });
             setFavourite(result.data)
+            success("Added to wishlist!")
         } else {
-            alert("You need to be logged in to perform this function!")
+            warning("You need to be logged in to perform this function!")
         }
     }
 
@@ -108,8 +109,9 @@ const MovieDetails = () => {
             const result = await axios.delete(apiConfig.urlConnect + 'movie/delete-favourite/' + favourite._id)
             console.log(result);
             setFavourite(null)
+            success("Removed from favorites!")
         } else {
-            alert("You need to be logged in to perform this function!")
+            warning("You need to be logged in to perform this function!")
         }
     }
 

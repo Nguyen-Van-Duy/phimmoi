@@ -35,4 +35,7 @@
         max-width: 50%;
         flex: 0 0 50%;
     }
+    .movie-favourite__container .view-more__item .movie-item {
+        padding: 0;
+    }
 }

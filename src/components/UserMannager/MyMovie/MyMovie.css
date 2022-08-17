@@ -10,3 +10,14 @@
 .my-movie__container .view-more__item {
     min-width: 20%;
 }
+
+@media (max-width: 786px) {
+    .my-movie__container .view-more__item {
+        max-width: 50%;
+        flex: 0 0 50%;
+    }
+    .my-movie__container .view-more__item .movie-item {
+        min-width: 0;
+        padding: 0 0.5rem;
+    }
+}

@@ -18,6 +18,7 @@ import ApprovalMovie from './ApprovalMovie/ApprovalMovie'
 function UserMannager() {
 // const history = createBrowserHistory();
 const [menu, setMenu] = useState()
+const [showMenu, setShowMenu] = useState(false)
 const dataUser = useSelector((state) => state.loginSlice.dataUser);
 const isLogin = useSelector((state) => state.loginSlice.isLogin);
 const navigate = useNavigate()
@@ -42,6 +43,7 @@ useEffect(()=> {
   return (
     <>
     {isLogin && <div className="manager__container">
+    {/* <div className="manager__menu-bar" onClick={setShowMenu}><i className="fa-solid fa-qrcode"></i></div> */}
     <div className='manager-menu'>
         <div className='manager-menu__header'>
             <img src={dataUser?.avatar && apiConfig.urlConnectSocketIO + dataUser?.avatar} alt='' />

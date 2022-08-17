@@ -85,8 +85,8 @@ function ApprovalMovie() {
             </div>
         </Space> */}
         <div className='approval_page'>
-            <span className={`${!approvalActive && "approval-active"}`} onClick={()=> handleShareApproval("movie/movie-waiting")}>Approval Movie</span>
-            <span className={`${approvalActive && "approval-active"}`} onClick={()=> handleShareApproval("movie/movie-update")}>Share Movie</span>
+            <span className={`${!approvalActive && "approval-active"}`} onClick={()=> handleShareApproval("movie/movie-waiting")}>Share Movie</span>
+            <span className={`${approvalActive && "approval-active"}`} onClick={()=> handleShareApproval("movie/movie-update")}>Update Movie</span>
         </div>
         {isLoading && <div className="manager-loading loading"><Loading /></div>}
         {!isLoading && movie && movie.length > 0 ? <table className='history__list'>
