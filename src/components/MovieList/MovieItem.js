@@ -42,9 +42,10 @@ const MovieItem = ({item, category, userId, handleRemove, myMovie, setShowModal}
                     <div className="movie-item__cent">{item.vote_average?.toFixed(1) || 10}</div>
                 </Link>
                 {userId && <div className="update-movie">
-                    <div className='update-movie__button' onClick={()=>navigate(`/${category}/${item.id || item._id}`)}>
-                        {(!handleRemove || myMovie) && <span  className="blue" onClick={setShowModal} ><i className="fa-solid fa-pen-to-square"></i> Update</span>}
-                        {handleRemove && <span className="red" onClick={handleRemove}><i className="fa-solid fa-trash-can"></i>Delete</span>}
+                    <div className='update-movie__wrap' onClick={()=>navigate(`/${category}/${item.id || item._id}`)}></div>
+                    <div className='update-movie__button'>
+                        {(!handleRemove || myMovie) && <span  className="blue" onClick={setShowModal} ><i className="fa-solid fa-pen-to-square button-icon"></i> Update</span>}
+                        {handleRemove && <span className="red" onClick={handleRemove}><i className="fa-solid fa-trash-can button-icon"></i>Delete</span>}
                     </div>
                 </div>}
             </div>

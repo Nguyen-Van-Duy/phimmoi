@@ -144,11 +144,18 @@
 }
 
 .update-movie {
-    width: 100%;
-    height: 100%;
+    position: absolute;
+    display: flex;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    align-items: center;
+    justify-content: center;
+
 }
 
-.update-movie__button {
+.update-movie__wrap {
     justify-content: center;
     align-items: center;
     display: none;
@@ -161,10 +168,19 @@
     background-color: rgba(0, 0, 0, 0.3);
 }
 
-.movie-item__content:hover .update-movie__button  {
+.update-movie__button {
+    display: none;
+    z-index: 100;
+}
+
+.movie-item__content:hover .update-movie__wrap  {
     display: flex;
     width: 100%;
     height: 100%;
+}
+
+.movie-item__content:hover .update-movie__button  {
+    display: flex;
 }
 
 .update-movie__button span {

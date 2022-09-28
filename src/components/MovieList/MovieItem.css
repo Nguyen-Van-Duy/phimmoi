@@ -93,6 +93,10 @@
     /* color:rgb(255, 251, 0); */
 }
 
+.button-icon {
+    z-index: 10000;
+}
+
 
 .movie-item__desc {
     padding: 0.5rem;

@@ -70,8 +70,8 @@ function Approval({setShowModal, movieApproval, handleApproval}) {
                     </div>
                 </div>
                 <div className='approval__button'>
-                    <span className='button green' onClick={()=>handleApproval("1")}>Approval</span>
-                    <span className='button red'  onClick={()=>handleApproval("2")}>Refuse</span>
+                    <p className='button green' onClick={()=>handleApproval("1")}>Approval</p>
+                    <p className='button red'  onClick={()=>handleApproval("2")}>Refuse</p>
                 </div>
             </div>
     </BoxModal>

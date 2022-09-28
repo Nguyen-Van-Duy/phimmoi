@@ -34,11 +34,13 @@ useEffect(()=> {
     setMenu(menuRole)
 }, [dataUser?.role])
 
-    useEffect(()=> {
-        if(dataUser && apiConfig.token && !isLogin) {
-            navigate('/')
-        }
-    }, [isLogin, navigate, dataUser])
+useEffect(()=> {
+    console.log(apiConfig.token , !isLogin);
+    if(!isLogin) {
+        console.log(122);
+        navigate('/')
+    }
+}, [isLogin, navigate])
 
   return (
     <>
