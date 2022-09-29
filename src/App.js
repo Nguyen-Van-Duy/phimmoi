@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import "./App.css";
 import 'antd/dist/antd.css'; 
 import React,{ useEffect, useState } from "react";
@@ -30,6 +30,8 @@ function App() {
   const [isLoading, setIsLoading] = useState(true)
   const [showBoxChat, setShowBoxChat] = useState(false)
   const dispatch = useDispatch()
+  const location = useLocation()
+  console.log(location);
 
   useEffect(() => {
     const fetchDataFilm = async () => {
@@ -91,7 +93,7 @@ function App() {
 
   return (
     <div className="App">
-      <Header />
+      {!location.pathname.includes("admin") && <Header />}
       {<ChatBox showBoxChat={showBoxChat} handleShowBoxChat={handleShowBoxChat} />}
       <div className="message-icon__show" onClick={handleShowBoxChat}><i className="fa-solid fa-comment-dots"></i></div>
       <main className="main">
@@ -136,7 +138,7 @@ function App() {
         {isLoading && <div className="loading"><Loading /></div>}
       </main>
       <ScrollToTop />
-      <Footer />
+      {!location.pathname.includes("admin") && <Footer />}
     </div>
   );
 }
