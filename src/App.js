@@ -13,6 +13,7 @@ import Loading from "./components/Loading";
 import ChatBox from "./components/ChatBox/ChatBox";
 import UserMannager from "./components/UserMannager/UserMannager";
 import RTC from "./pages/RTC/RTC";
+import Admin from "./pages/Admin/Admin";
 // import MovieDetails from "./pages/MovieDetails/MovieDetails";
 // import ViewMore from "./pages/ViewMore/ViewMore";
 // import ViewGenre from "./pages/ViewGenre/ViewMore";
@@ -99,7 +100,7 @@ function App() {
       <main className="main">
         {!isLoading && <Routes>
           <Route path="/" element={<Home />} />
-          
+          <Route path="/admin" element={<Admin />} />
           <Route
             path="/manager/*"
             element={<UserMannager />}
