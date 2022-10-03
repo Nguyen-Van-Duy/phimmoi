@@ -100,7 +100,7 @@ function App() {
       <main className="main">
         {!isLoading && <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/admin" element={<Admin />} />
+          <Route path="/admin/*" element={<Admin />} />
           <Route
             path="/manager/*"
             element={<UserMannager />}

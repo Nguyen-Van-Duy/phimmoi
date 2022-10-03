@@ -1,0 +1,17 @@
+.table-admin__account table {
+    width: 100%;
+}
+
+.admin-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+}
+
+.table-admin__account table tr td {
+    padding: 10px;
+}
+
+.admin-center {
+    text-align: center;
+}

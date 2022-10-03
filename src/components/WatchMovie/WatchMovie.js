@@ -8,6 +8,8 @@ import VoteAverage from '../VoteAverage/VoteAverage';
 import './WatchMovie.css';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
+import CommentBox from '../CommentBox/CommentBox';
+import MessageComment from '../CommentBox/MessageComment/MessageComment';
 
 const WatchMovie = () => {
 
@@ -46,11 +48,11 @@ const WatchMovie = () => {
             await axios.post(apiConfig.urlConnect + 'movie/add-movie-history/', dataRequest)
             console.log("favourite:", dataRequest);
         }
-        if((dataFilm.id || dataFilm._id) && dataFilm.genres && params.category && dataUser._id) {
+        if((dataFilm?.id || dataFilm?._id) && dataFilm.genres && params.category && dataUser?._id) {
             addMovieHistory()
             console.log("2222222222222222");
         }
-    }, [dataFilm.id, dataFilm._id, dataFilm.genres, params.category, dataUser._id])
+    }, [dataFilm?.id, dataFilm?._id, dataFilm.genres, params.category, dataUser?._id])
 
     useEffect(()=> {
         const getFavourite = async () => {
@@ -125,6 +127,8 @@ const WatchMovie = () => {
                             {favourite && favourite.movie_id === (dataFilm._id || dataFilm.id.toString()) && 
                             <span className='favourite favourite-add' onClick={handleRemoveFavourite}>Favourite:<i className="fa-solid fa-heart"></i></span>}
                         </p>
+                        <CommentBox />
+                        <MessageComment />
                         
                     </div>
                     <div className="watch-movie__trending">

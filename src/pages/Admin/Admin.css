@@ -1,0 +1,29 @@
+.admin__container {
+    background-color: #eaeaea;
+    min-height: 100vh;
+}
+
+.ant-menu-overflow.ant-menu.ant-menu-root {
+    height: 6rem;
+}
+  .logo {
+    float: left;
+    width: 120px;
+    height: 31px;
+    margin: 16px 24px 16px 0;
+    background: rgba(255, 255, 255, 0.3);
+  }
+  
+  .ant-row-rtl .logo {
+    float: right;
+    margin: 16px 0 16px 24px;
+  }
+  
+  .site-layout-background {
+    background: #fff;
+  }
+
+  .ant-layout .ant-layout-has-sider {
+    margin-top: 6rem;
+    min-height: calc(100vh - 6rem);
+  }
