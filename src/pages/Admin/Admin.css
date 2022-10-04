@@ -27,3 +27,7 @@
     margin-top: 6rem;
     min-height: calc(100vh - 6rem);
   }
+
+  .ant-menu.ant-menu-root.ant-menu-inline.ant-menu-dark {
+    height: 100%;
+  }

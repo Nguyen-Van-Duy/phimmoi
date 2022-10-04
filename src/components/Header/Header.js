@@ -146,9 +146,9 @@ const Header = () => {
             <div id="google_translate_element" className={!showLanguage? "show-language": ""}></div>
             <i onClick={handleShowLanguage} style={{fontSize: "2rem"}}  className="fa-solid fa-earth-americas"></i>
           </li>
-          {isLogin && !loading && <li className="feature__item header-list__feature">
+          {/* {isLogin && !loading && <li className="feature__item header-list__feature">
             <i style={{fontSize: "2rem"}}  className="fa-solid fa-bell"></i>
-          </li>}
+          </li>} */}
           {!isLogin && <li className="feature__item" onClick={handleShowModal}><span className="login-bottom">Login</span></li>}
           {isLogin && !loading && <li className="feature__item login-bottom">
             <img src={ apiConfig.urlConnectSocketIO + dataUser.avatar } alt="" />
