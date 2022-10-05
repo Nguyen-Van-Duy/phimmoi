@@ -1,7 +1,11 @@
 .new-movie__filter {
     margin-bottom: 1rem;
 }
-
+.movie-admin__container,
+.movie-list-admin {
+    margin: 0;
+    padding: 0;
+}
 
 .new-movie__filter .ant-select .ant-select-selector {
     display: flex;

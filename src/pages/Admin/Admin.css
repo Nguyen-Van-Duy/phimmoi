@@ -31,3 +31,18 @@
   .ant-menu.ant-menu-root.ant-menu-inline.ant-menu-dark {
     height: 100%;
   }
+
+  .site-layout-background .content-list {
+    padding: 0;
+  }
+
+  .site-layout-background .content-list .view-more__container {
+    margin: 0;
+    padding: 0;
+  }
+
+  .site-layout-background .content-list .view-more__container .ant-select-selector,
+  .site-layout-background .content-list .view-more__container .new-movie__filter .ant-picker {
+    border: 1px solid #d9d9d9 !important;
+
+  }

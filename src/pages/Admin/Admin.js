@@ -1,18 +1,21 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import 'antd/dist/antd.css';
 import './Admin.css';
-import { LaptopOutlined, NotificationOutlined, LogoutOutlined, BlockOutlined,AppstoreOutlined,
+import {LogoutOutlined, BlockOutlined,AppstoreOutlined,
   ContainerOutlined,
   DesktopOutlined,
   MailOutlined,
-  MenuFoldOutlined,
-  MenuUnfoldOutlined,
   PieChartOutlined,} from '@ant-design/icons';
 import { Breadcrumb, Layout, Menu } from 'antd';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import HomeAdmin from './HomeAdmin/HomeAdmin';
 import AccountUser from './AccountUser/AccountUser';
 import MyMovie from '../../components/UserMannager/MyMovie/MyMovie';
+import { useDispatch, useSelector } from 'react-redux';
+import axios from 'axios';
+import apiConfig from '../../API/configApi';
+import { setUserId } from '../../store/LoginSlice';
+import NewMovie from '../NewMovie/NewMovie';
 
 const menu = [
   {
@@ -61,24 +64,47 @@ function getItem(label, key, icon, children, type) {
 }
 
 const items = [
-  getItem('Option 1', '1', <PieChartOutlined />),
-  getItem('Option 2', '2', <DesktopOutlined />),
-  getItem('Option 3', '3', <ContainerOutlined />),
-  getItem('Navigation One', 'sub1', <MailOutlined />, [
-    getItem('Option 5', '5'),
-    getItem('Option 6', '6'),
-    getItem('Option 7', '7'),
-    getItem('Option 8', '8'),
+  getItem('Home', '', <PieChartOutlined />),
+  getItem('Account', 'Account', <DesktopOutlined />),
+  getItem('Movie', 'movie', <MailOutlined />, [
+    getItem('Movie list', 'movie-list'),
+    getItem('My movie', 'my-movie'),
   ]),
-  getItem('Navigation Two', 'sub2', <AppstoreOutlined />, [
-    getItem('Option 9', '9'),
-    getItem('Option 10', '10'),
-    getItem('Submenu', 'sub3', null, [getItem('Option 11', '11'), getItem('Option 12', '12')]),
+  getItem('Approve', 'approve', <AppstoreOutlined />, [
+    getItem('Movie share', 'movie-share'),
+    getItem('Movie update', 'movie-update'),
+    // getItem('Submenu', 'sub3', null, [getItem('Option 11', '11'), getItem('Option 12', '12')]),
   ]),
 ];
 
 export default function Admin() {
   const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const urlConnect = useSelector((state) => state.loginSlice.urlConnect)
+  const isLogin = useSelector((state) => state.loginSlice.isLogin)
+  const [loading, setLoading] = useState(true)
+  const token = localStorage.getItem('token')
+  useEffect(()=> {
+    const authentication = async () => {
+        setLoading(true)
+        if(token && !isLogin) {
+            try {
+                const result = await axios.get(urlConnect + 'account/refresh', apiConfig.headers);
+                dispatch(setUserId(result.data))
+                setLoading(false)
+            } catch (error) {
+                console.log(error);
+                setLoading(false)
+                return
+            }
+        } else {
+            setLoading(false)
+        }
+    }
+    authentication()
+  }, [token, dispatch, urlConnect, isLogin])
+
+
   const handleClick = (e) => {
     console.log(e);
     navigate(`/admin/${e.key}`)
@@ -96,6 +122,7 @@ export default function Admin() {
     <Layout>
       <Sider width={200} className="site-layout-background">
       <Menu
+        onClick={handleClick}
         defaultSelectedKeys={['1']}
         defaultOpenKeys={['sub1']}
         mode="inline"
@@ -117,7 +144,7 @@ export default function Admin() {
           <Breadcrumb.Item>List</Breadcrumb.Item>
           <Breadcrumb.Item>App</Breadcrumb.Item>
         </Breadcrumb>
-        <Content
+        {!loading && <Content
           className="site-layout-background"
           style={{
             padding: 24,
@@ -129,8 +156,9 @@ export default function Admin() {
             <Route path="" element={<HomeAdmin />} />
             <Route path="/account" element={<AccountUser />} />
             <Route path="/my-movie" element={<MyMovie />} />
+            <Route path="/movie-list" element={<NewMovie />} />
         </Routes>
-        </Content>
+        </Content>}
       </Layout>
     </Layout>
   </Layout>

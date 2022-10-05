@@ -89,12 +89,12 @@ function App() {
   }
 
 //   document.onkeydown = function(event) {
-//     console.log(event.key);
+//   console.log(event.key);
 // }
 
   return (
     <div className="App">
-      {location.pathname.includes("admin") && <Header />}
+      {!location.pathname.includes("admin") && <Header />}
       {<ChatBox showBoxChat={showBoxChat} handleShowBoxChat={handleShowBoxChat} />}
       <div className="message-icon__show" onClick={handleShowBoxChat}><i className="fa-solid fa-comment-dots"></i></div>
       <main className="main">

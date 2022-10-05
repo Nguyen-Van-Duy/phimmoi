@@ -9,6 +9,7 @@ import MovieItem from '../../components/MovieList/MovieItem';
 import '../../components/MovieList/MovieList.css';
 import '../ViewMore/ViewMore.css';
 import './NewMovie.css'
+import { useSelector } from 'react-redux';
 const { Option } = Select;
 
 const NewMovie = () => {
@@ -21,6 +22,7 @@ const NewMovie = () => {
     const [selectYear, setSelectYear] = useState(null)
     const [selectCountry, setSelectCountry] = useState(null)
     const [selectGenre, setSelectGenre] = useState(null)
+    const dataUser = useSelector((state) => state.loginSlice.dataUser);
 
     const handlePage = () => {
         setPage(page + 1)
@@ -74,7 +76,7 @@ const NewMovie = () => {
         {<div className="content-list">
             <div className="movie-list view-more__container">
                 <div className="movie-list__header">
-                    <span className="movie-list__title">New Movie</span>
+                    {dataUser.role !== 'admin' && <span className="movie-list__title">New Movie</span>}
                 </div>
                 <div className='new-movie__filter'>
                     <DatePicker onChange={handleFilterDate}  disabledDate={disabledYear} picker="year" className='history__time' />
