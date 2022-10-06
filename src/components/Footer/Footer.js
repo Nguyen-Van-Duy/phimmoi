@@ -22,10 +22,8 @@ const Footer = () => {
           <li>Become A Member</li>
       </div>
       <div className="footer__list">
-          <h4 className="footer__list--title">Support</h4>
-          <li>FAQs</li>
-          <li>Support Center</li>
-          <li>Contact</li>
+          <h4 className="footer__list--title">Feedback</h4>
+          <li><textarea type="text" /></li>
       </div>
       </div>
       <div className="app__container footer__desc">
