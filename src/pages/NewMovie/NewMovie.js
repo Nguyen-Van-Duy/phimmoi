@@ -76,7 +76,7 @@ const NewMovie = () => {
         {<div className="content-list">
             <div className="movie-list view-more__container">
                 <div className="movie-list__header">
-                    {dataUser.role !== 'admin' && <span className="movie-list__title">New Movie</span>}
+                    {dataUser?.role !== 'admin' && <span className="movie-list__title">New Movie</span>}
                 </div>
                 <div className='new-movie__filter'>
                     <DatePicker onChange={handleFilterDate}  disabledDate={disabledYear} picker="year" className='history__time' />
