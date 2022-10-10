@@ -22,6 +22,7 @@ const Feedback = ({closeTrailer}) => {
             <div className="feedback-main">
                 <input type="text" placeholder="Email" />
                 <textarea placeholder="content"></textarea>
+                <div className="bw"><span className='button blue paticipant-button'>Send</span></div>
             </div>
         </BoxModal>
     );

@@ -1,0 +1,14 @@
+.feedback-main textarea,
+.feedback-main input {
+    width: 100%;
+    margin-bottom: 2rem;
+}
+
+.feedback-main textarea {
+    height: 200px;
+}
+
+.bw {
+    margin-bottom: 2rem;
+
+}

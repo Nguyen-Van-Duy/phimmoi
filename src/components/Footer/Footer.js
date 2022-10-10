@@ -34,7 +34,7 @@ const Footer = () => {
       <div className="footer__list">
           <h4 className="footer__list--title">Feedback application</h4>
           <li><span className="button blue paticipant-button" onClick={toggleModal}>
-        More info</span></li>
+        Feedback</span></li>
       </div>
       </div>
       <div className="app__container footer__desc">
