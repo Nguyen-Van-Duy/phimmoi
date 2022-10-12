@@ -1,7 +1,11 @@
 .feedback-main textarea,
 .feedback-main input {
-    width: 100%;
-    margin-bottom: 2rem;
+    /* width: 100%;
+    margin-bottom: 2rem; */
+}
+
+.feedback-main {
+    margin-top: 1rem;
 }
 
 .feedback-main textarea {
@@ -9,6 +13,8 @@
 }
 
 .bw {
-    margin-bottom: 2rem;
+    display: flex;
+    justify-content: center;
+    margin: 2rem 0;
 
 }

@@ -13,7 +13,7 @@ const Footer = () => {
 }
   return (<>
     <div onClick={toggleModal}><Modal showModal={showModal} /></div>
-        {showModal && <Feedback />}
+        {showModal && <Feedback closeFeedback={toggleModal} />}
     <footer className="footer">
       <div className="app__container footer__container">
       <div className="footer__list" onClick={() => navigate('/')}>

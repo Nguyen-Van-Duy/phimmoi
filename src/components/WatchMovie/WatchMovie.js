@@ -106,7 +106,7 @@ const WatchMovie = () => {
             <div className="watch-movie__containers">
                 <div className="watch-movie__content">
                     <div className="watch-movie__video">
-                        <iframe
+                        {/* <iframe
                             src={Number(params.id) ? ((params.category === 'movie' && apiConfig.embedMovie(params.id)) || 
                             (params.category === 'tv' && apiConfig.embedEpisode(params.id, params.season, params.esp))) : 
                             dataFilm.url}
@@ -114,7 +114,7 @@ const WatchMovie = () => {
                             title="Movie player"
                             frameBorder="0"
                             allowFullScreen="allowFullScreen"
-                        />
+                        /> */}
                         <h2 className="watch-content__title">{dataFilm.title || dataFilm.name}</h2>
                         {params.season && <p className="watch-content__desc">Season {params.season} episode {params.esp}</p>}
                         <p className="watch-content__desc">{(dataFilm.seasons && dataFilm.seasons[params.season]?.overview) || dataFilm.overview}</p>
@@ -129,8 +129,8 @@ const WatchMovie = () => {
                             {favourite && favourite.movie_id === (dataFilm._id || dataFilm.id.toString()) && 
                             <span className='favourite favourite-add' onClick={handleRemoveFavourite}>Favourite:<i className="fa-solid fa-heart"></i></span>}
                         </p>
-                        <CommentBox />
-                        <MessageComment />
+                        <CommentBox dataUser={dataUser} idFilm={dataFilm._id || dataFilm.id} />
+                        {/* <MessageComment /> */}
                         
                     </div>
                     <div className="watch-movie__trending">

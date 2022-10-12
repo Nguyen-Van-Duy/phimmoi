@@ -1,21 +1,32 @@
 import { Avatar, Button, Comment, Form, Input, List } from 'antd';
+import axios from 'axios';
 import moment from 'moment';
 import React, { useState } from 'react';
+import { useCallback } from 'react';
+import { useEffect } from 'react';
+import apiConfig from '../../API/configApi';
+import MessageComment from './MessageComment/MessageComment';
 const { TextArea } = Input;
 
-const CommentList = ({ comments }) => (
-  <List
-    dataSource={comments}
-    header={`${comments.length} ${comments.length > 1 ? 'replies' : 'reply'}`}
-    itemLayout="horizontal"
-    renderItem={(props) => <Comment {...props} />}
-  />
-);
+// const CommentList = ({ comments }) => (
+//   <List
+//     dataSource={comments}
+//     header={`${comments.length} ${comments.length > 1 ? 'replies' : 'reply'}`}
+//     itemLayout="horizontal"
+//     renderItem={(props) => <Comment {...props} />}
+//   />
+// );
 
-const Editor = ({ onChange, onSubmit, submitting, value }) => (
+const Editor = ({ onChange, onSubmit, submitting, value }) => {
+  const handleKeyPress = (event) => {
+    if(event.key === 'Enter'){
+      onSubmit()
+    }
+  }
+  return(
   <>
     <Form.Item>
-      <TextArea rows={4} onChange={onChange} value={value} />
+      <TextArea rows={4} onChange={onChange} value={value} onKeyPress={handleKeyPress} />
     </Form.Item>
     <Form.Item>
       <Button htmlType="submit" loading={submitting} onClick={onSubmit} type="primary">
@@ -24,38 +35,53 @@ const Editor = ({ onChange, onSubmit, submitting, value }) => (
     </Form.Item>
   </>
 );
+}
 
-export default function CommentBox() {
+export default function CommentBox({dataUser, idFilm}) {
   const [comments, setComments] = useState([]);
   const [submitting, setSubmitting] = useState(false);
   const [value, setValue] = useState('');
 
-  const handleSubmit = () => {
-    if (!value) return;
+  console.log(dataUser);
+
+  const getComment = useCallback(async () => {
+    const data = await axios.get(apiConfig.urlConnect + "comment/" + idFilm)
+    console.log(data);
+    setComments(data.data)
+  }, [idFilm])
+  
+  useEffect(()=> {
+    getComment()
+  }, [getComment])
+
+  const handleSubmit = async () => {
+    if (!value || value.trim() === "") return;
     setSubmitting(true);
-    setTimeout(() => {
+    try {
+      const data = await axios.post(apiConfig.urlConnect + "comment/add-comment/", {
+        movie_id: idFilm,
+        user_id: dataUser._id,
+        user_name: dataUser.user_name,
+        avatar: dataUser.avatar,
+        message: value, 
+      });
+      getComment()
       setSubmitting(false);
-      setValue('');
-      setComments([
-        ...comments,
-        {
-          author: 'Han Solo',
-          avatar: 'https://joeschmoe.io/api/v1/random',
-          content: <p>{value}</p>,
-          datetime: moment('2016-11-22').fromNow(),
-        },
-      ]);
-    }, 1000);
+    } catch (error) {
+      console.log(error);
+      setSubmitting(false);
+    }
   };
 
   const handleChange = (e) => {
-    setValue(e.target.value);
+    console.log(e.target.value);
+    setValue(e.target.value.trim());
   };
   return (
     <>
-      {comments.length > 0 && <CommentList comments={comments} />}
+      {/* {comments.length > 0 && <CommentList comments={comments} />} */}
       <Comment
-        avatar={<Avatar src="https://joeschmoe.io/api/v1/random" alt="Han Solo" />}
+        avatar={<Avatar src={apiConfig.urlConnectSocketIO + dataUser.avatar} alt="Han Solo" />}
         content={
           <Editor
             onChange={handleChange}
@@ -65,6 +91,7 @@ export default function CommentBox() {
           />
         }
       />
+      <MessageComment comments={comments} />
     </>
   )
 }
