@@ -1,0 +1,19 @@
+
+.schedule_item  {
+    margin-bottom: 2rem;
+    display: flex;
+}
+
+.schedule_image {
+    width: 250px;
+    height: 150px;
+}
+
+.schedule_content {
+    padding: 0 2rem;
+    color: #fff;
+}
+
+.schedule_name {
+    font-size: 1.8rem;
+}

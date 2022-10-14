@@ -33,6 +33,11 @@ export const menuList = [
     icon: "fa-solid fa-file-arrow-up"
   },
   {
+    path: "/manager/movie-schedule",
+    title: "Movie Schedule",
+    icon: "fa-solid fa-calendar-days"
+  },
+  {
     path: "/manager/approval-movie",
     title: "Approval Movie",
     icon: "fa-solid fa-circle-question"

@@ -12,6 +12,7 @@ import ChangePassword from './ChangePassword/ChangePassword'
 import Favourite from './Favourite/Favourite'
 import History from './History/History'
 import ApprovalMovie from './ApprovalMovie/ApprovalMovie'
+import Schedule from './Schedule/Schedule'
 // import Loading from '../Loading'
 
 
@@ -75,6 +76,7 @@ useEffect(()=> {
             <Route path="my-favourite" element={<Favourite />} />
             <Route path="change-password" element={<ChangePassword />} />
             <Route path="history" element={<History />} />
+            <Route path="movie-schedule" element={<Schedule />} />
         </Routes>
     </div>
 </div>}</>

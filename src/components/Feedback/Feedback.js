@@ -1,41 +1,44 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Input } from 'antd';
 
-import { listTrailer } from '../../API/MoviesApi';
 import BoxModal from '../BoxModal/BoxModal';
 import '../Trailer/Trailer.css';
 import './Feedback.css';
+import apiConfig, { success } from '../../API/configApi';
+import axios from 'axios';
 const { TextArea } = Input;
 
 const Feedback = ({closeFeedback}) => {
+    const emailRef = useRef()
+    const messageRef = useRef()
 
     const closeMovieTrailer = () => {
         closeFeedback()
     }
 
-    const onChangeFeedback = (e) => {
-        console.log(e);
+    const handleSendMessage = async () => {
+        const email = emailRef.current.input.value;
+        const message = messageRef.current.resizableTextArea.textArea.value;
+        try {
+            const data = await axios.post(apiConfig.urlConnect + "feedback/add-feedback", {
+              email,
+              message, 
+            });
+            console.log(data);
+            success("Approved success!")
+          } catch (error) {
+            console.log(error);
+            error("Failed, please try again!")
+          }
     }
-
-     const onChangeEmail = (e) => {
-        console.log(e);
-     }
-
-    useEffect(() => {
-        // const fetchDataTrailer = async () => {
-        //     const data = await listTrailer(category, id);
-        //     setDataTrailer(data.results)
-        // }
-        // fetchDataTrailer()
-    }, [])
     return (
         <BoxModal title="Feedback" closeModal={closeMovieTrailer}>
             <div className="feedback-main">
-                <Input placeholder="input with clear icon" allowClear onChange={onChangeEmail} />
+                <Input placeholder="Enter your email" ref={emailRef} allowClear />
                 <br />
                 <br />
-                <TextArea placeholder="textarea with clear icon" allowClear onChange={onChangeFeedback} />
-                <div className="bw"><span className='button blue paticipant-button'>Send</span></div>
+                <TextArea placeholder="Enter your feedback" ref={messageRef} allowClear />
+                <div className="bw"><span className='button blue paticipant-button' onClick={handleSendMessage}>Send</span></div>
             </div>
         </BoxModal>
     );

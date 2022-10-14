@@ -46,11 +46,12 @@ function History() {
         })
     }, [])
 
-    console.log(movie, listChecked);
+    console.log(dataUser);
 
       useEffect(()=> {
         const getDataHistory = async () => {
             const data = await axios.get(apiConfig.urlConnect + "movie/movie-history/" + dataUser._id)
+            console.log(data);
             // setListMovie(data.data)
             if(data.data.length > 0) {
                 getListFavourite(data.data)

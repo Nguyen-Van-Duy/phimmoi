@@ -55,7 +55,7 @@ const MovieDetails = () => {
                 const data = await movieShareDetails(params.id)
                 console.log(data);
                 setDAtaDetails(data[0])
-                document.title = `${data[0].title || data[0].name}`;
+                document.title = `${data[0]?.title || data[0]?.name}`;
            }
             setIsLoading(false)
             window.scrollTo(0, 0)
@@ -76,14 +76,14 @@ const MovieDetails = () => {
             console.log("favourite:", data.data);
             setFavourite(data.data[0])
         }
-        if(dataUser && dataDetails._id) {
+        if(dataUser && dataDetails?._id) {
             getFavouriteMyMovie()
         }
-        if(dataUser && dataDetails.id) {
+        if(dataUser && dataDetails?.id) {
             getFavourite()
         }
         console.log(dataUser);
-    }, [dataUser, dataUser?._id, dataDetails.id, dataDetails._id])
+    }, [dataUser, dataUser?._id, dataDetails?.id, dataDetails?._id])
     
     const handleAddFavourite = async () => {
         if(dataUser && dataUser._id) {
@@ -129,33 +129,33 @@ const MovieDetails = () => {
         {!isLoading && <> <section className="detail-container app__container" 
         style={Number(params.id) ? 
             { backgroundImage: `url(${(dataDetails.backdrop_path || dataDetails.poster_path ? apiConfig.originalImage(dataDetails.backdrop_path || dataDetails.poster_path): apiConfig.background)})` }
-        : { backgroundImage: `url(${apiConfig.urlConnectSocketIO + dataDetails.backdrop_path})` }}>
+        : { backgroundImage: `url(${apiConfig.urlConnectSocketIO + dataDetails?.backdrop_path})` }}>
             <div className="detail-container__content">
                 <div className="detail__image"> 
                     {Number(params.id) ? <Image src={(dataDetails.poster_path || dataDetails.backdrop_path ? apiConfig.w500Image(dataDetails.poster_path || dataDetails.backdrop_path) : apiConfig.backupPhoto)} 
                     effect='black-and-white'
                     alt={dataDetails.title || dataDetails.name} />: 
-                    <Image src={(apiConfig.urlConnectSocketIO + dataDetails.poster_path)} 
+                    <Image src={(apiConfig.urlConnectSocketIO + dataDetails?.poster_path)} 
                     effect='black-and-white'
-                    alt={dataDetails.title || dataDetails.name} />}
+                    alt={dataDetails?.title || dataDetails?.name} />}
                 </div>
                 <div className="detail-container__wrap">
                     <div className="detail-content">
-                        <h2 className="detail-content__title">{dataDetails.title || dataDetails.name}</h2>
-                        <p className="detail-content__desc">{dataDetails.overview}</p>
+                        <h2 className="detail-content__title">{dataDetails?.title || dataDetails?.name}</h2>
+                        <p className="detail-content__desc">{dataDetails?.overview}</p>
                         <p className="detail-content__desc">
-                            <span className="detail-content__time">Country: {dataDetails.country || dataDetails.production_countries[0]?.name || (dataDetails.origin_country && dataDetails.origin_country[0]) || 'Updateting'}</span>
+                            <span className="detail-content__time">Country: {dataDetails?.country || dataDetails?.production_countries[0]?.name || (dataDetails?.origin_country && dataDetails?.origin_country[0]) || 'Updateting'}</span>
                         </p>
                         {params.category === 'tv' && <p className="detail-content__desc">
-                            <span className="detail-content__time">Total seasons: {dataDetails.number_of_seasons}</span>
-                            Total Episode: {dataDetails.number_of_episodes}
+                            <span className="detail-content__time">Total seasons: {dataDetails?.number_of_seasons}</span>
+                            Total Episode: {dataDetails?.number_of_episodes}
                         </p>}
                         <p className="detail-content__desc">
-                            <span className="detail-content__time">Time: {dataDetails.runtime || dataDetails.episode_run_time} minute</span>
-                            Date: {dataDetails.release_date || dataDetails.first_air_date}
+                            <span className="detail-content__time">Time: {dataDetails?.runtime || dataDetails?.episode_run_time} minute</span>
+                            Date: {dataDetails?.release_date || dataDetails.first_air_date}
                         </p>
                         {directors.length > 0  && <p className="detail-content__desc">Directors: {directors.map((item) => `${item.name} `)}</p>}
-                        { dataDetails.director !== "" && <p className="detail-content__desc">Directors: {dataDetails.director}</p>}
+                        {directors.length <= 0 &&  dataDetails.director !== "" && <p className="detail-content__desc">Directors: {dataDetails.director}</p>}
                         <div className="detail-content__genres">
                             {dataDetails.genres.map((item, id) => <span key={id}>{item.key || item.name}</span>)}
                         </div>
