@@ -357,6 +357,12 @@ function RTC() {
 
     console.log( "userOnline", userOnline);
 
+    const handleCloseShare = () => {
+        peer.current.destroyed()
+        peer.current.disconnect();
+        peer.current.close();
+    }
+
   return (
     <div className='RTC__container'>
         <div className='RTC__share'>
@@ -368,8 +374,9 @@ function RTC() {
                 <input id="remoteId2" type="text" placeholder="Remote ID" />
                 <button id="btnCall" type="submit">Call</button>
             </form> */}
-            <span className='button green' onClick={handleShareVideo}>Start</span>
+            <span className='button green' onClick={handleShareVideo}>Camera</span>
             <span className='button green' onClick={handleShare}>Share</span>
+            <span className='button red' onClick={handleCloseShare}>Close</span>
         </div>
         <div className='RTC__message'></div>
     </div>

@@ -36,7 +36,7 @@ function ForgotPassword({setShowForgot, showForgot}) {
                 label='Email'
                 name='email'
             />
-            <FormikControl
+            {/* <FormikControl
                 control='input'
                 type='password'
                 label='password'
@@ -47,15 +47,15 @@ function ForgotPassword({setShowForgot, showForgot}) {
                 type='password'
                 label='password'
                 name='password'
-            />
+            /> */}
         <div className="group">
             <input id="check" type="checkbox" className="check" defaultChecked/>
             <input id="tab-3" type="radio" name="tab" className="forgot-password"/>
-            <label htmlFor="tab-3" className="forgot-password-text" onClick={()=>setShowForgot(!showForgot)}>Forgot Password?</label>
+            {/* <label htmlFor="tab-3" className="forgot-password-text" onClick={()=>setShowForgot(!showForgot)}>Forgot Password?</label> */}
         </div>
         <div className="group">
             {!formik.isValid}
-            <input type="submit" className={`button ${!formik.isValid ? "disable-submit" : ""}`} disabled={!formik.isValid} value="Sign In"/>
+            <input type="submit" className={`button ${!formik.isValid ? "disable-submit" : ""}`} disabled={!formik.isValid} value="Send"/>
         </div>
         <div className="hr"></div>
         <div className="foot-lnk">
