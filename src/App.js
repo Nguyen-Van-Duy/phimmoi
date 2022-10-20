@@ -14,6 +14,7 @@ import ChatBox from "./components/ChatBox/ChatBox";
 import UserMannager from "./components/UserMannager/UserMannager";
 import RTC from "./pages/RTC/RTC";
 import Admin from "./pages/Admin/Admin";
+import ResetPassword from "./pages/ResetPassword/ResetPassword";
 // import MovieDetails from "./pages/MovieDetails/MovieDetails";
 // import ViewMore from "./pages/ViewMore/ViewMore";
 // import ViewGenre from "./pages/ViewGenre/ViewMore";
@@ -121,6 +122,10 @@ function App() {
           <Route
             path="/RTC/:roomId"
             element={<RTC />}
+          />
+          <Route
+            path="/reset-password/:token"
+            element={<ResetPassword />}
           />
           <Route
             path="/:category/:id"

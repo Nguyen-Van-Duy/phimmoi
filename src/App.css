@@ -145,6 +145,20 @@ background: #7a7a7a;
   background-color: red;
 }
 
+.reset-password-center {
+  justify-content: center !important;
+}
+.reset-password-send {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.reset-password-send input {
+  min-width: 400px;
+}
+
 .button-add {
   margin-top: 0.5rem;
   margin-left: 2rem;
