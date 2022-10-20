@@ -2,10 +2,12 @@ import { Result } from 'antd';
 import React from 'react'
 import { useState } from 'react'
 import { useSelector } from 'react-redux';
-import apiConfig from '../../../API/configApi'
+import apiConfig, { success } from '../../../API/configApi'
 import './Schedule.css'
 import ScheduleUpdate from './ScheduleUpdate/SchuduleUpdate';
 import { SmileOutlined } from '@ant-design/icons';
+import { useEffect } from 'react';
+import axios from 'axios';
 
 export default function Schedule() {
     const [movie, setMovie] = useState([{
@@ -36,6 +38,23 @@ export default function Schedule() {
         setShowUpdate(!showUpdate)
         setTitle("add")
     }
+
+    useEffect(() => {
+        const fetchDataSearch = async () => {
+            const data = await axios.get(apiConfig.urlConnect + "upload/schedule/" + dataUser._id)
+            console.log(data);
+            setMovie(data.data)
+            document.title = 'Movie schedule'
+        }
+        fetchDataSearch()
+
+    }, [dataUser._id])
+
+    const handleDeleteScheduleUpdate = async (data) => {
+        const result = await axios.delete(apiConfig.urlConnect + "upload/delete-schedule/" + data._id)
+        success("Delete successful!")
+        setMovie(d=>d.filter(item=>item._id !== data._id))
+    }
     
   return (
     <>
@@ -49,16 +68,16 @@ export default function Schedule() {
                 />}
             <ul className='schedule_list'>
                 {movie && movie.length > 0 && movie.map((item, id)=><li className='schedule_item' key={id}>
-                <div style={{maxWidth: "250px"}}><img src={ apiConfig.urlConnectSocketIO + dataUser.avatar} alt="" className='schedule_image' /></div>
+                <div style={{maxWidth: "250px"}}><img src={ apiConfig.urlConnectSocketIO + item.image } alt="" className='schedule_image' /></div>
                 <div className='schedule_content'>
                     <span className='schedule_name'>{item.name}</span>
+                    <div>{item.genres !== undefined && item.genres.map((items, id) => <span key={id}>{items.key || items.name}</span>)}</div>
                     <div className='schedule_name'>{item.time}</div>
                     {/* {dataDetails.genres.map((item, id) => <span key={id}>{item.key || item.name}</span>)} */}
-                    <p>{item.overview}
-                    </p>
-                    <div>
+                    <div>{item.overview}</div>
+                    <div style={{marginTop: "2rem"}}>
                         <span className='button blue' onClick={()=>handleShowScheduleUpdate(item)}>Update</span>
-                        <span className='button red'>Delete</span>
+                        <span className='button red'onClick={()=>handleDeleteScheduleUpdate(item)}>Delete</span>
                     </div>
                 </div>
                 </li>)}

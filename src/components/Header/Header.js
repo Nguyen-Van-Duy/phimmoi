@@ -35,6 +35,10 @@ const menu = [
     name: "Movie Genre",
     path: "/new-popular",
   },
+  {
+    name: "Movie schedule",
+    path: "/movie-schedule",
+  },
 ];
 
 const Header = () => {

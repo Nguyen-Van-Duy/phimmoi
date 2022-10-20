@@ -20,6 +20,7 @@ import Admin from "./pages/Admin/Admin";
 // import ResultSearch from "./pages/ResultSearch/ResultSearch";
 // import Watch from "./pages/Watch/Watch";
 const NewMovie = React.lazy(()=>import("./pages/NewMovie/NewMovie"));
+const MovieSchedule = React.lazy(()=>import("./pages/MovieSchedule/MovieSchedule"));
 const Movie = React.lazy(()=>import("./pages/Movies/Movie"));
 const MovieDetails = React.lazy(()=>import("./pages/MovieDetails/MovieDetails"));
 const ViewMore = React.lazy(()=>import("./pages/ViewMore/ViewMore"));
@@ -108,6 +109,10 @@ function App() {
           <Route
             path="/new-movie/*"
             element={<React.Suspense fallback={<div className="loading"><Loading /></div>}><NewMovie /></React.Suspense>}
+          />
+          <Route
+            path="/movie-schedule/*"
+            element={<React.Suspense fallback={<div className="loading"><Loading /></div>}><MovieSchedule /></React.Suspense>}
           />
           <Route
             path="/:category"

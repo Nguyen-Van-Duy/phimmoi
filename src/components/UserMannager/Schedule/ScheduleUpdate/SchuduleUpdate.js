@@ -8,11 +8,15 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setUserId } from '../../../../store/LoginSlice'
 import { DatePicker, Space, TimePicker } from 'antd'
 import moment from 'moment'
+import { genderMovie } from '../../../../API/MoviesApi'
 
 function ScheduleUpdate({dataDetail, handleShowSchedule, title}) {
 
     const dataUser = useSelector((state) => state.loginSlice.dataUser);
     const [selectedFile, setSelectedFile] = useState();
+    const [checkDate, setCheckDate] = useState(false);
+    const [checkFile, setCheckFile] = useState(false);
+    const [valueDate, setValueDate] = useState('');
     // const [image, setImage] = useState();
     const dispatch = useDispatch()
 
@@ -24,9 +28,16 @@ function ScheduleUpdate({dataDetail, handleShowSchedule, title}) {
         return result;
     }
 
+    const listGenres = []
+    if(dataDetail) {
+        dataDetail.genres.forEach(item=>listGenres.push(item.value))
+    }
+
     const initialValues = {
     name: dataDetail?.name,
     overview: dataDetail?.overview,
+    genres: listGenres,
+    password: dataDetail?.password,
     }
 
     const disabledDate = (current) => {
@@ -40,6 +51,7 @@ function ScheduleUpdate({dataDetail, handleShowSchedule, title}) {
 
     const handleDateValue = (date, dateString) => {
         console.log(date, dateString);
+        setValueDate(dateString)
     }
 
     const handleChangeImage = (event) => {
@@ -55,23 +67,34 @@ function ScheduleUpdate({dataDetail, handleShowSchedule, title}) {
 
     const validationSchema = Yup.object({
         name: Yup.string().required('Required').min(2),
+        overview: Yup.string().required('Required').min(2),
+        genres: Yup.array().required('Required'),
     })
 
     const onSubmitLogin = async (values, {resetForm}) => {
+       
     console.log('Form data', values)
+    let arrGenres = []
+        values.genres.forEach(item => {
+            for(let i = 0; i < genderMovie.length; i++) {
+                if(genderMovie[i].value === item) {
+                    arrGenres.push(genderMovie[i])
+                }
+            }
+        });
         
-        const dataRequest = {...values, user_id: dataUser._id}
+        const dataRequest = {...values, user_id: dataUser._id, time: valueDate, genres: arrGenres}
         const formData = new FormData();
         formData.append('avatar', selectedFile);
         // formData.append('image_movie2', image);
         formData.append('data', JSON.stringify(dataRequest));
         //  formData.append('password', "duy123");
-        console.log("formData", formData);
+        console.log("formData", dataRequest);
 
-        const result = await axios.post(apiConfig.urlConnect + 'profile/upload', formData)
-        // dispatch(setUserId(result.data))
-        handleShowSchedule()
+        const result = await axios.post(apiConfig.urlConnect + 'upload/add-schedule', formData)
+        console.log(result);
         success("Update successful!")
+        handleShowSchedule()
     }
 
   return (
@@ -83,51 +106,61 @@ function ScheduleUpdate({dataDetail, handleShowSchedule, title}) {
     onSubmit={onSubmitLogin}
     >
     {formik => {
-        console.log(formik)
+        // console.log(formik)
         
         return (
         <Form  className="update-profile__form">
             <FormikControl
                 control='input'
                 type='text'
-                label='Name'
+                label='Name *'
                 placeholder="Name"
                 name='name'
             /> 
-            <FormikControl
-            control='input'
-            type='text'
-            label='Time'
-            placeholder="Time"
-            name='time'
-        />
             <div className='group'>
-            <label htmlFor="image_movie" className="label">Avatar</label>
-                <input className='input' type="file" name="avatar" onChange={handleChangeImage} />
+                <label htmlFor="image_movie" className="label">Backdrop *</label>
+                <input className='input' type="file" name="avatar" onChange={handleChangeImage} onBlur={()=>setCheckFile(true)} />
+                {checkFile === true && !selectedFile && <span className='error'>Required</span>}
             </div>
-            {/* <div className='group'>
-            <label htmlFor="image_movie" className="label">Avatar</label>
-                <input className='input' type="file" name="image-backdrop" onChange={handleChangeImage2} />
-            </div> */}
+            <FormikControl
+                        control='checkbox'
+                        label='Checkbox genres *'
+                        name='genres'
+                        options={genderMovie}
+                    />
+            <div className='group'>
+            <label htmlFor="image_movie" className="label">Time *</label>
             <Space direction="vertical" size={12}>
                 <DatePicker
                 format="YYYY-MM-DD HH:mm:ss"
                 disabledDate={disabledDate}
                 onChange={handleDateValue}
+                onBlur={()=>setCheckDate(true)}
+                name="date"
                 // disabledTime={disabledDateTime}
                 showTime={{
                     defaultValue: moment('00:00:00', 'HH:mm:ss'),
                 }}/>
             </Space>
+            {checkDate === true && valueDate.trim() === '' && <span className='error'>Required</span>}
+            </div>
             <FormikControl
                 control='textarea'
                 type='textarea'
-                label='Overview'
+                label='Overview *'
                 placeholder='Overview'
                 name='overview'
             />
+            <FormikControl
+                control='input'
+                type='text'
+                label='Password'
+                placeholder="Password"
+                name='password'
+            /> 
         <div className='profile-edit'>
-            <button type="submit" className={`button blue ${!formik.isValid ? "disable-submit" : ""}`} disabled={!formik.isValid}>
+            <button type="submit" className={`button blue ${!formik.isValid ? "disable-submit" : ""}`} 
+            onClick={()=>{ setCheckFile(true); setCheckDate(true)}} disabled={!formik.isValid}>
                 <i className="fa-solid fa-check"></i>Update
             </button>
             <span className="button red" onClick={handleShowSchedule}>

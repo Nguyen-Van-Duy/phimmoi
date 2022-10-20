@@ -43,6 +43,8 @@ useEffect(()=> {
     }
 }, [isLogin, navigate])
 
+console.log(menu);
+
   return (
     <>
     {isLogin && <div className="manager__container">
