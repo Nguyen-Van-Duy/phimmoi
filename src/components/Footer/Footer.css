@@ -12,19 +12,19 @@
 .footer__container {
     display: flex;
     justify-content: space-around;
-    align-items: center;
+    align-items: stretch;
 }
 
 .footer__list--title {
     color: yellow;
     font-size: 2.4rem;
     margin: 0;
-    padding: 2rem 0 1rem;
+    padding: 0;
 }
 
 .footer__list li {
     list-style: none;
-    padding: 0.4rem 0;
+    padding: 0.2rem 0;
     cursor: pointer;
 }
 
@@ -84,9 +84,11 @@
     }
 }
 
-.paticipant-button {
+.footer-button {
+    margin-top: 1rem;
     right: 2rem;
     bottom: 1.5rem;
     z-index: 1;
+    display: block;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.7);
 }

@@ -3,12 +3,13 @@ import { FieldArray, Form, Formik } from 'formik'
 import FormikControl from '../../Form/FormikControl'
 import * as Yup from 'yup'
 import axios from "axios"
-import apiConfig from '../../../API/configApi'
+import apiConfig, { success } from '../../../API/configApi'
 import '../Profile/EditProfile/EditProfile.css'
 import './UploadMovie.scss'
 import { useSelector } from 'react-redux'
 // import { setUserId } from '../../../store/LoginSlice'
 import { genderMovie, countries } from '../../../API/MoviesApi'
+import { useNavigate } from 'react-router-dom'
 
 function UploadMovie({movieDetail, closeModal}) {
 
@@ -18,6 +19,7 @@ function UploadMovie({movieDetail, closeModal}) {
     const [checkBackdrop, setCheckBackdrop] = useState(null);
     const [checkPoster, setCheckPoster] = useState(null);
     const [valueUrl, setValueUrl] = useState()
+    const navigate = useNavigate()
     // const urlRef = useRef()
 
     // const [checkboxGender, setCheckboxGender] = useState([])
@@ -182,6 +184,8 @@ function UploadMovie({movieDetail, closeModal}) {
             if(result.status === 200) {
                 closeModal()
                 console.log(result);
+                success("Update successful!")
+                navigate("/manager/upload-movie")
             }
         } else {
             const result = await axios.post(apiConfig.urlConnect + 'upload/upload-movie', formData)
@@ -197,6 +201,8 @@ function UploadMovie({movieDetail, closeModal}) {
                 setPoster(null)
                 setValueUrl("")
                 resetForm()
+                success("Update successful!")
+                navigate("/manager/upload-movie")
             }
         }
         // dispatch(setUserId(result.data))

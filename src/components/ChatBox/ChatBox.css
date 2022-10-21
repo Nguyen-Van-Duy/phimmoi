@@ -69,6 +69,7 @@
     height: 3.2rem;
     margin-right: 8px;
     border-radius: 50%;
+    object-fit: cover;
 }
 
 .message-header__title {

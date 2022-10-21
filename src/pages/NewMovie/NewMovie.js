@@ -18,7 +18,7 @@ const NewMovie = () => {
     const [dataFilm, setDataFilm] = useState([])
     const [page, setPage] = useState(1)
     // const [totalResults, setTotalResults] = useState(0)
-    const [totalPage, setTotalPage] = useState(0)
+    // const [totalPage, setTotalPage] = useState(0)
     const [selectYear, setSelectYear] = useState(null)
     const [selectCountry, setSelectCountry] = useState(null)
     const [selectGenre, setSelectGenre] = useState(null)
@@ -107,7 +107,8 @@ const NewMovie = () => {
                         </div>
                     })}
                 </div>
-                {totalPage > page && <div className="load-more">
+                {/* totalPage > page */}
+                {!true && <div className="load-more">
                     <span className="button green" onClick={handlePage}>Load More</span>
                 </div>}
             </div>

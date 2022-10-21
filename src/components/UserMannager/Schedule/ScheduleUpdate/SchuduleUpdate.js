@@ -4,9 +4,9 @@ import FormikControl from '../../../Form/FormikControl'
 import * as Yup from 'yup'
 import axios from "axios"
 import apiConfig, { success } from '../../../../API/configApi'
-import { useDispatch, useSelector } from 'react-redux'
-import { setUserId } from '../../../../store/LoginSlice'
-import { DatePicker, Space, TimePicker } from 'antd'
+import { useSelector } from 'react-redux'
+// import { setUserId } from '../../../../store/LoginSlice'
+import { DatePicker, Space } from 'antd'
 import moment from 'moment'
 import { genderMovie } from '../../../../API/MoviesApi'
 
@@ -18,15 +18,15 @@ function ScheduleUpdate({dataDetail, handleShowSchedule,handleShowAddScheduleClo
     const [checkFile, setCheckFile] = useState(false);
     const [valueDate, setValueDate] = useState('');
     // const [image, setImage] = useState();
-    const dispatch = useDispatch()
+    // const dispatch = useDispatch()
 
-    const range = (start, end) => {
-        const result = [];
-        for (let i = start; i < end; i++) {
-          result.push(i);
-        }
-        return result;
-    }
+    // const range = (start, end) => {
+    //     const result = [];
+    //     for (let i = start; i < end; i++) {
+    //       result.push(i);
+    //     }
+    //     return result;
+    // }
 
     const listGenres = []
     if(dataDetail) {
@@ -37,7 +37,7 @@ function ScheduleUpdate({dataDetail, handleShowSchedule,handleShowAddScheduleClo
     name: dataDetail?.name,
     overview: dataDetail?.overview,
     genres: listGenres,
-    password: dataDetail?.password,
+    // password: dataDetail?.password,
     }
 
     const disabledDate = (current) => {
@@ -72,7 +72,6 @@ function ScheduleUpdate({dataDetail, handleShowSchedule,handleShowAddScheduleClo
     })
 
     const onSubmitLogin = async (values, {resetForm}) => {
-       
     console.log('Form data', values)
     let arrGenres = []
         values.genres.forEach(item => {
@@ -83,7 +82,11 @@ function ScheduleUpdate({dataDetail, handleShowSchedule,handleShowAddScheduleClo
             }
         });
         
-        const dataRequest = {...values, user_id: dataUser._id, time: valueDate, genres: arrGenres}
+        let dataRequest = {...values, user_id: dataUser._id, time: valueDate, genres: arrGenres}
+        if(title ==="update") {
+            dataRequest = {...dataRequest, id: dataDetail._id}
+            console.log(dataRequest);
+        }
         const formData = new FormData();
         formData.append('avatar', selectedFile);
         // formData.append('image_movie2', image);
@@ -91,10 +94,16 @@ function ScheduleUpdate({dataDetail, handleShowSchedule,handleShowAddScheduleClo
         //  formData.append('password', "duy123");
         console.log("formData", dataRequest);
 
-        const result = await axios.post(apiConfig.urlConnect + 'upload/add-schedule', formData)
-        console.log(result);
+        if(title === 'add') {
+            const result = await axios.post(apiConfig.urlConnect + 'upload/add-schedule', formData)
+            console.log(result);
+            // handleShowAddScheduleClose()
+        } else {
+            const resultUpdate = await axios.post(apiConfig.urlConnect + 'profile/update-schedule', formData)
+            console.log(resultUpdate);
+        }
         success("Update successful!")
-        handleShowAddScheduleClose(null)
+        handleShowAddScheduleClose()
     }
 
   return (
@@ -120,7 +129,7 @@ function ScheduleUpdate({dataDetail, handleShowSchedule,handleShowAddScheduleClo
             <div className='group'>
                 <label htmlFor="image_movie" className="label">Backdrop *</label>
                 <input className='input' type="file" name="avatar" onChange={handleChangeImage} onBlur={()=>setCheckFile(true)} />
-                {checkFile === true && !selectedFile && <span className='error'>Required</span>}
+                {title === "add" && checkFile === true && !selectedFile && <span className='error'>Required</span>}
             </div>
             <FormikControl
                         control='checkbox'
@@ -137,9 +146,10 @@ function ScheduleUpdate({dataDetail, handleShowSchedule,handleShowAddScheduleClo
                 onChange={handleDateValue}
                 onBlur={()=>setCheckDate(true)}
                 name="date"
+                defaultValue={moment(dataDetail?.time, "YYYY-MM-DD HH:mm:ss")}
                 // disabledTime={disabledDateTime}
                 showTime={{
-                    defaultValue: moment('00:00:00', 'HH:mm:ss'),
+                    defaultValue: moment(dataDetail.time || "", 'YYYY-MM-DD HH:mm:ss'),
                 }}/>
             </Space>
             {checkDate === true && valueDate.trim() === '' && <span className='error'>Required</span>}
@@ -151,19 +161,19 @@ function ScheduleUpdate({dataDetail, handleShowSchedule,handleShowAddScheduleClo
                 placeholder='Overview'
                 name='overview'
             />
-            <FormikControl
+            {/* <FormikControl
                 control='input'
                 type='text'
                 label='Password'
                 placeholder="Password"
                 name='password'
-            /> 
+            />  */}
         <div className='profile-edit'>
             <button type="submit" className={`button blue ${!formik.isValid ? "disable-submit" : ""}`} 
-            onClick={()=>{ setCheckFile(true); setCheckDate(true); handleShowAddScheduleClose(null)}} disabled={!formik.isValid}>
+            onClick={()=>{ setCheckFile(true); setCheckDate(true)}} disabled={!formik.isValid}>
                 <i className="fa-solid fa-check"></i>Update
             </button>
-            <span className="button red" onClick={()=>handleShowAddScheduleClose(null)}>
+            <span className="button red" onClick={()=>handleShowAddScheduleClose()}>
             <i className="fa-solid fa-xmark"></i>Cancel
             </span>
         </div>

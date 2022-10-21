@@ -26,7 +26,7 @@ function Profile() {
             </div>
             <div className='profile_content'>
                 <span className='profile__name'>{dataUser.user_name}</span>
-                <span className='profile__desc'>{dataUser.description|| "hello world!"}</span>
+                <span className='profile__desc'>{dataUser.description|| "hi "+dataUser.user_name +"!"}</span>
             </div>
         </div>
         <div className='profile_body'>

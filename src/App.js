@@ -5,7 +5,7 @@ import React,{ useEffect, useState } from "react";
 import Header from "./components/Header/Header";
 import Home from "./pages/Home/Home";
 import { dataMovie, trending } from "./API/MoviesApi";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { dataFilmAction } from "./store/dataFilmSlice";
 import Footer from "./components/Footer/Footer";
 import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
@@ -16,6 +16,7 @@ import RTC from "./pages/RTC/RTC";
 import Admin from "./pages/Admin/Admin";
 import ResetPassword from "./pages/ResetPassword/ResetPassword";
 import axios from "axios";
+import LoginAdmin from "./pages/Admin/LoginAdmin/LoginAdmin";
 // import MovieDetails from "./pages/MovieDetails/MovieDetails";
 // import ViewMore from "./pages/ViewMore/ViewMore";
 // import ViewGenre from "./pages/ViewGenre/ViewMore";
@@ -35,8 +36,7 @@ function App() {
   const [showBoxChat, setShowBoxChat] = useState(false)
   const dispatch = useDispatch()
   const location = useLocation()
-  const dataUser = useSelector((state) => state.loginSlice.dataUser);
-  console.log(location);
+  // const dataUser = useSelector((state) => state.loginSlice.dataUser);
 
   useEffect(() => {
     const fetchDataFilm = async () => {
@@ -97,15 +97,19 @@ function App() {
 //   console.log(event.key);
 // }
 
+console.log(location);
+
   return (
     <div className="App">
       {!location.pathname.includes("admin") && <Header />}
-      {<ChatBox showBoxChat={showBoxChat} handleShowBoxChat={handleShowBoxChat} />}
-      <div className="message-icon__show" onClick={handleShowBoxChat}><i className="fa-solid fa-comment-dots"></i></div>
+      {!location.pathname.includes("/login-admin") && <ChatBox showBoxChat={showBoxChat} handleShowBoxChat={handleShowBoxChat} />}
+      {!location.pathname.includes("/login-admin") && 
+      <div className="message-icon__show" onClick={handleShowBoxChat}><i className="fa-solid fa-comment-dots"></i></div>}
       <main className="main">
         {!isLoading && <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/admin/*" element={<Admin />} />
+          <Route path="/login-admin/*" element={<LoginAdmin />} />
           <Route
             path="/manager/*"
             element={<UserMannager />}

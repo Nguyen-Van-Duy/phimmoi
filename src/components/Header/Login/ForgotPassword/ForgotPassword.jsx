@@ -17,8 +17,8 @@ function ForgotPassword({setShowForgot, showForgot}) {
       })
     
       const onSubmitLogin = async (values, {resetForm}) => {
-        console.log('Form data', values)
-        const data = await axios.post(apiConfig.urlConnect + "profile/forgot-password", values)
+        // console.log('Form data', values)
+        await axios.post(apiConfig.urlConnect + "profile/forgot-password", values)
         success("Send successfully!")
         resetForm()
       }

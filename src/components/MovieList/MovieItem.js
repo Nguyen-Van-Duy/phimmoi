@@ -2,11 +2,12 @@ import React from 'react';
 import './MovieItem.css';
 import "./MovieList.css";
 import apiConfig from '../../API/configApi';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 // import { useSelector } from 'react-redux';
 
 const MovieItem = ({item, category, userId, handleRemove, myMovie, setShowModal}) => {
+    const location = useLocation()
     // const dataUser = useSelector(state=>state.loginSlice.dataUser)
     const navigate = useNavigate()
     const handleNotification = () =>{
@@ -42,9 +43,13 @@ const MovieItem = ({item, category, userId, handleRemove, myMovie, setShowModal}
                     <div className="movie-item__cent">{item.vote_average?.toFixed(1) || 10}</div>
                 </Link>
                 {userId && <div className="update-movie">
-                    <div className='update-movie__wrap' onClick={()=>navigate(`/${category}/${item.id || item._id}`)}></div>
+                    <div className='update-movie__wrap' onClick={()=>{
+                        if(location.pathname !== "/manager/movie-waiting") {
+                            navigate(`/${category}/${item.id || item._id}`)
+                        }
+                    }}></div>
                     <div className='update-movie__button'>
-                        {(!handleRemove || myMovie) && <span  className="blue" onClick={setShowModal} ><i className="fa-solid fa-pen-to-square button-icon"></i> Update</span>}
+                        {(!handleRemove || myMovie) && location.pathname !== "/manager/movie-waiting" && <span  className="blue" onClick={setShowModal} ><i className="fa-solid fa-pen-to-square button-icon"></i> Update</span>}
                         {handleRemove && <span className="red" onClick={handleRemove}><i className="fa-solid fa-trash-can button-icon"></i>Delete</span>}
                     </div>
                 </div>}

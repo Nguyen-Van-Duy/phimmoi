@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import apiConfig, { error, success, warning } from '../../API/configApi';
+import apiConfig, { success, warning } from '../../API/configApi';
 import { movieDetails, movieShareDetails } from '../../API/MoviesApi';
 import PlayMovieMore from '../PlayMovieMore/PlayMovieMore';
 import VoteAverage from '../VoteAverage/VoteAverage';
@@ -9,7 +9,7 @@ import './WatchMovie.css';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import CommentBox from '../CommentBox/CommentBox';
-import MessageComment from '../CommentBox/MessageComment/MessageComment';
+// import MessageComment from '../CommentBox/MessageComment/MessageComment';
 
 const WatchMovie = ({getGenres}) => {
 
@@ -35,7 +35,7 @@ const WatchMovie = ({getGenres}) => {
             window.scrollTo(0, 0)
         }
         fetchData()
-    }, [params.category, params.id])
+    }, [params.category, params.id], getGenres)
     console.log(dataFilm);
 
     useEffect(()=> {

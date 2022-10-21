@@ -1,16 +1,16 @@
 import { Form, Formik } from 'formik'
 import React from 'react'
-import FormikControl from '../../../Form/FormikControl'
 import * as Yup from 'yup'
 import axios from "axios"
 import { useDispatch } from 'react-redux'
 import { useSelector } from 'react-redux'
-import { setUserId } from '../../../../store/LoginSlice'
-import { error, success } from '../../../../API/configApi'
 import { useNavigate } from 'react-router-dom'
+import { setUserId } from '../../../store/LoginSlice'
+import { error, success } from '../../../API/configApi'
+import FormikControl from '../../../components/Form/FormikControl'
 // import { useNavigate } from 'react-router-dom'
 
-function LoginForm({setShowForgot, showForgot, handleCloseModal}) {
+function LoginAdmin() {
 
     const urlConnect = useSelector((state) => state.loginSlice.urlConnect)
     const dispatch = useDispatch()
@@ -37,7 +37,6 @@ function LoginForm({setShowForgot, showForgot, handleCloseModal}) {
         if(result.data.status === 200) {
             localStorage.setItem("token", result.data.token)
             dispatch(setUserId(result.data))
-            handleCloseModal()
             success(`Logged in successfully, Hi ${result.data.user_name}!`)
             console.log(result.data);
             if(result.data.role === 'admin') {
@@ -73,7 +72,6 @@ function LoginForm({setShowForgot, showForgot, handleCloseModal}) {
         <div className="group">
             <input id="check" type="checkbox" className="check" defaultChecked/>
             <input id="tab-3" type="radio" name="tab" className="forgot-password"/>
-            <label htmlFor="tab-3" className="forgot-password-text" onClick={()=>setShowForgot(!showForgot)}>Forgot Password?</label>
         </div>
         <div className="group">
             {!formik.isValid}
@@ -84,9 +82,6 @@ function LoginForm({setShowForgot, showForgot, handleCloseModal}) {
             <input type="button" className={`button`} onClick={formik.resetForm} value="Reset"/>
         </div> */}
         <div className="hr"></div>
-        <div className="foot-lnk">
-            <span href="#forgot">Forgot Password?</span>
-        </div>
         </Form>
         )
     }}
@@ -94,4 +89,4 @@ function LoginForm({setShowForgot, showForgot, handleCloseModal}) {
   )
 }
 
-export default LoginForm
+export default LoginAdmin

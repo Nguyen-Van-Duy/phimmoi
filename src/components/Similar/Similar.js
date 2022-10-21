@@ -21,7 +21,7 @@ const Similar = ({idGenres}) => {
             setDataSimilar(data)
         }
         fetchDataSimilar()
-    },[params.category, params.id])
+    },[params.category, params.id, idGenres])
     return (
         <div>
             {/* show movies */}

@@ -1,6 +1,6 @@
-import { Avatar, Button, Comment, Form, Input, List } from 'antd';
+import { Avatar, Button, Comment, Form, Input } from 'antd';
 import axios from 'axios';
-import moment from 'moment';
+// import moment from 'moment';
 import React, { useState } from 'react';
 import { useCallback } from 'react';
 import { useEffect } from 'react';
@@ -43,8 +43,6 @@ export default function CommentBox({dataUser, idFilm}) {
   const [submitting, setSubmitting] = useState(false);
   const [value, setValue] = useState('');
 
-  console.log(dataUser);
-
   const getComment = useCallback(async () => {
     const data = await axios.get(apiConfig.urlConnect + "comment/" + idFilm)
     console.log(data);
@@ -59,7 +57,7 @@ export default function CommentBox({dataUser, idFilm}) {
     if (!value || value.trim() === "") return;
     setSubmitting(true);
     try {
-      const data = await axios.post(apiConfig.urlConnect + "comment/add-comment/", {
+      await axios.post(apiConfig.urlConnect + "comment/add-comment/", {
         movie_id: idFilm,
         user_id: dataUser._id,
         user_name: dataUser.user_name,

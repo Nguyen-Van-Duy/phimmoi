@@ -22,7 +22,7 @@ const Trailer = ({closeTrailer, category, id, trailerData}) => {
         } else {
             fetchDataTrailer()
         }
-    }, [category, id])
+    }, [category, id, trailerData])
     return (
         <BoxModal title="Movies Trailer" closeModal={closeMovieTrailer}>
             <div className="trailer-main">

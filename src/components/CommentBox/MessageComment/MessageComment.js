@@ -24,7 +24,7 @@ const ExampleComment = ({ children, comment, handelDeleteData }) => {
   return (
     <>
     <Comment
-      actions={[<span key="comment-nested-reply-to" style={{fontWeight: "300", color: "#000"}} onClick={()=> handleShowBoxRep(comment._id)}>Reply to</span>]}
+      // actions={[<span key="comment-nested-reply-to" style={{fontWeight: "300", color: "#000"}} onClick={()=> handleShowBoxRep(comment._id)}>Reply to</span>]}
       // eslint-disable-next-line jsx-a11y/anchor-is-valid
       author={<a href='#' className='color-name' style={{fontWeight: "700"}}>{comment.user_name}</a>}
       avatar={<Avatar src={apiConfig.urlConnectSocketIO + comment.avatar} alt={comment.user_name} />}
@@ -42,39 +42,39 @@ const ExampleComment = ({ children, comment, handelDeleteData }) => {
   );
 }
 
-  const data = [
-    {
-        name: "Duy",
-        comment: "We supply a series of design principles, practical patterns and high quality desig",
-        rep: [{
-            name: "Duy",
-            comment: "We supply a series",
-            rep: [{
-                name: "Duy",
-                comment: "We supply a series",
-            },
-            {
-                name: "Duy",
-                comment: "We supply a series of design principles",
-            }]
-        },
-        {
-            name: "Duy",
-            comment: "We supply a series of design principles",
-        }]
-    }
-  ]
+  // const data = [
+  //   {
+  //       name: "Duy",
+  //       comment: "We supply a series of design principles, practical patterns and high quality desig",
+  //       rep: [{
+  //           name: "Duy",
+  //           comment: "We supply a series",
+  //           rep: [{
+  //               name: "Duy",
+  //               comment: "We supply a series",
+  //           },
+  //           {
+  //               name: "Duy",
+  //               comment: "We supply a series of design principles",
+  //           }]
+  //       },
+  //       {
+  //           name: "Duy",
+  //           comment: "We supply a series of design principles",
+  //       }]
+  //   }
+  // ]
 
 export default function MessageComment({comments}) {
   const [listComment, setListCommment] = useState()
 
   useEffect(() => {
     setListCommment(comments)
-  }, [])
+  }, [comments])
 
-    const reps = (data) => {
-        data.map((item)=>{return (<ExampleComment comment={item}/>)})
-    }
+    // const reps = (data) => {
+    //     data.map((item)=>{return (<ExampleComment comment={item}/>)})
+    // }
 
     const handelDeleteData = item => {
       const newData = listComment.filter(itemComment=>itemComment._id !== item._id)

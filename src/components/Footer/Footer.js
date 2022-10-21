@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Feedback from "../Feedback/Feedback";
 import Modal from "../Modal/Modal";
 import "./Footer.css";
+import tmdb from '../../image/TMDB.svg';
 
 const Footer = () => {
   const navigate = useNavigate()
@@ -18,23 +19,27 @@ const Footer = () => {
       <div className="app__container footer__container">
       <div className="footer__list" onClick={() => navigate('/')}>
         <h2 className="logo-movie">DUY FILM</h2>
-      </div>
-      {/* <div className="footer__list">
-          <h4 className="footer__list--title">About</h4>
-          <li>About Us</li>
-          <li>Features</li>
-          <li>New Movies</li>
+        <div>
+          <img src={tmdb} alt="The Movie DB" />
+          </div>
       </div>
       <div className="footer__list">
-          <h4 className="footer__list--title">Company</h4>
-          <li>Team</li>
-          <li>Plan</li>
-          <li>Become A Member</li>
-      </div> */}
+          <h4 className="footer__list--title">Movie</h4>
+          <li>Trending Day</li>
+          <li>Trending Week</li>
+          <li>Top Rated</li>
+          <li>Popular</li>
+      </div>
       <div className="footer__list">
-          <h4 className="footer__list--title">Feedback application</h4>
-          <span className="button blue paticipant-button" onClick={toggleModal}>
-        Feedback</span>
+          <h4 className="footer__list--title">TV Shows</h4>
+          <li>Trending Day</li>
+          <li>Trending Week</li>
+          <li>Top Rated</li>
+          <li>Popular</li>
+      </div>
+      <div className="footer__list">
+          <h4 className="footer__list--title" style={{    marginBottom: "2rem"}}>Feedback application</h4>
+          <span className="button blue footer-button" onClick={toggleModal}>Feedback</span>
       </div>
       </div>
       <div className="app__container footer__desc">

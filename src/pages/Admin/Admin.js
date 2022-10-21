@@ -20,6 +20,7 @@ import UploadMovie from '../../components/UserMannager/UploadMovie/UploadMovie';
 import ApprovalMovie from '../../components/UserMannager/ApprovalMovie/ApprovalMovie';
 import FeedbackAdmin from './FeedbackAdmin/FeedbackAdmin';
 import Loading from '../../components/Loading';
+import LoginAdmin from './LoginAdmin/LoginAdmin';
 
 const menu = [
   {
@@ -94,6 +95,10 @@ export default function Admin() {
   const token = localStorage.getItem('token')
   const location = useLocation()
   console.log(location, location.pathname !== '/admin/Account');
+  const dataUser = useSelector((state) => state.loginSlice.dataUser);
+
+  console.log(isLogin);
+
   useEffect(()=> {
     const authentication = async () => {
         setLoading(true)
@@ -104,20 +109,20 @@ export default function Admin() {
               console.log("2222222222");
                 const result = await axios.get(urlConnect + 'account/refresh', apiConfig.headers);
                 dispatch(setUserId(result.data))
-                (result.data.role === 'admin') && navigate('/')
+                (result.data.role !== 'admin') && navigate('/login-admin')
                 setLoading(false)
             } catch (error) {
                 console.log(error);
                 setLoading(false)
                 return
               }
-            } else {
-            navigate('/')
+            } 
+            isLogin && dataUser.role !== 'admin' && navigate('/login-admin')
+
             setLoading(false)
-        }
     }
     authentication()
-  }, [token, dispatch, urlConnect, isLogin])
+  }, [token, dispatch, urlConnect, isLogin, navigate])
 
 
   const handleClick = (e) => {
@@ -128,19 +133,20 @@ export default function Admin() {
   const handleLogout = () => {
     dispatch(logout())
     localStorage.removeItem("token")
-    navigate('/')
+    navigate('/login-admin')
 }
 
   return (<>
   {loading && <div className="loading"><Loading /></div>}
-    {!loading && <div className='admin__container'>
+  {/* {!loading && dataUser && dataUser.role !== 'admin' && <LoginAdmin />} */}
+    {!loading && isLogin && dataUser && dataUser.role === 'admin' && <div className='admin__container'>
        <Layout>
         <Header className="header">
           <div className="logo" style={{textAlign: 'center',
         lineHeight: "31px", background: "none"}} >Admin</div>
           <div style={{display: "flex", justifyContent: "space-between"}}>
           <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']} items={items1} />
-          <div>Admin <span onClick={handleLogout}><LogoutOutlined /></span></div>
+          <div>Logout <span onClick={handleLogout}><LogoutOutlined /></span></div>
           </div>
         </Header>
         <Layout>
@@ -168,7 +174,7 @@ export default function Admin() {
               <Breadcrumb.Item>{location.pathname}</Breadcrumb.Item>
             </Breadcrumb>
             {!loading && <Content
-              className={(location.pathname !== '/admin/Account' && location.pathname !== '/admin/' && location.pathname !== '/admin/feedback') && "site-layout-background"}
+              className={(location.pathname !== '/admin/Account' && location.pathname !== '/admin/' && location.pathname !== '/admin' && location.pathname !== '/admin/feedback') && "site-layout-background"}
               style={{
                 padding: 24,
                 margin: 0,

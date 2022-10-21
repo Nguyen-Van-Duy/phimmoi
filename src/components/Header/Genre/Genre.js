@@ -22,7 +22,7 @@ const Genre = () => {
             <div className="list-genre">
                 <h3 className="list-genre__title">Movie Genre</h3>
                 <ul className="list-menu__genre">
-                    {movieGenre.length > 0 && movieGenre?.map((item, id) => <li key={id} className="list-genre__item">
+                    {movieGenre && movieGenre.length > 0 && movieGenre?.map((item, id) => <li key={id} className="list-genre__item">
                         <NavLink
                             className="header__menu-link list__menu-link"
                             to={`/movie/genre/${item.id}/${item.name}`}

@@ -1,12 +1,12 @@
 import React from 'react'
-import { CCard, CCardBody, CCol, CCardHeader, CRow } from '@coreui/react'
+import { CCard, CCardBody, CCardHeader } from '@coreui/react'
 import {
   CChartBar,
-  CChartDoughnut,
-  CChartLine,
+  // CChartDoughnut,
+  // CChartLine,
   CChartPie,
-  CChartPolarArea,
-  CChartRadar,
+  // CChartPolarArea,
+  // CChartRadar,
 } from '@coreui/react-chartjs'
 import './Chart.css'
 

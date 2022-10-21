@@ -8,6 +8,7 @@ import ScheduleUpdate from './ScheduleUpdate/SchuduleUpdate';
 import { SmileOutlined } from '@ant-design/icons';
 import { useEffect } from 'react';
 import axios from 'axios';
+import { useCallback } from 'react';
 
 export default function Schedule() {
     const [movie, setMovie] = useState([])
@@ -27,24 +28,28 @@ export default function Schedule() {
         setShowUpdate(!showUpdate)
         setTitle(title)
     }
-    const handleShowAddScheduleClose = (title) => {
+    const handleShowAddScheduleClose = () => {
         setShowUpdate(!showUpdate)
         setTitle(null)
+        fetchDataSearch()
     }
 
+    const fetchDataSearch = useCallback(async () => {
+        const data = await axios.get(apiConfig.urlConnect + "upload/schedule/" + dataUser._id)
+        console.log(data);
+        setMovie(data.data)
+        document.title = 'Movie schedule'
+        setIsLoading(false)
+    }, [])
+
     useEffect(() => {
-        const fetchDataSearch = async () => {
-            const data = await axios.get(apiConfig.urlConnect + "upload/schedule/" + dataUser._id)
-            console.log(data);
-            setMovie(data.data)
-            document.title = 'Movie schedule'
-        }
+        setIsLoading(true)
         fetchDataSearch()
 
-    }, [dataUser._id])
+    }, [dataUser._id, fetchDataSearch])
 
     const handleDeleteScheduleUpdate = async (data) => {
-        const result = await axios.delete(apiConfig.urlConnect + "upload/delete-schedule/" + data._id)
+         await axios.delete(apiConfig.urlConnect + "upload/delete-schedule/" + data._id)
         success("Delete successful!")
         setMovie(d=>d.filter(item=>item._id !== data._id))
     }
@@ -61,10 +66,10 @@ export default function Schedule() {
                 />}
             <ul className='schedule_list'>
                 {movie && movie.length > 0 && movie.map((item, id)=><li className='schedule_item' key={id}>
-                <div style={{maxWidth: "250px"}}><img src={ apiConfig.urlConnectSocketIO + item.image } alt="" className='schedule_image' /></div>
+                <div style={{minWidth: "250px"}}><img style={{width: "100%"}}src={ apiConfig.urlConnectSocketIO + item.image } alt="" className='schedule_image' /></div>
                 <div className='schedule_content'>
                     <span className='schedule_name'>{item.name}</span>
-                    <div>{item.genres !== undefined && item.genres.map((items, id) => <span key={id}>{items.key || items.name}</span>)}</div>
+                    <div>{item.genres !== undefined && item.genres.map((items, id) => <span key={id}>{items.key || items.name}, </span>)}</div>
                     <div className='schedule_name'>{item.time}</div>
                     {/* {dataDetails.genres.map((item, id) => <span key={id}>{item.key || item.name}</span>)} */}
                     <div>{item.overview}</div>
@@ -77,7 +82,7 @@ export default function Schedule() {
             </ul>
         </div>
     </div>}
-    {showUpdate && title === "update" && <ScheduleUpdate dataDetail={dataDetail} title={title} />}
+    {showUpdate && title === "update" && <ScheduleUpdate dataDetail={dataDetail} title={title} handleShowAddScheduleClose={handleShowAddScheduleClose} />}
     {showUpdate && title === "add" && <ScheduleUpdate title={title} handleShowAddScheduleClose={handleShowAddScheduleClose} />}
     </>
   )

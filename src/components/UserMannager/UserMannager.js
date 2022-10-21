@@ -19,7 +19,7 @@ import Schedule from './Schedule/Schedule'
 function UserMannager() {
 // const history = createBrowserHistory();
 const [menu, setMenu] = useState()
-const [showMenu, setShowMenu] = useState(false)
+// const [showMenu, setShowMenu] = useState(false)
 const dataUser = useSelector((state) => state.loginSlice.dataUser);
 const isLogin = useSelector((state) => state.loginSlice.isLogin);
 const navigate = useNavigate()

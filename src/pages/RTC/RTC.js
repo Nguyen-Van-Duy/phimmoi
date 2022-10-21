@@ -196,7 +196,7 @@ import socketIO from "../../API/Socket"
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
-import apiConfig from '../../API/configApi';
+import apiConfig, { success } from '../../API/configApi';
 
 function RTC() {
     const [idPeer, setIdPeer] = useState()
@@ -386,17 +386,22 @@ console.log(params);
     console.log( "userOnline", userOnline);
 
     const handleCloseShare = () => {
-        navigate("/")
+        navigate("/scshedule")
+    }
+
+    const handleDeleteSchedule = async () => {
+        try {
+            const result = await axios.delete(apiConfig.urlConnect + "upload/delete-schedule/" + dataMovie._id)
+            success("Delete successful!")
+        } catch (err) {
+
+        }
     }
 
   return (
-    <div className='RTC__container'>
+    <div style={{position: 'relative'}}>
+        <div className='RTC__container' style={{ backgroundImage: dataUser && dataMovie &&( `url(${apiConfig.urlConnectSocketIO + dataMovie.image})` || "") }}>
         <div className='RTC__share'>
-        {dataMovie && (params.type === 'schedule') && <div>
-            <h2>{dataMovie.name}</h2>
-            <div style={{color: "#fff"}}>{dataMovie.time}</div>
-            <span style={{color: "#fff"}}>{dataMovie.overview}</span>
-        </div>}
             {/* <h2 style={{color: '#fff'}}>RTC: {idPeer}</h2> */}
             <video id="localStream" width="100%" controls></video>
             {/* <video id="remoteStream" width="900" controls></video> */}
@@ -405,11 +410,20 @@ console.log(params);
                 <input id="remoteId2" type="text" placeholder="Remote ID" />
                 <button id="btnCall" type="submit">Call</button>
             </form> */}
-            {/* <span className='button green' onClick={handleShareVideo}>Camera</span> */}
+            <div className="RTC__button">
+                {/* <span className='button green' onClick={handleShareVideo}>Camera</span> */}
             {(((dataUser && (id === dataUser?._id))) || (params.type === 'friend')) && <span className='button green' onClick={handleShare}>Share</span>}
+            {(((dataUser && (id === dataUser?._id))) || (params.type === 'friend')) && <span className='button green' onClick={handleDeleteSchedule}>End</span>}
             <span className='button red' onClick={handleCloseShare}>Close</span>
+            </div>
+            {dataMovie && (params.type === 'schedule') && <div>
+                <h2>{dataMovie.name}</h2>
+                <div style={{color: "#fff"}}>{dataMovie.time}</div>
+                <span style={{color: "#fff"}}>{dataMovie.overview}</span>
+            </div>}
         </div>
         {/* <div className='RTC__message'></div> */}
+    </div>
     </div>
   )
 }

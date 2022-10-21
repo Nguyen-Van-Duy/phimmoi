@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { Form, Formik } from 'formik'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import apiConfig, { error, success } from '../../API/configApi'
 import FormikControl from '../../components/Form/FormikControl'
@@ -9,7 +9,6 @@ import { useSelector } from 'react-redux'
 
 export default function ResetPassword() {
     // const [isloading, setisLoading] = useState(true)
-    const valueRef = useRef()
     const param = useParams()
     const navigate = useNavigate()
     const dataUser = useSelector((state) => state.loginSlice.dataUser)
@@ -17,7 +16,7 @@ export default function ResetPassword() {
 
     useEffect(()=> {
         dataUser && dataUser._id && navigate("/")
-    }, [dataUser])
+    }, [dataUser, navigate])
 
     const initialValues = {
         password: '',

@@ -1,5 +1,5 @@
 import React from "react";
-import Chart from "./Chart";
+// import Chart from "./Chart";
 import "./HomeAdmin.css";
 
 export default function HomeAdmin() {

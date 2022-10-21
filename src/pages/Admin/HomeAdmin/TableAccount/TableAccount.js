@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import 'antd/dist/antd.css';
-import { Button, Table } from 'antd';
+// import { Button, Table } from 'antd';
 import axios from 'axios';
 import apiConfig, { success } from '../../../../API/configApi';
-import { format } from 'timeago.js';
+// import { format } from 'timeago.js';
 import './TableAccount.css'
 
 const columns = [
@@ -35,27 +35,27 @@ const columns = [
   
   export default function TableAccount() {
 
-    const [selectedRowKeys, setSelectedRowKeys] = useState([]);
-    const [loading, setLoading] = useState(false);
+    // const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+    // const [loading, setLoading] = useState(false);
     const [account, setAccount] = useState([]);
 
-  const start = () => {
-    setLoading(true);
-    // ajax request after empty completing
-      setSelectedRowKeys([]);
-      setLoading(false);
-  };
+  // const start = () => {
+  //   setLoading(true);
+  //   // ajax request after empty completing
+  //     setSelectedRowKeys([]);
+  //     setLoading(false);
+  // };
 
-  const onSelectChange = (newSelectedRowKeys) => {
-    console.log('selectedRowKeys changed: ', selectedRowKeys);
-    setSelectedRowKeys(newSelectedRowKeys);
-  };
+  // const onSelectChange = (newSelectedRowKeys) => {
+  //   console.log('selectedRowKeys changed: ', selectedRowKeys);
+  //   setSelectedRowKeys(newSelectedRowKeys);
+  // };
 
-  const rowSelection = {
-    selectedRowKeys,
-    onChange: onSelectChange,
-  };
-  const hasSelected = selectedRowKeys.length > 0;
+  // const rowSelection = {
+  //   selectedRowKeys,
+  //   onChange: onSelectChange,
+  // };
+  // const hasSelected = selectedRowKeys.length > 0;
 
   useEffect(() => {
     const fetchData = async () => {

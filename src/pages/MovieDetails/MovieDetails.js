@@ -94,7 +94,7 @@ const MovieDetails = () => {
 
     const handleRemoveFavourite = async () => {
         if(dataUser && dataUser._id) {
-            const result = await axios.delete(apiConfig.urlConnect + 'movie/delete-favourite/' + favourite._id)
+            await axios.delete(apiConfig.urlConnect + 'movie/delete-favourite/' + favourite._id)
             setFavourite(null)
             success("Removed from favorites!")
         } else {

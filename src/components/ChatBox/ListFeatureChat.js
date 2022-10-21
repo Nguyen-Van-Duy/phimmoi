@@ -80,6 +80,7 @@ function ListFeatureChat({
         // if(id !== 0) {
         //   return []
         // }
+        console.log(item);
         const notification = item.list_user.find(user=> user.user_id === dataUser._id)        
         const notificationIndex = item.list_user.findIndex(user=> user.user_id === dataUser._id)
         return (
@@ -102,18 +103,23 @@ function ListFeatureChat({
       })}
 
       {/* message */}
-      {valueContentMenu === 'message' && listUser.length > 0 && listUser?.map((item) => (
-        <div key={item._id}>
-          <MessengerList socket={socket} 
-          online={userOnline.some(user=>user.userId === item._id)} 
-          setUserChat={setUserChat} 
-          currentId={userId} 
-          item={item} 
-          valueContentMenu={valueContentMenu} 
-          listInvitation={invitation} 
-          handleAddFriendClient={handleAddFriendClient}  />
-      </div>
-      ))}
+      {valueContentMenu === 'message' && listUser.length > 0 && listUser?.map((item) => {
+        if(item._id === idAdmin) {
+          return
+        }
+        return(
+          <div key={item._id}>
+            <MessengerList socket={socket} 
+            online={userOnline.some(user=>user.userId === item._id)} 
+            setUserChat={setUserChat} 
+            currentId={userId} 
+            item={item} 
+            valueContentMenu={valueContentMenu} 
+            listInvitation={invitation} 
+            handleAddFriendClient={handleAddFriendClient}  />
+        </div>
+        )
+      })}
     </ul>
   )
 }

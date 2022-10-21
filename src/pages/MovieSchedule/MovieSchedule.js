@@ -1,4 +1,4 @@
-import { DatePicker, Select } from 'antd';
+// import { DatePicker, Select } from 'antd';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import apiConfig from '../../API/configApi';
@@ -6,12 +6,12 @@ import apiConfig from '../../API/configApi';
 import '../../components/MovieList/MovieList.css';
 import '../ViewMore/ViewMore.css';
 import './MovieSchedule.css'
-import { useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 const MovieSchedule = () => {
     const [dataSchedule, setDataSchedule] = useState()
-    const dataUser = useSelector((state) => state.loginSlice.dataUser);
+    // const dataUser = useSelector((state) => state.loginSlice.dataUser);
 
     useEffect(() => {
         const fetchDataSearch = async () => {
@@ -39,7 +39,7 @@ const MovieSchedule = () => {
                         <img src={ apiConfig.urlConnectSocketIO + item.image } alt="" />
                         <div className="schedule_content">
                             <h3>{item.name}</h3>
-                            <div>{item.time}</div>
+                            <div style={{color: "yellow"}}>{item.time}</div>
                             <div>
                                 {item.genres !== undefined && item.genres.map((items, id) => <span key={id}>{items.key || items.name}, </span>)}
                             </div>
