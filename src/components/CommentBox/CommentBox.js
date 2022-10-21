@@ -6,6 +6,7 @@ import { useCallback } from 'react';
 import { useEffect } from 'react';
 import apiConfig from '../../API/configApi';
 import MessageComment from './MessageComment/MessageComment';
+import avatar from '../../image/avatar.jpeg'
 const { TextArea } = Input;
 
 // const CommentList = ({ comments }) => (
@@ -80,8 +81,8 @@ export default function CommentBox({dataUser, idFilm}) {
   return (
     <>
       {/* {comments.length > 0 && <CommentList comments={comments} />} */}
-      <Comment
-        avatar={<Avatar src={apiConfig.urlConnectSocketIO + dataUser.avatar} alt="Han Solo" />}
+      {dataUser && dataUser._id && <Comment
+        avatar={<Avatar src={(apiConfig.urlConnectSocketIO + dataUser.avatar) || avatar} alt="Han Solo" />}
         content={
           <Editor
             onChange={handleChange}
@@ -90,7 +91,7 @@ export default function CommentBox({dataUser, idFilm}) {
             value={value}
           />
         }
-      />
+      />}
       <MessageComment comments={comments} />
     </>
   )

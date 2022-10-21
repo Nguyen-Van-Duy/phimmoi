@@ -1,3 +1,15 @@
 .color-name {
     color: #000 !important;
 }
+
+.comment-container {
+    position: relative;
+}
+
+.comment-delete {
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: rgb(255, 0, 0);
+    cursor: pointer;
+}

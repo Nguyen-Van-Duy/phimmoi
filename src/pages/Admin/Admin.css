@@ -46,3 +46,19 @@
     border: 1px solid #d9d9d9 !important;
 
   }
+
+  .admin__container .profile_title {
+    color: #000 !important;
+  }
+
+  .admin__container .site-layout-background {
+    background-color: rgb(50 50 50);
+  }
+
+  .admin__container .site-layout-background .layout-account {
+    background-color: #fff;
+  }
+
+  .admin__container .site-layout-background h2 {
+    color: #fff !important;
+  }

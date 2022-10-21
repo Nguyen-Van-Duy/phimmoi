@@ -21,13 +21,13 @@ const MyMovie = () => {
         const fetchMovieUpload = async () => {
             const data = await axios.get(apiConfig.urlConnect + "movie/my-movie/" + dataUser._id)
             console.log(data);
-            setMovie([...data.data,...data.data])
+            setMovie([...data.data])
             setIsloading(false)
         }
-        if(dataUser._id) {
+        if(dataUser?._id) {
             fetchMovieUpload()
         }
-    }, [dataUser._id])
+    }, [dataUser?._id])
 
     const handleRemove = async (movieId) => {
         if(dataUser && dataUser._id) {

@@ -7,12 +7,14 @@ import { useDispatch } from 'react-redux'
 import { useSelector } from 'react-redux'
 import { setUserId } from '../../../../store/LoginSlice'
 import { error, success } from '../../../../API/configApi'
+import { useNavigate } from 'react-router-dom'
 // import { useNavigate } from 'react-router-dom'
 
 function LoginForm({setShowForgot, showForgot, handleCloseModal}) {
 
     const urlConnect = useSelector((state) => state.loginSlice.urlConnect)
     const dispatch = useDispatch()
+    const navigate = useNavigate()
     // const navigate = useNavigate()
     const initialValues = {
         email: '',
@@ -37,6 +39,10 @@ function LoginForm({setShowForgot, showForgot, handleCloseModal}) {
             dispatch(setUserId(result.data))
             handleCloseModal()
             success(`Logged in successfully, Hi ${result.data.user_name}!`)
+            console.log(result.data);
+            if(result.data.role == 'admin') {
+                navigate('/admin/')
+            }
         } else {
             error('Incorrect account or password!')
             resetForm()

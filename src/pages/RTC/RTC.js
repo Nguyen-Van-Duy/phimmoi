@@ -194,7 +194,9 @@ import { Peer } from "peerjs";
 import './RTC.css'
 import socketIO from "../../API/Socket"
 import { useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import axios from 'axios';
+import apiConfig from '../../API/configApi';
 
 function RTC() {
     const [idPeer, setIdPeer] = useState()
@@ -203,15 +205,35 @@ function RTC() {
     const peer = useRef()
     const socket = useRef();
     const [isReceive, setIsReceive] = useState(false);
-    const dataUser = useSelector((state) => state.loginSlice.dataUser);
     const [isStart, setIsStart] = useState(false)
+    const [dataMovie, setDataMovie] = useState()
+    const [id, setId] = useState()
     const params = useParams()
+    const navigate = useNavigate()
+    const dataUser = useSelector((state) => state.loginSlice.dataUser);
     // const online = useSelector(state=>state.loginSlice.online)
     // console.log("online", online);
-
+console.log(params);
     // useEffect(()=> {
     //     setUserOnline(online)
     // }, [online])
+
+    useEffect(()=>{
+        const fetchDataSearch = async () => {
+            const data = await axios.get(apiConfig.urlConnect + "upload/schedule-detail/" + params.roomId)
+            console.log(data);
+            if(data.status === 200) {
+                setDataMovie(data.data[0])
+                setId(data.data[0]?.user_id)
+            }
+            // setTotalResults(data.total_results)
+            // setTotalPage(data.total_pages)
+            // setDataSchedule(data.data)
+        }
+        if(params.type === "schedule") {
+            fetchDataSearch()
+        }
+    }, [])
 
     useEffect(()=> {
         if (dataUser && dataUser?._id && idPeer) {
@@ -245,10 +267,7 @@ function RTC() {
                         }
                     });
                 })
-
-                
-                    console.log(group);
-                    setUserOnline(group);
+                setUserOnline(group);
                 });
                 }
         return () => {
@@ -296,6 +315,15 @@ function RTC() {
             // })
         })
     }, [])
+
+    // const handleDate = (time) => {
+    //     const date = new Date(time)
+    //     const day = time.slice(0, 10)
+    //     const h = date.getHours()
+    //     const m = date.getMinutes()
+    //     const s = date.getSeconds()
+    //     return day + ' ' + h + ":" + m + ":" + s
+    // }
 
     // useEffect(()=> {
     //     if(userOnline && userOnline.length > 1) {
@@ -358,15 +386,18 @@ function RTC() {
     console.log( "userOnline", userOnline);
 
     const handleCloseShare = () => {
-        peer.current.destroyed()
-        peer.current.disconnect();
-        peer.current.close();
+        navigate("/")
     }
 
   return (
     <div className='RTC__container'>
         <div className='RTC__share'>
-            <h2 style={{color: '#fff'}}>RTC: {idPeer}</h2>
+        {dataMovie && (params.type === 'schedule') && <div>
+            <h2>{dataMovie.name}</h2>
+            <div style={{color: "#fff"}}>{dataMovie.time}</div>
+            <span style={{color: "#fff"}}>{dataMovie.overview}</span>
+        </div>}
+            {/* <h2 style={{color: '#fff'}}>RTC: {idPeer}</h2> */}
             <video id="localStream" width="100%" controls></video>
             {/* <video id="remoteStream" width="900" controls></video> */}
             {/* <form onSubmit={handleCall}>
@@ -374,11 +405,11 @@ function RTC() {
                 <input id="remoteId2" type="text" placeholder="Remote ID" />
                 <button id="btnCall" type="submit">Call</button>
             </form> */}
-            <span className='button green' onClick={handleShareVideo}>Camera</span>
-            <span className='button green' onClick={handleShare}>Share</span>
+            {/* <span className='button green' onClick={handleShareVideo}>Camera</span> */}
+            {(((dataUser && (id === dataUser?._id))) || (params.type === 'friend')) && <span className='button green' onClick={handleShare}>Share</span>}
             <span className='button red' onClick={handleCloseShare}>Close</span>
         </div>
-        <div className='RTC__message'></div>
+        {/* <div className='RTC__message'></div> */}
     </div>
   )
 }

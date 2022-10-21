@@ -11,7 +11,7 @@ import axios from 'axios';
 import CommentBox from '../CommentBox/CommentBox';
 import MessageComment from '../CommentBox/MessageComment/MessageComment';
 
-const WatchMovie = () => {
+const WatchMovie = ({getGenres}) => {
 
     const params = useParams()
     const [dataFilm, setDataFim] = useState({})
@@ -20,14 +20,16 @@ const WatchMovie = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            if(Number(params.id)) {
+            if(Number(params.id) && params.id.toString().length < 8){
                 const data = await movieDetails(params.category, params.id)
                 setDataFim(data)
+                // getGenres(data.genres)
                 document.title = data.title || data.original_title || data.name
             } else {
                 const data = await movieShareDetails(params.id)
                 console.log(data);
                 setDataFim(data[0])
+                getGenres(data[0].genres[0])
                 document.title = `${data[0].title || data[0].name}`;
             }
             window.scrollTo(0, 0)

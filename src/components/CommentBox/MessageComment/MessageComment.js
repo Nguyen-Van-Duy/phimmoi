@@ -3,10 +3,23 @@ import 'antd/dist/antd.css';
 import { Avatar, Comment } from 'antd';
 import "./MessageComment.css"
 import apiConfig from '../../../API/configApi';
+import { useSelector } from 'react-redux';
+import axios from 'axios';
+import { useState } from 'react';
+import { useEffect } from 'react';
 
-const ExampleComment = ({ children, comment }) => {
+const ExampleComment = ({ children, comment, handelDeleteData }) => {
+  const dataUser = useSelector((state) => state.loginSlice.dataUser);
   const handleShowBoxRep = (userId) => {
+  }
 
+  const handleDelete = async (data) => {
+    console.log(data);
+    if(data.user_id === dataUser._id) {
+        const result = await axios.delete(apiConfig.urlConnect + "comment/delete/" + data._id);
+       console.log(result);
+       handelDeleteData(data)
+    }
   }
   return (
     <>
@@ -16,8 +29,9 @@ const ExampleComment = ({ children, comment }) => {
       author={<a href='#' className='color-name' style={{fontWeight: "700"}}>{comment.user_name}</a>}
       avatar={<Avatar src={apiConfig.urlConnectSocketIO + comment.avatar} alt={comment.user_name} />}
       content={
-        <p style={{fontWeight: "400", color: "#000"}}>
+        <p style={{fontWeight: "400", color: "#000", position: "relative"}}>
           {comment.message}
+          {dataUser && (dataUser._id === comment.user_id) && <span className="comment-delete" onClick={()=>handleDelete(comment)}>Delete</span>}
         </p>
       }
     >
@@ -52,14 +66,26 @@ const ExampleComment = ({ children, comment }) => {
   ]
 
 export default function MessageComment({comments}) {
-  console.log(comments);
+  const [listComment, setListCommment] = useState()
+
+  useEffect(() => {
+    setListCommment(comments)
+  }, [])
 
     const reps = (data) => {
         data.map((item)=>{return (<ExampleComment comment={item}/>)})
     }
+
+    const handelDeleteData = item => {
+      const newData = listComment.filter(itemComment=>itemComment._id !== item._id)
+      setListCommment(newData)
+    }
   return (
     <div style={{backgroundColor: "#fff", color: "#000", padding: "0 20px"}}>
-        {comments.map((item, id)=><ExampleComment comment={item} key={id} />)}
+        {listComment && listComment.length > 0 && listComment.map((item, id)=><div key={id} className="comment-container">
+          <ExampleComment comment={item}  handelDeleteData={handelDeleteData} />
+          
+        </div>)}
         {/* <ExampleComment>
             <ExampleComment>
                 <ExampleComment />

@@ -43,12 +43,12 @@ function Profile() {
             <li className='profile_item'>
                 <span className='profile_item-title'>Phone:</span><span> {dataUser.phone}</span>
             </li>
-            <li className='profile_item'>
+            {/* <li className='profile_item'>
                 <span className='profile_item-title'>Loves:</span><span> {dataUser.loves}</span>
             </li>
             <li className='profile_item'>
                 <span className='profile_item-title'>Hates:</span><span> {dataUser.hates}</span>
-            </li>
+            </li> */}
         </ul>
         <div className='profile-edit'>
             <span className="button blue" onClick={handleShowEditProfile}>

@@ -1,15 +1,23 @@
 import axios from 'axios'
 import { Form, Formik } from 'formik'
 import React, { useEffect, useRef, useState } from 'react'
-import { useParams } from 'react-router-dom'
-import apiConfig from '../../API/configApi'
+import { useNavigate, useParams } from 'react-router-dom'
+import apiConfig, { error, success } from '../../API/configApi'
 import FormikControl from '../../components/Form/FormikControl'
 import * as Yup from 'yup'
+import { useSelector } from 'react-redux'
 
 export default function ResetPassword() {
     // const [isloading, setisLoading] = useState(true)
     const valueRef = useRef()
     const param = useParams()
+    const navigate = useNavigate()
+    const dataUser = useSelector((state) => state.loginSlice.dataUser)
+    dataUser && dataUser._id && navigate("/")
+
+    useEffect(()=> {
+        dataUser && dataUser._id && navigate("/")
+    }, [dataUser])
 
     const initialValues = {
         password: '',
@@ -25,8 +33,15 @@ export default function ResetPassword() {
     
         const onSubmit = async (values, {resetForm}) => {
         console.log('Form data', values)
-        const result = await axios.post(apiConfig.urlConnect + 'profile/reset-password/', {token: param.token, password: values.password.trim()})
+        const result = await axios.post(apiConfig.urlConnect + 'profile/reset-password/', 
+        {password: values.password.trim()}, { headers: {"Authorization" : `Bearer ${param.token}`} })
         console.log(result);
+        if (result.status === 200) {
+            success("Change password successfully!")
+            navigate("/")
+        } else {
+            error("Change password failed!")
+        }
         resetForm()
         }
   return (

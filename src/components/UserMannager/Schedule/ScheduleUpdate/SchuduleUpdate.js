@@ -10,7 +10,7 @@ import { DatePicker, Space, TimePicker } from 'antd'
 import moment from 'moment'
 import { genderMovie } from '../../../../API/MoviesApi'
 
-function ScheduleUpdate({dataDetail, handleShowSchedule, title}) {
+function ScheduleUpdate({dataDetail, handleShowSchedule,handleShowAddScheduleClose, title}) {
 
     const dataUser = useSelector((state) => state.loginSlice.dataUser);
     const [selectedFile, setSelectedFile] = useState();
@@ -94,7 +94,7 @@ function ScheduleUpdate({dataDetail, handleShowSchedule, title}) {
         const result = await axios.post(apiConfig.urlConnect + 'upload/add-schedule', formData)
         console.log(result);
         success("Update successful!")
-        handleShowSchedule()
+        handleShowAddScheduleClose(null)
     }
 
   return (
@@ -160,10 +160,10 @@ function ScheduleUpdate({dataDetail, handleShowSchedule, title}) {
             /> 
         <div className='profile-edit'>
             <button type="submit" className={`button blue ${!formik.isValid ? "disable-submit" : ""}`} 
-            onClick={()=>{ setCheckFile(true); setCheckDate(true)}} disabled={!formik.isValid}>
+            onClick={()=>{ setCheckFile(true); setCheckDate(true); handleShowAddScheduleClose(null)}} disabled={!formik.isValid}>
                 <i className="fa-solid fa-check"></i>Update
             </button>
-            <span className="button red" onClick={handleShowSchedule}>
+            <span className="button red" onClick={()=>handleShowAddScheduleClose(null)}>
             <i className="fa-solid fa-xmark"></i>Cancel
             </span>
         </div>

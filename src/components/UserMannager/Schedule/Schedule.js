@@ -10,18 +10,7 @@ import { useEffect } from 'react';
 import axios from 'axios';
 
 export default function Schedule() {
-    const [movie, setMovie] = useState([{
-        name: "The flash",
-        overview: "Gửi các sinh viên trong danh sách làm ĐATN kỳ 1 2021-2022. Đến ngày 10/10/2022 bộ môn sẽ cho phép những bạn được GVHD chấp nhận cho gặp phản biện được lên danh sách phản biện. Các sinh viên thuộc diện: Xin lùi sang đợt 3,trượt PB các đợt trước và BV trượt đợt trước có cơ hội cuối này. Các b",
-        time: "10/10/2022",
-        date: "10/10/2022",
-    },
-    {
-        name: "The flash",
-        overview: "Gửi các sinh viên trong danh sách làm ĐATN kỳ 1 2021-2022. Đến ngày 10/10/2022 bộ môn sẽ cho phép những bạn được GVHD chấp nhận cho gặp phản biện được lên danh sách phản biện. Các sinh viên thuộc diện: Xin lùi sang đợt 3,trượt PB các đợt trước và BV trượt đợt trước có cơ hội cuối này. Các b",
-        time: "10/10/2022",
-        date: "10/10/2022",
-    }])
+    const [movie, setMovie] = useState([])
     const [title, setTitle] = useState()
     const [isLoading, setIsLoading] = useState(false)
     const [dataDetail, setDataDetail] = useState()
@@ -34,9 +23,13 @@ export default function Schedule() {
         setTitle("update")
     }
 
-    const handleShowAddSchedule = (data) => {
+    const handleShowAddSchedule = (title) => {
         setShowUpdate(!showUpdate)
-        setTitle("add")
+        setTitle(title)
+    }
+    const handleShowAddScheduleClose = (title) => {
+        setShowUpdate(!showUpdate)
+        setTitle(null)
     }
 
     useEffect(() => {
@@ -60,7 +53,7 @@ export default function Schedule() {
     <>
     {!showUpdate && <div>
         <h2 className='profile_title'>Schedule</h2>
-        <div style={{height: "50px"}}><span className='button blue' style={{float: "right", marginBottom: "1rem" }} onClick={handleShowAddSchedule}>Add</span></div>
+        <div style={{height: "50px"}}><span className='button blue' style={{float: "right", marginBottom: "1rem" }} onClick={()=>handleShowAddSchedule('add')}>Add</span></div>
         <div className='schedule_container'>
         {!isLoading && movie.length <= 0 && <Result
                     icon={<SmileOutlined />}
@@ -85,7 +78,7 @@ export default function Schedule() {
         </div>
     </div>}
     {showUpdate && title === "update" && <ScheduleUpdate dataDetail={dataDetail} title={title} />}
-    {showUpdate && title === "add" && <ScheduleUpdate title={title} />}
+    {showUpdate && title === "add" && <ScheduleUpdate title={title} handleShowAddScheduleClose={handleShowAddScheduleClose} />}
     </>
   )
 }

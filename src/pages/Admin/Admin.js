@@ -7,15 +7,19 @@ import {LogoutOutlined, BlockOutlined,AppstoreOutlined,
   MailOutlined,
   PieChartOutlined,} from '@ant-design/icons';
 import { Breadcrumb, Layout, Menu } from 'antd';
-import { Route, Routes, useNavigate } from 'react-router-dom';
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import HomeAdmin from './HomeAdmin/HomeAdmin';
 import AccountUser from './AccountUser/AccountUser';
 import MyMovie from '../../components/UserMannager/MyMovie/MyMovie';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import apiConfig from '../../API/configApi';
-import { setUserId } from '../../store/LoginSlice';
+import { logout, setUserId } from '../../store/LoginSlice';
 import NewMovie from '../NewMovie/NewMovie';
+import UploadMovie from '../../components/UserMannager/UploadMovie/UploadMovie';
+import ApprovalMovie from '../../components/UserMannager/ApprovalMovie/ApprovalMovie';
+import FeedbackAdmin from './FeedbackAdmin/FeedbackAdmin';
+import Loading from '../../components/Loading';
 
 const menu = [
   {
@@ -70,11 +74,15 @@ const items = [
     getItem('Movie list', 'movie-list'),
     getItem('My movie', 'my-movie'),
   ]),
-  getItem('Approve', 'approve', <AppstoreOutlined />, [
-    getItem('Movie share', 'movie-share'),
-    getItem('Movie update', 'movie-update'),
-    // getItem('Submenu', 'sub3', null, [getItem('Option 11', '11'), getItem('Option 12', '12')]),
-  ]),
+  getItem('Share movie', 'share-movie', <DesktopOutlined />),
+  getItem('Approve movie', 'approve-movie', <DesktopOutlined />),
+  getItem('Feedback', 'feedback', <DesktopOutlined />),
+
+  // getItem('Approve', 'approve', <AppstoreOutlined />, [
+  //   getItem('Movie shared', 'movie-shared'),
+  //   getItem('Movie update', 'movie-update'),
+  //   // getItem('Submenu', 'sub3', null, [getItem('Option 11', '11'), getItem('Option 12', '12')]),
+  // ]),
 ];
 
 export default function Admin() {
@@ -84,20 +92,27 @@ export default function Admin() {
   const isLogin = useSelector((state) => state.loginSlice.isLogin)
   const [loading, setLoading] = useState(true)
   const token = localStorage.getItem('token')
+  const location = useLocation()
+  console.log(location, location.pathname !== '/admin/Account');
   useEffect(()=> {
     const authentication = async () => {
         setLoading(true)
+        console.log("dddddddđ",token, !isLogin);
         if(token && !isLogin) {
+
             try {
+              console.log("2222222222");
                 const result = await axios.get(urlConnect + 'account/refresh', apiConfig.headers);
                 dispatch(setUserId(result.data))
+                (result.data.role === 'admin') && navigate('/')
                 setLoading(false)
             } catch (error) {
                 console.log(error);
                 setLoading(false)
                 return
-            }
-        } else {
+              }
+            } else {
+            navigate('/')
             setLoading(false)
         }
     }
@@ -109,59 +124,71 @@ export default function Admin() {
     console.log(e);
     navigate(`/admin/${e.key}`)
   }
-  return (
-    <div className='admin__container'>
+
+  const handleLogout = () => {
+    dispatch(logout())
+    localStorage.removeItem("token")
+    navigate('/')
+}
+
+  return (<>
+  {loading && <div className="loading"><Loading /></div>}
+    {!loading && <div className='admin__container'>
        <Layout>
-    <Header className="header">
-      <div className="logo" />
-      <div style={{display: "flex", justifyContent: "space-between"}}>
-      <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']} items={items1} />
-      <div><LogoutOutlined /></div>
-      </div>
-    </Header>
-    <Layout>
-      <Sider width={200} className="site-layout-background">
-      <Menu
-        onClick={handleClick}
-        defaultSelectedKeys={['1']}
-        defaultOpenKeys={['sub1']}
-        mode="inline"
-        theme="dark"
-        items={items}
-      />
-      </Sider>
-      <Layout
-        style={{
-          padding: '0 24px 24px',
-        }}
-      >
-        <Breadcrumb
-          style={{
-            margin: '16px 0',
-          }}
-        >
-          <Breadcrumb.Item>Home</Breadcrumb.Item>
-          <Breadcrumb.Item>List</Breadcrumb.Item>
-          <Breadcrumb.Item>App</Breadcrumb.Item>
-        </Breadcrumb>
-        {!loading && <Content
-          className="site-layout-background"
-          style={{
-            padding: 24,
-            margin: 0,
-            minHeight: 280,
-          }}
-        >
-          <Routes>
-            <Route path="" element={<HomeAdmin />} />
-            <Route path="/account" element={<AccountUser />} />
-            <Route path="/my-movie" element={<MyMovie />} />
-            <Route path="/movie-list" element={<NewMovie />} />
-        </Routes>
-        </Content>}
+        <Header className="header">
+          <div className="logo" style={{textAlign: 'center',
+        lineHeight: "31px", background: "none"}} >Admin</div>
+          <div style={{display: "flex", justifyContent: "space-between"}}>
+          <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']} items={items1} />
+          <div>Admin <span onClick={handleLogout}><LogoutOutlined /></span></div>
+          </div>
+        </Header>
+        <Layout>
+          <Sider width={200} className={'site-layout-background'}>
+          <Menu
+            onClick={handleClick}
+            defaultSelectedKeys={['1']}
+            defaultOpenKeys={['sub1']}
+            mode="inline"
+            theme="dark"
+            items={items}
+          />
+          </Sider>
+          <Layout
+            style={{
+              padding: '0 24px 24px',
+            }}
+          >
+            <Breadcrumb
+              style={{
+                margin: '16px 0',
+              }}
+            >
+              {/* <Breadcrumb.Item>Admin</Breadcrumb.Item> */}
+              <Breadcrumb.Item>{location.pathname}</Breadcrumb.Item>
+            </Breadcrumb>
+            {!loading && <Content
+              className={(location.pathname !== '/admin/Account' && location.pathname !== '/admin/' && location.pathname !== '/admin/feedback') && "site-layout-background"}
+              style={{
+                padding: 24,
+                margin: 0,
+                minHeight: 280,
+              }}
+            >
+              <Routes>
+                <Route path="" element={<HomeAdmin />} />
+                <Route path="/account" element={<AccountUser />} />
+                <Route path="/my-movie" element={<MyMovie />} />
+                <Route path="/movie-list" element={<NewMovie />} />
+                <Route path="/approve-movie" element={<ApprovalMovie />} />
+                <Route path="/share-movie" element={<UploadMovie />} />
+                <Route path="/feedback" element={<FeedbackAdmin />} />
+            </Routes>
+            </Content>}
+          </Layout>
+        </Layout>
       </Layout>
-    </Layout>
-  </Layout>
-    </div>
+    </div>}
+    </>
   )
 }

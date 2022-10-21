@@ -19,7 +19,7 @@ const Footer = () => {
       <div className="footer__list" onClick={() => navigate('/')}>
         <h2 className="logo-movie">DUY FILM</h2>
       </div>
-      <div className="footer__list">
+      {/* <div className="footer__list">
           <h4 className="footer__list--title">About</h4>
           <li>About Us</li>
           <li>Features</li>
@@ -30,15 +30,15 @@ const Footer = () => {
           <li>Team</li>
           <li>Plan</li>
           <li>Become A Member</li>
-      </div>
+      </div> */}
       <div className="footer__list">
           <h4 className="footer__list--title">Feedback application</h4>
-          <li><span className="button blue paticipant-button" onClick={toggleModal}>
-        Feedback</span></li>
+          <span className="button blue paticipant-button" onClick={toggleModal}>
+        Feedback</span>
       </div>
       </div>
       <div className="app__container footer__desc">
-          <span>copy right @ by Nguyen Van Duy</span>
+          <a href="https://www.themoviedb.org/">https://www.themoviedb.org/</a>
           <a href="https://app-film-10550.web.app/">DUY FILM version 1.0</a>
       </div>
     </footer>

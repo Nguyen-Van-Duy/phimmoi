@@ -296,7 +296,7 @@ const ChatBox = ({ showBoxChat, handleShowBoxChat }) => {
               </div>
               <div className="message-header__left">
                 {currentChat && currentChat._id && (
-                  <Link to={"RTC/" + currentChat._id}>
+                  <Link to={"RTC/" + currentChat._id + '/friend'}>
                     <i className="fa-solid fa-video"></i>
                   </Link>
                 )}

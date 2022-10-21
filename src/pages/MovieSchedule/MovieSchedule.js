@@ -7,6 +7,7 @@ import '../../components/MovieList/MovieList.css';
 import '../ViewMore/ViewMore.css';
 import './MovieSchedule.css'
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 const MovieSchedule = () => {
     const [dataSchedule, setDataSchedule] = useState()
@@ -25,7 +26,6 @@ const MovieSchedule = () => {
 
     }, [])
 
-
     return (<>
         {<div className="content-list">
             <div className="movie-list view-more__container">
@@ -34,17 +34,18 @@ const MovieSchedule = () => {
                 </div>
                 <ul className='schedule_list'>
                     {dataSchedule && dataSchedule.length > 0 && dataSchedule.map((item, index) => 
-                    <li key={index} className="schedule_item">
+                    <li key={index} >
+                        <Link to={`/RTC/${item._id}/schedule`} className="schedule_item">
                         <img src={ apiConfig.urlConnectSocketIO + item.image } alt="" />
                         <div className="schedule_content">
                             <h3>{item.name}</h3>
-                            <p>{item.time}</p>
-                            <br />
+                            <div>{item.time}</div>
                             <div>
-                                {item.genres !== undefined && item.genres.map((items, id) => <span key={id}>{items.key || items.name}</span>)}
+                                {item.genres !== undefined && item.genres.map((items, id) => <span key={id}>{items.key || items.name}, </span>)}
                             </div>
                             <p>{item.overview}</p>
                         </div>
+                        </Link>
                     </li>)}
                 </ul> 
             </div>

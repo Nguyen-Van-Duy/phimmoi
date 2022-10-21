@@ -153,8 +153,15 @@ function UploadMovie({movieDetail, closeModal}) {
         } else {
             urlRequest = valueUrl
         }
+
+        let trailerData
+        if(values.trailers[0].url.trim() === "") {
+            trailerData = []
+        } else {
+            trailerData = values.trailers
+        }
         
-        const dataRequest = {...values, user_id: dataUser._id, url: urlRequest, user_name: dataUser.user_name, avatar: dataUser.avatar, genres: arrGenres}
+        const dataRequest = {...values, user_id: dataUser._id, url: urlRequest, user_name: dataUser.user_name, avatar: dataUser.avatar, genres: arrGenres, trailers: trailerData}
         if(movieDetail) {
             dataRequest.movie_id = movieDetail._id
             dataRequest.vote_count = movieDetail.vote_count

@@ -83,3 +83,10 @@
         width: 100%;
     }
 }
+
+.paticipant-button {
+    right: 2rem;
+    bottom: 1.5rem;
+    z-index: 1;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.7);
+}

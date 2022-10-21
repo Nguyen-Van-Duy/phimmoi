@@ -1,16 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { similar } from '../../API/MoviesApi';
+import { similar, viewGenreMovies } from '../../API/MoviesApi';
 import MovieList from '../MovieList/MovieList';
 
-const Similar = () => {
-
+const Similar = ({idGenres}) => {
+    console.log(idGenres);
     const [dataSimilar, setDataSimilar] = useState([])
     const params = useParams()
 
     useEffect(() => {
         const fetchDataSimilar = async () => {
-            const data = await similar(params.category, params.id)
+            let data
+            if(params.id.toString().length < 8) {
+                data = await similar(params.category, params.id)
+            } else {
+                data = await viewGenreMovies('movie', idGenres.value, 1)
+                data = data.results
+            }
+            console.log(data);
             setDataSimilar(data)
         }
         fetchDataSimilar()

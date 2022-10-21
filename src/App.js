@@ -5,7 +5,7 @@ import React,{ useEffect, useState } from "react";
 import Header from "./components/Header/Header";
 import Home from "./pages/Home/Home";
 import { dataMovie, trending } from "./API/MoviesApi";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { dataFilmAction } from "./store/dataFilmSlice";
 import Footer from "./components/Footer/Footer";
 import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
@@ -15,6 +15,7 @@ import UserMannager from "./components/UserMannager/UserMannager";
 import RTC from "./pages/RTC/RTC";
 import Admin from "./pages/Admin/Admin";
 import ResetPassword from "./pages/ResetPassword/ResetPassword";
+import axios from "axios";
 // import MovieDetails from "./pages/MovieDetails/MovieDetails";
 // import ViewMore from "./pages/ViewMore/ViewMore";
 // import ViewGenre from "./pages/ViewGenre/ViewMore";
@@ -34,6 +35,7 @@ function App() {
   const [showBoxChat, setShowBoxChat] = useState(false)
   const dispatch = useDispatch()
   const location = useLocation()
+  const dataUser = useSelector((state) => state.loginSlice.dataUser);
   console.log(location);
 
   useEffect(() => {
@@ -56,10 +58,11 @@ function App() {
 
   useEffect(() => {
     const fetchDataFilm = async () => {
-
+      
       // call data movie
+      // await dataMovie("movie", "upcoming")
       const movie_trending = await trending("movie", "week")
-      const movie_upcoming = await dataMovie("movie", "upcoming")
+      const movie_upcoming = (await axios.get(`https://api.themoviedb.org/3/trending/movie/week?api_key=37f380c84b46fa72f453af5706c78a44&page=1`)).data.results
       const movie_popular = await dataMovie("movie", "popular")
       const movie_top_rated = await dataMovie("movie", "top_rated")
 
@@ -120,7 +123,7 @@ function App() {
             element={<React.Suspense fallback={<div className="loading"><Loading /></div>}><Movie /></React.Suspense>}
           />
           <Route
-            path="/RTC/:roomId"
+            path="/RTC/:roomId/:type"
             element={<RTC />}
           />
           <Route
@@ -145,6 +148,7 @@ function App() {
           />
           <Route path="/:category/:id/watch" element={<React.Suspense fallback={<div className="loading"><Loading /></div>}><Watch /></React.Suspense>} />
           <Route path="/:category/:id/watch/season/:season/esp/:esp" element={<React.Suspense fallback={<div className="loading"><Loading /></div>}><Watch /></React.Suspense>} />
+          {/* <Route path='*' element={<Home />} /> */}
         </Routes>}
         {isLoading && <div className="loading"><Loading /></div>}
       </main>

@@ -32,12 +32,12 @@ const menu = [
     path: "/new-movie",
   },
   {
-    name: "Movie Genre",
-    path: "/new-popular",
-  },
-  {
     name: "Movie schedule",
     path: "/movie-schedule",
+  },
+  {
+    name: "Movie Genre",
+    path: "/new-popular",
   },
 ];
 
@@ -58,6 +58,7 @@ const Header = () => {
   const token = localStorage.getItem('token')
   useEffect(()=> {
     const authentication = async () => {
+      console.log("cccccccccccccccccccc");
         setLoading(true)
         if(token && !isLogin) {
             try {

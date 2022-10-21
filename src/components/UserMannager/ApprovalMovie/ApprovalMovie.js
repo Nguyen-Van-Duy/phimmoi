@@ -48,16 +48,17 @@ function ApprovalMovie() {
     //     success("Approved success!")
     //   }
 
-      const handleApproval = async (approvalValue) => {
+      const handleApproval = async (movieItem, approvalValue) => {
+        console.log(movieItem);
         try {
             const data = await axios.post(apiConfig.urlConnect + "movie/approval", {
-                movie_id: movieApproval._id,
+                movie_id: movieItem._id,
                 approval: approvalValue
             }, apiConfig.headers)
             if(data.status === 200) {
                 setShowModal()
-                // approval(movieApproval._id)
-                const newMovie = movie.filter(item=>item._id !== movieApproval._id)
+                // approval(movieItem._id)
+                const newMovie = movie.filter(item=>item._id !== movieItem._id)
                 setMovie(newMovie)
                 success("Approved success!")
             }
@@ -113,8 +114,8 @@ function ApprovalMovie() {
                     </td>
                     <td className='history__time'>{handleDate(item.createdAt)}</td>
                     <td>
-                        <span className='button green history__button' onClick={()=>handleApproval("1")}>Approval</span>
-                        <span className='button red history__button' onClick={()=>handleApproval("2")}>Refuse</span>
+                        <span className='button green history__button' onClick={()=>handleApproval(item, "1")}>Approval</span>
+                        <span className='button red history__button' onClick={()=>handleApproval(item, "2")}>Refuse</span>
                     </td>
                 </tr>)}
 

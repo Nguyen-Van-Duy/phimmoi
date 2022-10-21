@@ -2,11 +2,13 @@
     min-height: calc(100vh - 29.6rem);
     display: flex;
     padding: 68px 5rem 8px;
+    justify-content: center;
 }
 
 .RTC__share {
+    
     width: 70%;
-    flex: 1;
+    /* flex: 1; */
     margin-right: 2rem;
 }
 

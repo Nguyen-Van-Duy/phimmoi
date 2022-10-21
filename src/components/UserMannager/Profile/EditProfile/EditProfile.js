@@ -25,13 +25,11 @@ function EditProfile({handleShowEditProfile}) {
         date_of_birth: dataUser.date_of_birth,
         hometown: dataUser.hometown,
         phone: dataUser.phone,
-        loves: dataUser.loves,
-        hates: dataUser.hates,
-        description: dataUser.description,
+        // loves: dataUser.loves,
+        // hates: dataUser.hates,
+        // description: dataUser.description,
         gender: dataUser.gender,
       }
-
-      console.log({...initialValues, test: "hi"});
 
     const handleChangeImage = (event) => {
         console.log(event);
@@ -123,27 +121,27 @@ function EditProfile({handleShowEditProfile}) {
                 placeholder='Phone'
                 name='phone'
             />
-            <FormikControl
+            {/* <FormikControl
                 control='input'
                 type='text'
                 label='Loves'
                 placeholder='Loves'
                 name='loves'
-            />
-            <FormikControl
+            /> */}
+            {/* <FormikControl
                 control='input'
                 type='text'
                 label='Hates'
                 placeholder='Hates'
                 name='hates'
-            />
-            <FormikControl
+            /> */}
+            {/* <FormikControl
                 control='textarea'
                 type='textarea'
                 label='Description'
                 placeholder='Description'
                 name='description'
-            />
+            /> */}
         <div className='profile-edit'>
             <button type="submit" className={`button blue ${!formik.isValid ? "disable-submit" : ""}`} disabled={!formik.isValid}>
                 <i className="fa-solid fa-check"></i>Update

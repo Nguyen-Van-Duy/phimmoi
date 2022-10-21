@@ -2,22 +2,24 @@ import { Form, Formik } from 'formik'
 import React from 'react'
 import FormikControl from '../../../Form/FormikControl'
 import * as Yup from 'yup'
+import axios from 'axios'
+import apiConfig, { success } from '../../../../API/configApi'
 
 function ForgotPassword({setShowForgot, showForgot}) {
     const initialValues = {
         email: '',
-        password: ''
       }
     
       const validationSchema = Yup.object({
         email: Yup.string()
           .email('Invalid email format')
           .required('Required'),
-          password: Yup.string().required('Required').min(8)
       })
     
-      const onSubmitLogin = (values, {resetForm}) => {
+      const onSubmitLogin = async (values, {resetForm}) => {
         console.log('Form data', values)
+        const data = await axios.post(apiConfig.urlConnect + "profile/forgot-password", values)
+        success("Send successfully!")
         resetForm()
       }
   return (
@@ -36,18 +38,7 @@ function ForgotPassword({setShowForgot, showForgot}) {
                 label='Email'
                 name='email'
             />
-            {/* <FormikControl
-                control='input'
-                type='password'
-                label='password'
-                name='password'
-            />
-            <FormikControl
-                control='input'
-                type='password'
-                label='password'
-                name='password'
-            /> */}
+            
         <div className="group">
             <input id="check" type="checkbox" className="check" defaultChecked/>
             <input id="tab-3" type="radio" name="tab" className="forgot-password"/>

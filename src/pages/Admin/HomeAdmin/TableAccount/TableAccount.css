@@ -1,5 +1,6 @@
 .table-admin__account table {
     width: 100%;
+    
 }
 
 .admin-avatar {
@@ -8,10 +9,14 @@
     border-radius: 50%;
 }
 
-.table-admin__account table tr td {
-    padding: 10px;
+.table-admin__account tr  {
+    height: 50px;
 }
 
 .admin-center {
     text-align: center;
+}
+
+.table-account tr {
+    height: 50px;
 }

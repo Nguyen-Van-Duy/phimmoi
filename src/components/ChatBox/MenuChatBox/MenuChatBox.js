@@ -18,10 +18,10 @@ const listMenuChat = [
         icon: "fa-solid fa-user-plus",
         title: "message",
     },
-    {
-        icon: "fa-solid fa-users",
-        title: "group",
-    }
+    // {
+    //     icon: "fa-solid fa-users",
+    //     title: "group",
+    // }
 ]
 
 function MenuChatBox({setShowListFriend, showListFriend, setValueContentMenu }) {

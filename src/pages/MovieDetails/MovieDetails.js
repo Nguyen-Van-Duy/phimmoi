@@ -28,8 +28,6 @@ const MovieDetails = () => {
     const params = useParams()
     const dispatch = useDispatch()
 
-    console.log("dataUser:", dataUser);
-
     const toggleShowProfile = () => {
         dispatch(handleShowProfileCast.handleShowProfile())
     }
@@ -43,7 +41,7 @@ const MovieDetails = () => {
     useEffect(() => {
         const fetchDataFilm = async () => {
             // fetch dataFilm
-           if(Number(params.id)) {
+           if(Number(params.id) && params.id.toString().length < 8) {
                 const data = await movieDetails(params.category, params.id)
                 setDAtaDetails(data)
                 // fetch data cast and crew
@@ -53,7 +51,6 @@ const MovieDetails = () => {
                 document.title = `${data.title || data.name}`;
            } else {
                 const data = await movieShareDetails(params.id)
-                console.log(data);
                 setDAtaDetails(data[0])
                 document.title = `${data[0]?.title || data[0]?.name}`;
            }
@@ -63,17 +60,13 @@ const MovieDetails = () => {
         fetchDataFilm()
     }, [params.category, params.id])
 
-    console.log(dataDetails);
-    
     useEffect(()=> {
         const getFavourite = async () => {
             const data = await axios.get(apiConfig.urlConnect + 'movie/favourite/' + dataUser._id + '/' + (dataDetails.id))
-            console.log("favourite:", data.data);
             setFavourite(data.data[0])
         }
         const getFavouriteMyMovie = async () => {
             const data = await axios.get(apiConfig.urlConnect + 'movie/favourite/' + dataUser._id + '/' + (dataDetails._id))
-            console.log("favourite:", data.data);
             setFavourite(data.data[0])
         }
         if(dataUser && dataDetails?._id) {
@@ -82,7 +75,6 @@ const MovieDetails = () => {
         if(dataUser && dataDetails?.id) {
             getFavourite()
         }
-        console.log(dataUser);
     }, [dataUser, dataUser?._id, dataDetails?.id, dataDetails?._id])
     
     const handleAddFavourite = async () => {
@@ -92,11 +84,7 @@ const MovieDetails = () => {
                 movie_id: dataDetails._id || dataDetails.id,
                 category: params.category
             })
-            console.log({
-                user_id: dataUser._id,
-                movie_id: dataDetails.id,
-                category: params.category
-            });
+            
             setFavourite(result.data)
             success("Added to wishlist!")
         } else {
@@ -107,32 +95,30 @@ const MovieDetails = () => {
     const handleRemoveFavourite = async () => {
         if(dataUser && dataUser._id) {
             const result = await axios.delete(apiConfig.urlConnect + 'movie/delete-favourite/' + favourite._id)
-            console.log(result);
             setFavourite(null)
             success("Removed from favorites!")
         } else {
             warning("You need to be logged in to perform this function!")
         }
     }
-
-    console.log(dataDetails);
+    console.log(isLoading);
 
     return (<>
         {/* modal show trailer */}
         <div onClick={toggleModal}><Modal showModal={showModal} /></div>
-        {showModal && <Trailer closeTrailer={toggleModal} category={params.category} id={params.id}/>}
+        {showModal && <Trailer closeTrailer={toggleModal} category={params.category} id={params.id} trailerData={dataDetails?.trailers}/>}
         {/* modal show profile */}
         <div onClick={toggleShowProfile}><Modal showModal={showProfileCast} /></div>
         {showProfileCast && <ProfileCast category={params.category} id={params.id}/>}
 
         {isLoading && <div className="loading"><Loading /></div>}
         {!isLoading && <> <section className="detail-container app__container" 
-        style={Number(params.id) ? 
+        style={Number(params.id) &&  params.id.toString().length < 8 ? 
             { backgroundImage: `url(${(dataDetails.backdrop_path || dataDetails.poster_path ? apiConfig.originalImage(dataDetails.backdrop_path || dataDetails.poster_path): apiConfig.background)})` }
         : { backgroundImage: `url(${apiConfig.urlConnectSocketIO + dataDetails?.backdrop_path})` }}>
             <div className="detail-container__content">
                 <div className="detail__image"> 
-                    {Number(params.id) ? <Image src={(dataDetails.poster_path || dataDetails.backdrop_path ? apiConfig.w500Image(dataDetails.poster_path || dataDetails.backdrop_path) : apiConfig.backupPhoto)} 
+                    {Number(params.id) &&  params.id.toString().length < 8 ? <Image src={(dataDetails.poster_path || dataDetails.backdrop_path ? apiConfig.w500Image(dataDetails.poster_path || dataDetails.backdrop_path) : apiConfig.backupPhoto)} 
                     effect='black-and-white'
                     alt={dataDetails.title || dataDetails.name} />: 
                     <Image src={(apiConfig.urlConnectSocketIO + dataDetails?.poster_path)} 
@@ -152,7 +138,7 @@ const MovieDetails = () => {
                         </p>}
                         <p className="detail-content__desc">
                             <span className="detail-content__time">Time: {dataDetails?.runtime || dataDetails?.episode_run_time} minute</span>
-                            Date: {dataDetails?.release_date || dataDetails.first_air_date}
+                            Date: {dataDetails?.release_date || dataDetails?.first_air_date}
                         </p>
                         {directors.length > 0  && <p className="detail-content__desc">Directors: {directors.map((item) => `${item.name} `)}</p>}
                         {directors.length <= 0 &&  dataDetails.director !== "" && <p className="detail-content__desc">Directors: {dataDetails.director}</p>}
@@ -181,7 +167,7 @@ const MovieDetails = () => {
         <span className="home-page app__container">Homepage: <a href={dataDetails.homepage} target="_blank" rel="noopener noreferrer"> {dataDetails.homepage}</a></span>
         <div className="content-list">
             {listCast.length > 3 && <Paticipants paticipants={listCast}/>}
-            <Similar />
+            <Similar idGenres={dataDetails.genres[0]} />
         </div>
         </>
         }

@@ -25,6 +25,8 @@ const Feedback = ({closeFeedback}) => {
               message, 
             });
             console.log(data);
+            emailRef.current.input.value = ""
+            messageRef.current.resizableTextArea.textArea.value = ""
             success("Approved success!")
           } catch (error) {
             console.log(error);
